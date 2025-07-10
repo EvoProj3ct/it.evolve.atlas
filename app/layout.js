@@ -31,7 +31,13 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${poppins.variable} ${geistMono.variable}`}>
         <AuthProvider>
-          <Navbar items={[{ label: 'Home', href: '/' }, { label: 'Contatti', href: '/contatti' }]} />
+          <Navbar
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Contatti', href: '/contatti' },
+              { label: 'Game', href: '/game' },
+            ]}
+          />
           {children}
           <Footer />
         </AuthProvider>
