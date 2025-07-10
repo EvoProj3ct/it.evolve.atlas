@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import styles from './Navbar.module.css';
-import '../app/styles/buttons.css';
 
 export default function Navbar({ items = [] }) {
   const { data: session } = useSession();

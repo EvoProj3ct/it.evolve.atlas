@@ -8,8 +8,8 @@ export default async function Dashboard() {
     redirect('/login')
   }
   return (
-    <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',minHeight:'calc(100vh - 120px)'}}>
+    <>
       <h1>Ora sei nella dashboard</h1>
-    </div>
+    </>
   )
 }
