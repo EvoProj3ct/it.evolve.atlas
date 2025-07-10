@@ -31,7 +31,12 @@
   width: 280px;
 }
 
-.contact .icons .btn:hover svg {
-  fill: var(--color-black);
-  stroke: var(--color-black);
+.contact .icons .btn {
+  border-color: var(--color-white);
+  color: var(--color-white);
+}
+
+.contact .icons .btn:hover {
+  border-color: var(--color-black);
+  color: var(--color-black);
 }
