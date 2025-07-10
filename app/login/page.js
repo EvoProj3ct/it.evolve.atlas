@@ -1,6 +1,5 @@
 'use client'
 import { signIn } from 'next-auth/react'
-import './page.css'
 
 export default function Login() {
   const handleSubmit = async (e) => {
