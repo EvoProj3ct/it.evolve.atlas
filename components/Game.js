@@ -21,11 +21,25 @@ export default function Game() {
   const [shipIcon, setShipIcon] = useState(shipIcons[0])
   const [score, setScore] = useState(0)
   const [health, setHealth] = useState(100)
+  const [gameHeight, setGameHeight] = useState('100vh')
 
   const randomizeIcons = () => {
     const next = shipIcons[Math.floor(Math.random() * shipIcons.length)]
     setShipIcon(next)
   }
+
+  useEffect(() => {
+    const updateHeight = () => {
+      const nav = document.querySelector('.nav')
+      const footer = document.querySelector('.footer')
+      const navH = nav ? nav.offsetHeight : 0
+      const footerH = footer ? footer.offsetHeight : 0
+      setGameHeight(`calc(100vh - ${navH + footerH}px)`)
+    }
+    updateHeight()
+    window.addEventListener('resize', updateHeight)
+    return () => window.removeEventListener('resize', updateHeight)
+  }, [])
 
   useEffect(() => {
     if (typeof Image === 'undefined') return
@@ -39,8 +53,18 @@ export default function Game() {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
     let animationId
-    const width = (canvas.width = canvas.offsetWidth)
-    const height = (canvas.height = canvas.offsetHeight)
+    let width = canvas.offsetWidth
+    let height = canvas.offsetHeight
+
+    const updateDimensions = () => {
+      width = canvas.offsetWidth
+      height = canvas.offsetHeight
+      canvas.width = width
+      canvas.height = height
+    }
+
+    updateDimensions()
+    window.addEventListener('resize', updateDimensions)
 
     const shipSize = 30
     const ship = { x: width / 2 - shipSize / 2, y: height - shipSize - 10, width: shipSize, height: shipSize }
@@ -48,6 +72,8 @@ export default function Game() {
     const aliens = []
     const alienSize = 30
     let direction = 1
+    let stepCount = 0
+    let stepLimit = 60
     let left = false
     let right = false
 
@@ -62,12 +88,14 @@ export default function Game() {
           y: -alienSize,
           size: alienSize,
           img,
+          hit: false,
+          hitFrames: 0,
         })
       }
     }
 
     spawnRow()
-    let spawnInterval = setInterval(spawnRow, 3000)
+    let spawnInterval = setInterval(spawnRow, 2000)
 
     const shoot = () => {
       bullets.push({ x: ship.x + ship.width / 2 - 2, y: ship.y, width: 4, height: 10 })
@@ -102,17 +130,23 @@ export default function Game() {
       ship.x = Math.max(0, Math.min(width - ship.width, ship.x))
 
       bullets.forEach(b => {
-        b.y -= 8
+        b.y -= 5
       })
 
       let reverse = false
       aliens.forEach(a => {
-        a.x += direction * 1.5
-        a.y += 0.3
+        a.x += direction * 1
+        a.y += 0.05
         if (a.x < 0 || a.x + a.size > width) reverse = true
       })
-      if (reverse) {
+      stepCount++
+      if (stepCount >= stepLimit || reverse) {
         direction *= -1
+        stepCount = 0
+        stepLimit = direction === 1 ? 60 : 240
+        aliens.forEach(a => {
+          a.y += 5
+        })
       }
 
       for (let i = bullets.length - 1; i >= 0; i--) {
@@ -120,7 +154,15 @@ export default function Game() {
       }
 
       for (let i = aliens.length - 1; i >= 0; i--) {
-        if (aliens[i].y > height) aliens.splice(i, 1)
+        const a = aliens[i]
+        if (a.hit) {
+          a.hitFrames++
+          if (a.hitFrames > 10) {
+            aliens.splice(i, 1)
+            continue
+          }
+        }
+        if (a.y > height) aliens.splice(i, 1)
       }
 
       for (let i = bullets.length - 1; i >= 0; i--) {
@@ -128,13 +170,15 @@ export default function Game() {
         for (let j = aliens.length - 1; j >= 0; j--) {
           const a = aliens[j]
           if (
+            !a.hit &&
             b.x < a.x + a.size &&
             b.x + b.width > a.x &&
             b.y < a.y + a.size &&
             b.y + b.height > a.y
           ) {
             bullets.splice(i, 1)
-            aliens.splice(j, 1)
+            a.hit = true
+            a.hitFrames = 0
             setScore(s => s + 1)
             break
           }
@@ -161,7 +205,15 @@ export default function Game() {
 
       ctx.fillStyle = '#39FF14'
       bullets.forEach(b => ctx.fillRect(b.x, b.y, b.width, b.height))
-      aliens.forEach(a => ctx.drawImage(a.img, a.x, a.y, a.size, a.size))
+      aliens.forEach(a => {
+        if (a.hit) {
+          ctx.fillStyle = 'red'
+          ctx.fillRect(a.x, a.y, a.size, a.size)
+          ctx.fillStyle = '#39FF14'
+        } else {
+          ctx.drawImage(a.img, a.x, a.y, a.size, a.size)
+        }
+      })
 
       animationId = requestAnimationFrame(update)
     }
@@ -175,11 +227,12 @@ export default function Game() {
       canvas.removeEventListener('click', handleClick)
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('keyup', handleKeyUp)
+      window.removeEventListener('resize', updateDimensions)
     }
   }, [])
 
   return (
-    <div className="game">
+    <div className="game" style={{ height: gameHeight }}>
       <canvas ref={canvasRef} className="game-canvas" />
       <div className="game-overlay">
         <h1 className="title game-title">Game</h1>
