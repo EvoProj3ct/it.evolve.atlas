@@ -15,25 +15,115 @@
   gap: 1rem;
 }
 
-.inventory-filter {
-  align-self: flex-start;
-  padding: 0.5rem;
-  border-radius: 4px;
-  border: 1px solid var(--color-primary);
-  background: var(--background);
-  color: var(--foreground);
+.filter-slider {
+  position: relative;
+  width: 100%;
+}
+
+.filter-slider input[type='range'] {
+  width: 100%;
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+.filter-slider input[type='range']::-webkit-slider-runnable-track {
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    var(--color-primary) var(--slider-pct, 0%),
+    var(--foreground) var(--slider-pct, 0%)
+  );
+  border-radius: 2px;
+}
+
+.filter-slider input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  margin-top: -6px;
+  cursor: pointer;
+}
+
+.filter-slider input[type='range']::-moz-range-track {
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    var(--color-primary) var(--slider-pct, 0%),
+    var(--foreground) var(--slider-pct, 0%)
+  );
+  border-radius: 2px;
+}
+
+.filter-slider input[type='range']::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: none;
+  cursor: pointer;
+}
+
+.filter-slider .labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
 }
 
 .inventory-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 1rem;
   max-height: 400px;
   overflow-y: auto;
 }
 
 .inventory-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid var(--color-primary);
+  border-radius: 12px;
+  padding: 0.5rem;
+  min-height: 100px;
+  cursor: grab;
+  transition: box-shadow 0.3s ease;
+}
+
+.inventory-item:hover {
+  box-shadow: 0 0 10px var(--color-primary);
+}
+
+.popup-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.popup-content {
+  background: var(--background);
+  color: var(--foreground);
   border: 1px solid var(--color-primary);
   border-radius: 8px;
   padding: 1rem;
+  min-width: 240px;
+}
+
+.popup-close {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.5rem;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
 }
