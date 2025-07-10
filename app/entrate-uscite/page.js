@@ -1,3 +1,5 @@
+'use client'
+
 import FinanceChart from '@/components/FinanceChart'
 import PieChart from '@/components/PieChart'
 import records from './mockup.json'
