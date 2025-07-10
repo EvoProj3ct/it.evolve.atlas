@@ -1,8 +1,290 @@
 [
-  {"mese": "Gennaio", "tipo": "entrata", "descrizione": "Vendita prototipi 3D", "importo": 3500},
-  {"mese": "Gennaio", "tipo": "uscita", "descrizione": "Acquisto filamenti", "importo": 1200},
-  {"mese": "Febbraio", "tipo": "entrata", "descrizione": "Consulenza software", "importo": 2800},
-  {"mese": "Febbraio", "tipo": "uscita", "descrizione": "Manutenzione stampanti", "importo": 800},
-  {"mese": "Marzo", "tipo": "entrata", "descrizione": "Nuovi ordini stampa 3D", "importo": 4200},
-  {"mese": "Marzo", "tipo": "uscita", "descrizione": "Marketing online", "importo": 1500}
+  {
+    "mese": "Gennaio",
+    "tipo": "entrata",
+    "descrizione": "Vendita prodotti",
+    "importo": 3763
+  },
+  {
+    "mese": "Gennaio",
+    "tipo": "entrata",
+    "descrizione": "Consulenza",
+    "importo": 1765
+  },
+  {
+    "mese": "Gennaio",
+    "tipo": "uscita",
+    "descrizione": "Spese operative",
+    "importo": 2737
+  },
+  {
+    "mese": "Gennaio",
+    "tipo": "uscita",
+    "descrizione": "Marketing",
+    "importo": 1492
+  },
+  {
+    "mese": "Febbraio",
+    "tipo": "entrata",
+    "descrizione": "Vendita prodotti",
+    "importo": 2844
+  },
+  {
+    "mese": "Febbraio",
+    "tipo": "entrata",
+    "descrizione": "Consulenza",
+    "importo": 2928
+  },
+  {
+    "mese": "Febbraio",
+    "tipo": "uscita",
+    "descrizione": "Spese operative",
+    "importo": 2198
+  },
+  {
+    "mese": "Febbraio",
+    "tipo": "uscita",
+    "descrizione": "Marketing",
+    "importo": 1801
+  },
+  {
+    "mese": "Marzo",
+    "tipo": "entrata",
+    "descrizione": "Vendita prodotti",
+    "importo": 3336
+  },
+  {
+    "mese": "Marzo",
+    "tipo": "entrata",
+    "descrizione": "Consulenza",
+    "importo": 3789
+  },
+  {
+    "mese": "Marzo",
+    "tipo": "uscita",
+    "descrizione": "Spese operative",
+    "importo": 2533
+  },
+  {
+    "mese": "Marzo",
+    "tipo": "uscita",
+    "descrizione": "Marketing",
+    "importo": 1329
+  },
+  {
+    "mese": "Aprile",
+    "tipo": "entrata",
+    "descrizione": "Vendita prodotti",
+    "importo": 4610
+  },
+  {
+    "mese": "Aprile",
+    "tipo": "entrata",
+    "descrizione": "Consulenza",
+    "importo": 3741
+  },
+  {
+    "mese": "Aprile",
+    "tipo": "uscita",
+    "descrizione": "Spese operative",
+    "importo": 2795
+  },
+  {
+    "mese": "Aprile",
+    "tipo": "uscita",
+    "descrizione": "Marketing",
+    "importo": 705
+  },
+  {
+    "mese": "Maggio",
+    "tipo": "entrata",
+    "descrizione": "Vendita prodotti",
+    "importo": 4049
+  },
+  {
+    "mese": "Maggio",
+    "tipo": "entrata",
+    "descrizione": "Consulenza",
+    "importo": 1735
+  },
+  {
+    "mese": "Maggio",
+    "tipo": "uscita",
+    "descrizione": "Spese operative",
+    "importo": 1441
+  },
+  {
+    "mese": "Maggio",
+    "tipo": "uscita",
+    "descrizione": "Marketing",
+    "importo": 1655
+  },
+  {
+    "mese": "Giugno",
+    "tipo": "entrata",
+    "descrizione": "Vendita prodotti",
+    "importo": 4128
+  },
+  {
+    "mese": "Giugno",
+    "tipo": "entrata",
+    "descrizione": "Consulenza",
+    "importo": 1510
+  },
+  {
+    "mese": "Giugno",
+    "tipo": "uscita",
+    "descrizione": "Spese operative",
+    "importo": 1954
+  },
+  {
+    "mese": "Giugno",
+    "tipo": "uscita",
+    "descrizione": "Marketing",
+    "importo": 1237
+  },
+  {
+    "mese": "Luglio",
+    "tipo": "entrata",
+    "descrizione": "Vendita prodotti",
+    "importo": 2803
+  },
+  {
+    "mese": "Luglio",
+    "tipo": "entrata",
+    "descrizione": "Consulenza",
+    "importo": 2179
+  },
+  {
+    "mese": "Luglio",
+    "tipo": "uscita",
+    "descrizione": "Spese operative",
+    "importo": 1281
+  },
+  {
+    "mese": "Luglio",
+    "tipo": "uscita",
+    "descrizione": "Marketing",
+    "importo": 1716
+  },
+  {
+    "mese": "Agosto",
+    "tipo": "entrata",
+    "descrizione": "Vendita prodotti",
+    "importo": 3019
+  },
+  {
+    "mese": "Agosto",
+    "tipo": "entrata",
+    "descrizione": "Consulenza",
+    "importo": 3976
+  },
+  {
+    "mese": "Agosto",
+    "tipo": "uscita",
+    "descrizione": "Spese operative",
+    "importo": 1039
+  },
+  {
+    "mese": "Agosto",
+    "tipo": "uscita",
+    "descrizione": "Marketing",
+    "importo": 763
+  },
+  {
+    "mese": "Settembre",
+    "tipo": "entrata",
+    "descrizione": "Vendita prodotti",
+    "importo": 3471
+  },
+  {
+    "mese": "Settembre",
+    "tipo": "entrata",
+    "descrizione": "Consulenza",
+    "importo": 2988
+  },
+  {
+    "mese": "Settembre",
+    "tipo": "uscita",
+    "descrizione": "Spese operative",
+    "importo": 2927
+  },
+  {
+    "mese": "Settembre",
+    "tipo": "uscita",
+    "descrizione": "Marketing",
+    "importo": 831
+  },
+  {
+    "mese": "Ottobre",
+    "tipo": "entrata",
+    "descrizione": "Vendita prodotti",
+    "importo": 2941
+  },
+  {
+    "mese": "Ottobre",
+    "tipo": "entrata",
+    "descrizione": "Consulenza",
+    "importo": 2728
+  },
+  {
+    "mese": "Ottobre",
+    "tipo": "uscita",
+    "descrizione": "Spese operative",
+    "importo": 1216
+  },
+  {
+    "mese": "Ottobre",
+    "tipo": "uscita",
+    "descrizione": "Marketing",
+    "importo": 1315
+  },
+  {
+    "mese": "Novembre",
+    "tipo": "entrata",
+    "descrizione": "Vendita prodotti",
+    "importo": 3022
+  },
+  {
+    "mese": "Novembre",
+    "tipo": "entrata",
+    "descrizione": "Consulenza",
+    "importo": 2434
+  },
+  {
+    "mese": "Novembre",
+    "tipo": "uscita",
+    "descrizione": "Spese operative",
+    "importo": 1825
+  },
+  {
+    "mese": "Novembre",
+    "tipo": "uscita",
+    "descrizione": "Marketing",
+    "importo": 1285
+  },
+  {
+    "mese": "Dicembre",
+    "tipo": "entrata",
+    "descrizione": "Vendita prodotti",
+    "importo": 4107
+  },
+  {
+    "mese": "Dicembre",
+    "tipo": "entrata",
+    "descrizione": "Consulenza",
+    "importo": 1978
+  },
+  {
+    "mese": "Dicembre",
+    "tipo": "uscita",
+    "descrizione": "Spese operative",
+    "importo": 2356
+  },
+  {
+    "mese": "Dicembre",
+    "tipo": "uscita",
+    "descrizione": "Marketing",
+    "importo": 904
+  }
 ]
