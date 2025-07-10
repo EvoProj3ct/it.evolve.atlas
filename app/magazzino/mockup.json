@@ -1,0 +1,51 @@
+[
+  {
+    "tipo": "Materiale",
+    "misura": "metri",
+    "quantita": 120,
+    "tipologia": "PLA Rosso",
+    "segnalatore": "molto usato"
+  },
+  {
+    "tipo": "Materiale",
+    "misura": "metri",
+    "quantita": 80,
+    "tipologia": "PETG Verde Sunlu",
+    "segnalatore": "medio usato"
+  },
+  {
+    "tipo": "Materiale",
+    "misura": "metri",
+    "quantita": 60,
+    "tipologia": "ABS Nero",
+    "segnalatore": "poco usato"
+  },
+  {
+    "tipo": "Integrazione",
+    "misura": "pezzi",
+    "quantita": 50,
+    "tipologia": "Chip NFC",
+    "segnalatore": "molto usato"
+  },
+  {
+    "tipo": "Integrazione",
+    "misura": "pezzi",
+    "quantita": 30,
+    "tipologia": "LED 5mm",
+    "segnalatore": "medio usato"
+  },
+  {
+    "tipo": "Decorazione",
+    "misura": "kg",
+    "quantita": 5,
+    "tipologia": "Lacca di resina",
+    "segnalatore": "molto usato"
+  },
+  {
+    "tipo": "Decorazione",
+    "misura": "kg",
+    "quantita": 2,
+    "tipologia": "Polvere glitter",
+    "segnalatore": "poco usato"
+  }
+]
