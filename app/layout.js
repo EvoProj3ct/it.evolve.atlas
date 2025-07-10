@@ -5,6 +5,7 @@ import "./styles/buttons.css";
 import "./styles/forms.css";
 import "./styles/navbar.css";
 import "./styles/footer.css";
+import "./styles/pages.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";

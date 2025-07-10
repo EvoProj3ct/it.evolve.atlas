@@ -1,4 +1,3 @@
-import './page.css';
 import { InstagramIcon, TwitterIcon, TikTokIcon } from '@/components/Icons';
 
 export const metadata = {
