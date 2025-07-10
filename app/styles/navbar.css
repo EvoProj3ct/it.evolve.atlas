@@ -3,6 +3,7 @@
   padding: 1rem 2rem;
   display: flex;
   justify-content: center;
+  align-items: center;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(6px);
   position: sticky;
@@ -17,6 +18,10 @@
   margin: 0;
   padding: 0;
   font-size: 1.1rem;
+}
+
+.theme-toggle {
+  margin-left: auto;
 }
 
 .link {

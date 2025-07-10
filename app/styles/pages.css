@@ -19,24 +19,9 @@
   line-height: 1.4;
 }
 
-.icons {
-  display: flex;
-  gap: 1rem;
-}
-
 .login .form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   width: 280px;
-}
-
-.contact .icons .btn {
-  border-color: var(--color-white);
-  color: var(--color-white);
-}
-
-.contact .icons .btn:hover {
-  border-color: var(--color-black);
-  color: var(--color-black);
 }
