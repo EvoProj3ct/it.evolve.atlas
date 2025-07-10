@@ -19,10 +19,11 @@
   width: 120%;
   height: 120%;
   background: var(--color-primary);
+  opacity: 0;
   transform: translate(-50%, -50%) scale(0);
-  border-radius: 50%;
+  border-radius: inherit;
   z-index: -1;
-  transition: transform 0.4s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 .btn:hover {
@@ -31,6 +32,7 @@
 }
 
 .btn:hover::before {
+  opacity: 1;
   transform: translate(-50%, -50%) scale(1);
 }
 
