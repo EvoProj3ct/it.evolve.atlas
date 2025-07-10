@@ -25,21 +25,6 @@
   transform: scaleX(1);
 }
 
-.icons {
-  display: flex;
-  gap: 1rem;
-  font-size: 1.5rem;
-}
-
-.icons .btn {
-  border-color: var(--color-white);
-  color: var(--color-white);
-}
-
-.icons .btn:hover {
-  border-color: var(--color-black);
-  color: var(--color-black);
-}
 
 .copy {
   font-size: 0.875rem;

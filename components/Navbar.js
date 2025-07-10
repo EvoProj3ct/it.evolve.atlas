@@ -27,10 +27,8 @@ export default function Navbar({ items = [] }) {
             <Link href="/login" className="link">Login</Link>
           </li>
         )}
-        <li className="item">
-          <ThemeToggle />
-        </li>
       </ul>
+      <ThemeToggle />
     </nav>
   );
 }

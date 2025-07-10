@@ -1,0 +1,15 @@
+.icons {
+  display: flex;
+  gap: 1rem;
+  font-size: 1.5rem;
+}
+
+.icons .btn {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.icons .btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-black);
+}
