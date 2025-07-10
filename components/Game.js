@@ -13,6 +13,9 @@ const alienIcons = [
   '/instagram.svg',
   '/linkedin.svg',
   '/youtube.svg',
+  '/globe.svg',
+  '/vercel.svg',
+  '/window.svg',
 ]
 
 export default function Game() {
@@ -70,28 +73,37 @@ export default function Game() {
     const ship = { x: width / 2 - shipSize / 2, y: height - shipSize - 10, width: shipSize, height: shipSize }
     const bullets = []
     const aliens = []
+    const rows = []
     const alienSize = 30
-    let direction = 1
-    let stepCount = 0
-    let stepLimit = 60
     let left = false
     let right = false
+    let shipHitFrames = 0
 
     const spawnRow = () => {
       const cols = Math.floor(width / (alienSize + 20))
       const gap = (width - cols * alienSize) / (cols + 1)
+      const row = {
+        aliens: [],
+        direction: Math.random() < 0.5 ? -1 : 1,
+        stepCount: 0,
+        stepLimit: 120 + Math.random() * 180,
+      }
       for (let i = 0; i < cols; i++) {
         const img = new Image()
         img.src = alienIcons[Math.floor(Math.random() * alienIcons.length)]
-        aliens.push({
+        const alien = {
           x: gap + i * (alienSize + gap),
           y: -alienSize,
           size: alienSize,
           img,
           hit: false,
           hitFrames: 0,
-        })
+          row,
+        }
+        row.aliens.push(alien)
+        aliens.push(alien)
       }
+      rows.push(row)
     }
 
     spawnRow()
@@ -133,21 +145,23 @@ export default function Game() {
         b.y -= 5
       })
 
-      let reverse = false
-      aliens.forEach(a => {
-        a.x += direction * 1
-        a.y += 0.05
-        if (a.x < 0 || a.x + a.size > width) reverse = true
-      })
-      stepCount++
-      if (stepCount >= stepLimit || reverse) {
-        direction *= -1
-        stepCount = 0
-        stepLimit = direction === 1 ? 60 : 240
-        aliens.forEach(a => {
-          a.y += 5
+      rows.forEach((row, rIndex) => {
+        let needReverse = false
+        row.aliens.forEach(a => {
+          a.x += row.direction * 0.5
+          a.y += 0.05
+          if (a.x < 0 || a.x + a.size > width) needReverse = true
         })
-      }
+        row.stepCount++
+        if (row.stepCount >= row.stepLimit || needReverse) {
+          row.direction *= -1
+          row.stepCount = 0
+          row.stepLimit = 120 + Math.random() * 180
+          row.aliens.forEach(a => {
+            a.y += 5
+          })
+        }
+      })
 
       for (let i = bullets.length - 1; i >= 0; i--) {
         if (bullets[i].y < -bullets[i].height) bullets.splice(i, 1)
@@ -159,10 +173,16 @@ export default function Game() {
           a.hitFrames++
           if (a.hitFrames > 10) {
             aliens.splice(i, 1)
+            const idx = a.row.aliens.indexOf(a)
+            if (idx !== -1) a.row.aliens.splice(idx, 1)
             continue
           }
         }
-        if (a.y > height) aliens.splice(i, 1)
+        if (a.y > height) {
+          aliens.splice(i, 1)
+          const idx = a.row.aliens.indexOf(a)
+          if (idx !== -1) a.row.aliens.splice(idx, 1)
+        }
       }
 
       for (let i = bullets.length - 1; i >= 0; i--) {
@@ -194,7 +214,10 @@ export default function Game() {
           ship.y + ship.height > a.y
         ) {
           aliens.splice(j, 1)
+          const idx = a.row.aliens.indexOf(a)
+          if (idx !== -1) a.row.aliens.splice(idx, 1)
           setHealth(h => Math.max(0, h - 5))
+          shipHitFrames = 10
         }
       }
 
@@ -202,16 +225,25 @@ export default function Game() {
       ctx.fillRect(0, 0, width, height)
 
       ctx.drawImage(shipImgRef.current, ship.x, ship.y, ship.width, ship.height)
+      if (shipHitFrames > 0) {
+        ctx.save()
+        ctx.globalCompositeOperation = 'source-atop'
+        ctx.fillStyle = 'rgba(255,0,0,0.5)'
+        ctx.fillRect(ship.x, ship.y, ship.width, ship.height)
+        ctx.restore()
+        shipHitFrames--
+      }
 
       ctx.fillStyle = '#39FF14'
       bullets.forEach(b => ctx.fillRect(b.x, b.y, b.width, b.height))
       aliens.forEach(a => {
+        ctx.drawImage(a.img, a.x, a.y, a.size, a.size)
         if (a.hit) {
-          ctx.fillStyle = 'red'
+          ctx.save()
+          ctx.globalCompositeOperation = 'source-atop'
+          ctx.fillStyle = 'rgba(255,0,0,0.5)'
           ctx.fillRect(a.x, a.y, a.size, a.size)
-          ctx.fillStyle = '#39FF14'
-        } else {
-          ctx.drawImage(a.img, a.x, a.y, a.size, a.size)
+          ctx.restore()
         }
       })
 
