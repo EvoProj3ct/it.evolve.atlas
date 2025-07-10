@@ -77,6 +77,7 @@ export default function Game() {
     const alienSize = 30
     let left = false
     let right = false
+    let lastShot = 0
     let shipHitFrames = 0
 
     const spawnRow = () => {
@@ -121,7 +122,13 @@ export default function Game() {
     const handleKeyDown = e => {
       if (e.key === 'ArrowLeft') left = true
       if (e.key === 'ArrowRight') right = true
-      if (e.key === ' ') shoot()
+      if (e.key === ' ') {
+        const now = performance.now()
+        if (now - lastShot >= 200) {
+          shoot()
+          lastShot = now
+        }
+      }
     }
 
     const handleKeyUp = e => {
@@ -148,7 +155,7 @@ export default function Game() {
       rows.forEach((row, rIndex) => {
         let needReverse = false
         row.aliens.forEach(a => {
-          a.x += row.direction * 0.5
+          a.x += row.direction * 1
           a.y += 0.05
           if (a.x < 0 || a.x + a.size > width) needReverse = true
         })
