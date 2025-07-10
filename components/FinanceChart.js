@@ -78,6 +78,7 @@ export default function FinanceChart({ records = [], onSummary }) {
               onMouseLeave={() => setHoverIdx(null)}
             >
               <div className="bar-inner" style={{ '--h': height }} />
+              <span className="bar-label">{rec.importo}€</span>
               {isHover && (
                 <span className="bar-tooltip">
                   {rec.descrizione}
