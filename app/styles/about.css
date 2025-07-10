@@ -81,3 +81,14 @@
   padding: 1rem;
   text-align: center;
 }
+
+@media (max-width: 480px) {
+  .founders {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .founder-card {
+    width: 160px;
+    height: 220px;
+  }
+}

@@ -26,3 +26,16 @@
   gap: 1rem;
   width: 280px;
 }
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+  .description {
+    padding: 0 1rem;
+  }
+  .login .form {
+    width: 100%;
+    max-width: 280px;
+  }
+}
