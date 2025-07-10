@@ -8,7 +8,7 @@ export default function Login() {
     await signIn('credentials', {
       redirect: true,
       callbackUrl: '/dashboard',
-      email: formData.get('email'),
+      user: formData.get('user'),
       password: formData.get('password')
     })
   }
@@ -17,7 +17,7 @@ export default function Login() {
     <div className="login">
       <h1>Login</h1>
       <form onSubmit={handleSubmit} className="form">
-        <input type="email" name="email" placeholder="Email" required />
+        <input type="text" name="user" placeholder="User" required />
         <input type="password" name="password" placeholder="Password" required />
         <button type="submit" className="btn">Entra</button>
       </form>
