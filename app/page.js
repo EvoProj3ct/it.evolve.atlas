@@ -2,15 +2,17 @@
 export default function Home() {
   return (
     <div className="home">
-      <h1 className="title">Benvenuto sulla homepage</h1>
+      <h1 className="title">Benvenuto in Evolve</h1>
       <p className="description">
-        Questa pagina parla di se stessa. Serve come segnaposto mentre
-        costruiamo il sito definitivo.
+        Evolve è una società di consulenza informatica e stampa 3D. Offriamo
+        supporto nello sviluppo software, nella gestione di infrastrutture e
+        nella realizzazione di prototipi e produzioni personalizzate tramite la
+        stampa tridimensionale.
       </p>
       <p className="description">
-        Continua a seguirci per scoprire tutte le novità che stiamo preparando.
+        Scopri come i nostri servizi possono aiutarti a dare forma alle tue idee
+        e ottimizzare i processi della tua azienda.
       </p>
-      <button className="btn">Un semplice bottone</button>
     </div>
   );
 }
