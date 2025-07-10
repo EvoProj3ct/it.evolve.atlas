@@ -3,288 +3,504 @@
     "mese": "Gennaio",
     "tipo": "entrata",
     "descrizione": "Vendita prodotti",
-    "importo": 3763
+    "importo": 3763,
+    "data": "2024-01-05"
   },
   {
     "mese": "Gennaio",
     "tipo": "entrata",
     "descrizione": "Consulenza",
-    "importo": 1765
+    "importo": 1765,
+    "data": "2024-01-12"
   },
   {
     "mese": "Gennaio",
     "tipo": "uscita",
     "descrizione": "Spese operative",
-    "importo": 2737
+    "importo": 2737,
+    "data": "2024-01-18"
   },
   {
     "mese": "Gennaio",
     "tipo": "uscita",
     "descrizione": "Marketing",
-    "importo": 1492
+    "importo": 1492,
+    "data": "2024-01-22"
+  },
+  {
+    "mese": "Gennaio",
+    "tipo": "entrata",
+    "descrizione": "Progetto extra",
+    "importo": 500,
+    "data": "2024-01-26"
+  },
+  {
+    "mese": "Gennaio",
+    "tipo": "uscita",
+    "descrizione": "Varie",
+    "importo": 250,
+    "data": "2024-01-28"
   },
   {
     "mese": "Febbraio",
     "tipo": "entrata",
     "descrizione": "Vendita prodotti",
-    "importo": 2844
+    "importo": 2844,
+    "data": "2024-02-05"
   },
   {
     "mese": "Febbraio",
     "tipo": "entrata",
     "descrizione": "Consulenza",
-    "importo": 2928
+    "importo": 2928,
+    "data": "2024-02-12"
   },
   {
     "mese": "Febbraio",
     "tipo": "uscita",
     "descrizione": "Spese operative",
-    "importo": 2198
+    "importo": 2198,
+    "data": "2024-02-18"
   },
   {
     "mese": "Febbraio",
     "tipo": "uscita",
     "descrizione": "Marketing",
-    "importo": 1801
+    "importo": 1801,
+    "data": "2024-02-22"
+  },
+  {
+    "mese": "Febbraio",
+    "tipo": "entrata",
+    "descrizione": "Progetto extra",
+    "importo": 600,
+    "data": "2024-02-26"
+  },
+  {
+    "mese": "Febbraio",
+    "tipo": "uscita",
+    "descrizione": "Varie",
+    "importo": 300,
+    "data": "2024-02-28"
   },
   {
     "mese": "Marzo",
     "tipo": "entrata",
     "descrizione": "Vendita prodotti",
-    "importo": 3336
+    "importo": 3336,
+    "data": "2024-03-05"
   },
   {
     "mese": "Marzo",
     "tipo": "entrata",
     "descrizione": "Consulenza",
-    "importo": 3789
+    "importo": 3789,
+    "data": "2024-03-12"
   },
   {
     "mese": "Marzo",
     "tipo": "uscita",
     "descrizione": "Spese operative",
-    "importo": 2533
+    "importo": 2533,
+    "data": "2024-03-18"
   },
   {
     "mese": "Marzo",
     "tipo": "uscita",
     "descrizione": "Marketing",
-    "importo": 1329
+    "importo": 1329,
+    "data": "2024-03-22"
+  },
+  {
+    "mese": "Marzo",
+    "tipo": "entrata",
+    "descrizione": "Progetto extra",
+    "importo": 700,
+    "data": "2024-03-26"
+  },
+  {
+    "mese": "Marzo",
+    "tipo": "uscita",
+    "descrizione": "Varie",
+    "importo": 350,
+    "data": "2024-03-28"
   },
   {
     "mese": "Aprile",
     "tipo": "entrata",
     "descrizione": "Vendita prodotti",
-    "importo": 4610
+    "importo": 4610,
+    "data": "2024-04-05"
   },
   {
     "mese": "Aprile",
     "tipo": "entrata",
     "descrizione": "Consulenza",
-    "importo": 3741
+    "importo": 3741,
+    "data": "2024-04-12"
   },
   {
     "mese": "Aprile",
     "tipo": "uscita",
     "descrizione": "Spese operative",
-    "importo": 2795
+    "importo": 2795,
+    "data": "2024-04-18"
   },
   {
     "mese": "Aprile",
     "tipo": "uscita",
     "descrizione": "Marketing",
-    "importo": 705
+    "importo": 705,
+    "data": "2024-04-22"
+  },
+  {
+    "mese": "Aprile",
+    "tipo": "entrata",
+    "descrizione": "Progetto extra",
+    "importo": 800,
+    "data": "2024-04-26"
+  },
+  {
+    "mese": "Aprile",
+    "tipo": "uscita",
+    "descrizione": "Varie",
+    "importo": 400,
+    "data": "2024-04-28"
   },
   {
     "mese": "Maggio",
     "tipo": "entrata",
     "descrizione": "Vendita prodotti",
-    "importo": 4049
+    "importo": 4049,
+    "data": "2024-05-05"
   },
   {
     "mese": "Maggio",
     "tipo": "entrata",
     "descrizione": "Consulenza",
-    "importo": 1735
+    "importo": 1735,
+    "data": "2024-05-12"
   },
   {
     "mese": "Maggio",
     "tipo": "uscita",
     "descrizione": "Spese operative",
-    "importo": 1441
+    "importo": 1441,
+    "data": "2024-05-18"
   },
   {
     "mese": "Maggio",
     "tipo": "uscita",
     "descrizione": "Marketing",
-    "importo": 1655
+    "importo": 1655,
+    "data": "2024-05-22"
+  },
+  {
+    "mese": "Maggio",
+    "tipo": "entrata",
+    "descrizione": "Progetto extra",
+    "importo": 900,
+    "data": "2024-05-26"
+  },
+  {
+    "mese": "Maggio",
+    "tipo": "uscita",
+    "descrizione": "Varie",
+    "importo": 450,
+    "data": "2024-05-28"
   },
   {
     "mese": "Giugno",
     "tipo": "entrata",
     "descrizione": "Vendita prodotti",
-    "importo": 4128
+    "importo": 4128,
+    "data": "2024-06-05"
   },
   {
     "mese": "Giugno",
     "tipo": "entrata",
     "descrizione": "Consulenza",
-    "importo": 1510
+    "importo": 1510,
+    "data": "2024-06-12"
   },
   {
     "mese": "Giugno",
     "tipo": "uscita",
     "descrizione": "Spese operative",
-    "importo": 1954
+    "importo": 1954,
+    "data": "2024-06-18"
   },
   {
     "mese": "Giugno",
     "tipo": "uscita",
     "descrizione": "Marketing",
-    "importo": 1237
+    "importo": 1237,
+    "data": "2024-06-22"
+  },
+  {
+    "mese": "Giugno",
+    "tipo": "entrata",
+    "descrizione": "Progetto extra",
+    "importo": 1000,
+    "data": "2024-06-26"
+  },
+  {
+    "mese": "Giugno",
+    "tipo": "uscita",
+    "descrizione": "Varie",
+    "importo": 500,
+    "data": "2024-06-28"
   },
   {
     "mese": "Luglio",
     "tipo": "entrata",
     "descrizione": "Vendita prodotti",
-    "importo": 2803
+    "importo": 2803,
+    "data": "2024-07-05"
   },
   {
     "mese": "Luglio",
     "tipo": "entrata",
     "descrizione": "Consulenza",
-    "importo": 2179
+    "importo": 2179,
+    "data": "2024-07-12"
   },
   {
     "mese": "Luglio",
     "tipo": "uscita",
     "descrizione": "Spese operative",
-    "importo": 1281
+    "importo": 1281,
+    "data": "2024-07-18"
   },
   {
     "mese": "Luglio",
     "tipo": "uscita",
     "descrizione": "Marketing",
-    "importo": 1716
+    "importo": 1716,
+    "data": "2024-07-22"
+  },
+  {
+    "mese": "Luglio",
+    "tipo": "entrata",
+    "descrizione": "Progetto extra",
+    "importo": 1100,
+    "data": "2024-07-26"
+  },
+  {
+    "mese": "Luglio",
+    "tipo": "uscita",
+    "descrizione": "Varie",
+    "importo": 550,
+    "data": "2024-07-28"
   },
   {
     "mese": "Agosto",
     "tipo": "entrata",
     "descrizione": "Vendita prodotti",
-    "importo": 3019
+    "importo": 3019,
+    "data": "2024-08-05"
   },
   {
     "mese": "Agosto",
     "tipo": "entrata",
     "descrizione": "Consulenza",
-    "importo": 3976
+    "importo": 3976,
+    "data": "2024-08-12"
   },
   {
     "mese": "Agosto",
     "tipo": "uscita",
     "descrizione": "Spese operative",
-    "importo": 1039
+    "importo": 1039,
+    "data": "2024-08-18"
   },
   {
     "mese": "Agosto",
     "tipo": "uscita",
     "descrizione": "Marketing",
-    "importo": 763
+    "importo": 763,
+    "data": "2024-08-22"
+  },
+  {
+    "mese": "Agosto",
+    "tipo": "entrata",
+    "descrizione": "Progetto extra",
+    "importo": 1200,
+    "data": "2024-08-26"
+  },
+  {
+    "mese": "Agosto",
+    "tipo": "uscita",
+    "descrizione": "Varie",
+    "importo": 600,
+    "data": "2024-08-28"
   },
   {
     "mese": "Settembre",
     "tipo": "entrata",
     "descrizione": "Vendita prodotti",
-    "importo": 3471
+    "importo": 3471,
+    "data": "2024-09-05"
   },
   {
     "mese": "Settembre",
     "tipo": "entrata",
     "descrizione": "Consulenza",
-    "importo": 2988
+    "importo": 2988,
+    "data": "2024-09-12"
   },
   {
     "mese": "Settembre",
     "tipo": "uscita",
     "descrizione": "Spese operative",
-    "importo": 2927
+    "importo": 2927,
+    "data": "2024-09-18"
   },
   {
     "mese": "Settembre",
     "tipo": "uscita",
     "descrizione": "Marketing",
-    "importo": 831
+    "importo": 831,
+    "data": "2024-09-22"
+  },
+  {
+    "mese": "Settembre",
+    "tipo": "entrata",
+    "descrizione": "Progetto extra",
+    "importo": 1300,
+    "data": "2024-09-26"
+  },
+  {
+    "mese": "Settembre",
+    "tipo": "uscita",
+    "descrizione": "Varie",
+    "importo": 650,
+    "data": "2024-09-28"
   },
   {
     "mese": "Ottobre",
     "tipo": "entrata",
     "descrizione": "Vendita prodotti",
-    "importo": 2941
+    "importo": 2941,
+    "data": "2024-10-05"
   },
   {
     "mese": "Ottobre",
     "tipo": "entrata",
     "descrizione": "Consulenza",
-    "importo": 2728
+    "importo": 2728,
+    "data": "2024-10-12"
   },
   {
     "mese": "Ottobre",
     "tipo": "uscita",
     "descrizione": "Spese operative",
-    "importo": 1216
+    "importo": 1216,
+    "data": "2024-10-18"
   },
   {
     "mese": "Ottobre",
     "tipo": "uscita",
     "descrizione": "Marketing",
-    "importo": 1315
+    "importo": 1315,
+    "data": "2024-10-22"
+  },
+  {
+    "mese": "Ottobre",
+    "tipo": "entrata",
+    "descrizione": "Progetto extra",
+    "importo": 1400,
+    "data": "2024-10-26"
+  },
+  {
+    "mese": "Ottobre",
+    "tipo": "uscita",
+    "descrizione": "Varie",
+    "importo": 700,
+    "data": "2024-10-28"
   },
   {
     "mese": "Novembre",
     "tipo": "entrata",
     "descrizione": "Vendita prodotti",
-    "importo": 3022
+    "importo": 3022,
+    "data": "2024-11-05"
   },
   {
     "mese": "Novembre",
     "tipo": "entrata",
     "descrizione": "Consulenza",
-    "importo": 2434
+    "importo": 2434,
+    "data": "2024-11-12"
   },
   {
     "mese": "Novembre",
     "tipo": "uscita",
     "descrizione": "Spese operative",
-    "importo": 1825
+    "importo": 1825,
+    "data": "2024-11-18"
   },
   {
     "mese": "Novembre",
     "tipo": "uscita",
     "descrizione": "Marketing",
-    "importo": 1285
+    "importo": 1285,
+    "data": "2024-11-22"
+  },
+  {
+    "mese": "Novembre",
+    "tipo": "entrata",
+    "descrizione": "Progetto extra",
+    "importo": 1500,
+    "data": "2024-11-26"
+  },
+  {
+    "mese": "Novembre",
+    "tipo": "uscita",
+    "descrizione": "Varie",
+    "importo": 750,
+    "data": "2024-11-28"
   },
   {
     "mese": "Dicembre",
     "tipo": "entrata",
     "descrizione": "Vendita prodotti",
-    "importo": 4107
+    "importo": 4107,
+    "data": "2024-12-05"
   },
   {
     "mese": "Dicembre",
     "tipo": "entrata",
     "descrizione": "Consulenza",
-    "importo": 1978
+    "importo": 1978,
+    "data": "2024-12-12"
   },
   {
     "mese": "Dicembre",
     "tipo": "uscita",
     "descrizione": "Spese operative",
-    "importo": 2356
+    "importo": 2356,
+    "data": "2024-12-18"
   },
   {
     "mese": "Dicembre",
     "tipo": "uscita",
     "descrizione": "Marketing",
-    "importo": 904
+    "importo": 904,
+    "data": "2024-12-22"
+  },
+  {
+    "mese": "Dicembre",
+    "tipo": "entrata",
+    "descrizione": "Progetto extra",
+    "importo": 1600,
+    "data": "2024-12-26"
+  },
+  {
+    "mese": "Dicembre",
+    "tipo": "uscita",
+    "descrizione": "Varie",
+    "importo": 800,
+    "data": "2024-12-28"
   }
 ]
