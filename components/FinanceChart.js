@@ -18,6 +18,7 @@ const months = [
 
 export default function FinanceChart({ records = [] }) {
   const [monthIdx, setMonthIdx] = useState(0)
+  const [hoverIdx, setHoverIdx] = useState(null)
   const currentMonth = months[monthIdx]
   const filtered = records.filter(r => r.mese === currentMonth)
   const max = Math.max(...filtered.map(r => r.importo), 1)
@@ -47,9 +48,18 @@ export default function FinanceChart({ records = [] }) {
         {filtered.map((rec, idx) => {
           const height = `${(rec.importo / max) * 100}%`
           const barClass = rec.tipo === 'entrata' ? 'income' : 'expense'
+          const isHover = hoverIdx === idx
           return (
-            <div key={idx} className={`bar ${barClass}`}>
+            <div
+              key={idx}
+              className={`bar ${barClass}`}
+              onMouseEnter={() => setHoverIdx(idx)}
+              onMouseLeave={() => setHoverIdx(null)}
+            >
               <div className="bar-inner" style={{ '--h': height }} />
+              {isHover && (
+                <span className="bar-tooltip">{rec.importo}€</span>
+              )}
               <small className="bar-label">{rec.descrizione}</small>
             </div>
           )

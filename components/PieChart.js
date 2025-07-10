@@ -16,10 +16,9 @@ const months = [
   'Dicembre',
 ]
 
-const colors = [
-  '#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#4bc0c0', '#9966ff',
-  '#c9cbcf', '#ff9f40', '#ffcd56', '#4dc9f6', '#b4b4b4', '#f67019'
-]
+const colors = Array.from({ length: 12 }, (_, i) =>
+  `hsl(130, 70%, ${35 + i * 3}%)`
+)
 
 export default function PieChart({ records = [], type = 'entrata', title }) {
   const totals = months.map(m =>
@@ -41,10 +40,27 @@ export default function PieChart({ records = [], type = 'entrata', title }) {
     ? `conic-gradient(${segments.join(',')})`
     : 'none'
 
+  const percents = totals.map(t =>
+    totalSum ? Math.round((t / totalSum) * 100) : 0
+  )
+
   return (
     <div className="pie-wrapper">
       {title && <h2 className="subtitle">{title}</h2>}
       <div className="pie-chart" style={{ background: gradient }} />
+      <ul className="pie-legend">
+        {percents.map((p, i) =>
+          p > 0 ? (
+            <li key={i}>
+              <span
+                className="color-box"
+                style={{ background: colors[i % colors.length] }}
+              />
+              {months[i].slice(0, 3)} {p}%
+            </li>
+          ) : null
+        )}
+      </ul>
     </div>
   )
 }
