@@ -1,4 +1,4 @@
-.home {
+.contact {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,4 +15,9 @@
 .description {
   max-width: 600px;
   line-height: 1.4;
+}
+
+.icons {
+  display: flex;
+  gap: 1rem;
 }

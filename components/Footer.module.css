@@ -1,0 +1,28 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem 0;
+  background: var(--color-black);
+  color: var(--color-white);
+}
+
+.icons {
+  display: flex;
+  gap: 1rem;
+  font-size: 1.5rem;
+}
+
+.icons a {
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.icons a:hover {
+  color: var(--color-primary);
+}
+
+.copy {
+  font-size: 0.875rem;
+}
