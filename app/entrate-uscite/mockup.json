@@ -1,0 +1,8 @@
+[
+  {"mese": "Gennaio", "tipo": "entrata", "descrizione": "Vendita prototipi 3D", "importo": 3500},
+  {"mese": "Gennaio", "tipo": "uscita", "descrizione": "Acquisto filamenti", "importo": 1200},
+  {"mese": "Febbraio", "tipo": "entrata", "descrizione": "Consulenza software", "importo": 2800},
+  {"mese": "Febbraio", "tipo": "uscita", "descrizione": "Manutenzione stampanti", "importo": 800},
+  {"mese": "Marzo", "tipo": "entrata", "descrizione": "Nuovi ordini stampa 3D", "importo": 4200},
+  {"mese": "Marzo", "tipo": "uscita", "descrizione": "Marketing online", "importo": 1500}
+]
