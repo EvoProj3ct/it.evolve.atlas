@@ -1,13 +1,22 @@
 'use client';
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
+import { useState } from 'react';
 import ThemeToggle from './ThemeToggle';
 
 export default function Navbar({ items = [] }) {
   const { data: session } = useSession();
+  const [open, setOpen] = useState(false);
+
+  const toggleMenu = () => setOpen(prev => !prev);
 
   return (
-    <nav className="nav">
+    <nav className={`nav ${open ? 'open' : ''}`}>
+      <button className="burger" onClick={toggleMenu} aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <ul className="menu">
         {items.map((item, idx) => (
           <li key={idx} className="item">
