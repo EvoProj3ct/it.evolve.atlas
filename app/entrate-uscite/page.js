@@ -5,10 +5,6 @@ import PieChart from '@/components/PieChart'
 import records from './mockup.json'
 import { useState } from 'react'
 
-export const metadata = {
-  title: 'Entrate e Uscite',
-}
-
 export default function EntrateUscitePage() {
   const [summary, setSummary] = useState({ entrate: 0, uscite: 0, totale: 0 })
   return (
