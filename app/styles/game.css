@@ -2,14 +2,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   height: calc(100vh - 120px);
+  width: 100%;
+}
+
+.game .title,
+.game .score {
+  font-family: var(--font-press-start), var(--font-geist-mono), monospace;
 }
 
 .game-canvas {
   width: 100%;
-  max-width: 800px;
   flex-grow: 1;
   background: var(--color-black);
   border: 2px solid var(--color-primary);

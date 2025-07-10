@@ -2,7 +2,18 @@
 import { useRef, useEffect, useState } from 'react'
 
 const shipIcons = ['/ship.svg', '/vercel.svg', '/window.svg']
-const alienIcons = ['/alien1.svg', '/alien2.svg', '/alien3.svg', '/next.svg', '/file.svg']
+const alienIcons = [
+  '/alien1.svg',
+  '/alien2.svg',
+  '/alien3.svg',
+  '/next.svg',
+  '/file.svg',
+  '/twitter.svg',
+  '/facebook.svg',
+  '/instagram.svg',
+  '/linkedin.svg',
+  '/youtube.svg',
+]
 
 export default function Game() {
   const canvasRef = useRef(null)
@@ -33,16 +44,28 @@ export default function Game() {
     const ship = { x: width / 2 - 20, y: height - 40, width: 40, height: 40 }
     const bullets = []
     const aliens = []
+    const alienSize = 40
+    let direction = 1
     let left = false
     let right = false
 
-    const spawnAlien = () => {
-      const img = new Image()
-      img.src = alienIcons[Math.floor(Math.random() * alienIcons.length)]
-      aliens.push({ x: Math.random() * (width - 40), y: -40, size: 40, img })
+    const spawnRow = () => {
+      const cols = Math.floor(width / (alienSize + 20))
+      const gap = (width - cols * alienSize) / (cols + 1)
+      for (let i = 0; i < cols; i++) {
+        const img = new Image()
+        img.src = alienIcons[Math.floor(Math.random() * alienIcons.length)]
+        aliens.push({
+          x: gap + i * (alienSize + gap),
+          y: -alienSize,
+          size: alienSize,
+          img,
+        })
+      }
     }
 
-    let spawnInterval = setInterval(spawnAlien, 1000)
+    spawnRow()
+    let spawnInterval = setInterval(spawnRow, 4000)
 
     const shoot = () => {
       bullets.push({ x: ship.x + ship.width / 2 - 2, y: ship.y, width: 4, height: 10 })
@@ -79,9 +102,19 @@ export default function Game() {
       bullets.forEach(b => {
         b.y -= 8
       })
+
+      let reverse = false
       aliens.forEach(a => {
-        a.y += 2
+        a.x += direction * 1.5
+        if (a.x < 0 || a.x + a.size > width) reverse = true
       })
+      if (reverse) {
+        direction *= -1
+        aliens.forEach(a => {
+          a.y += alienSize
+          a.x += direction * 1.5
+        })
+      }
 
       for (let i = bullets.length - 1; i >= 0; i--) {
         if (bullets[i].y < -bullets[i].height) bullets.splice(i, 1)
@@ -135,8 +168,8 @@ export default function Game() {
 
   return (
     <div className="game">
-      <h1 className="title">Game</h1>
-      <div>Score: {score}</div>
+      <h1 className="title game-title">Game</h1>
+      <div className="score">Score: {score}</div>
       <canvas ref={canvasRef} className="game-canvas" />
       <button onClick={randomizeIcons} className="btn randomize-btn">Randomizza Icone</button>
     </div>
