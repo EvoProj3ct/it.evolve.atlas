@@ -30,3 +30,8 @@
   gap: 1rem;
   width: 280px;
 }
+
+.contact .icons .btn:hover svg {
+  fill: var(--color-black);
+  stroke: var(--color-black);
+}
