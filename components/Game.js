@@ -6,7 +6,7 @@ const alienIcons = ['/alien1.svg', '/alien2.svg', '/alien3.svg', '/next.svg', '/
 
 export default function Game() {
   const canvasRef = useRef(null)
-  const shipImgRef = useRef(new Image())
+  const shipImgRef = useRef(null)
   const [shipIcon, setShipIcon] = useState(shipIcons[0])
   const [score, setScore] = useState(0)
 
@@ -16,6 +16,10 @@ export default function Game() {
   }
 
   useEffect(() => {
+    if (typeof Image === 'undefined') return
+    if (!shipImgRef.current) {
+      shipImgRef.current = new Image()
+    }
     shipImgRef.current.src = shipIcon
   }, [shipIcon])
 
