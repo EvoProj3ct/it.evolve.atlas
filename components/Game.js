@@ -20,6 +20,7 @@ export default function Game() {
   const shipImgRef = useRef(null)
   const [shipIcon, setShipIcon] = useState(shipIcons[0])
   const [score, setScore] = useState(0)
+  const [health, setHealth] = useState(100)
 
   const randomizeIcons = () => {
     const next = shipIcons[Math.floor(Math.random() * shipIcons.length)]
@@ -41,10 +42,11 @@ export default function Game() {
     const width = (canvas.width = canvas.offsetWidth)
     const height = (canvas.height = canvas.offsetHeight)
 
-    const ship = { x: width / 2 - 20, y: height - 40, width: 40, height: 40 }
+    const shipSize = 30
+    const ship = { x: width / 2 - shipSize / 2, y: height - shipSize - 10, width: shipSize, height: shipSize }
     const bullets = []
     const aliens = []
-    const alienSize = 40
+    const alienSize = 30
     let direction = 1
     let left = false
     let right = false
@@ -65,7 +67,7 @@ export default function Game() {
     }
 
     spawnRow()
-    let spawnInterval = setInterval(spawnRow, 4000)
+    let spawnInterval = setInterval(spawnRow, 3000)
 
     const shoot = () => {
       bullets.push({ x: ship.x + ship.width / 2 - 2, y: ship.y, width: 4, height: 10 })
@@ -106,14 +108,11 @@ export default function Game() {
       let reverse = false
       aliens.forEach(a => {
         a.x += direction * 1.5
+        a.y += 0.3
         if (a.x < 0 || a.x + a.size > width) reverse = true
       })
       if (reverse) {
         direction *= -1
-        aliens.forEach(a => {
-          a.y += alienSize
-          a.x += direction * 1.5
-        })
       }
 
       for (let i = bullets.length - 1; i >= 0; i--) {
@@ -139,6 +138,19 @@ export default function Game() {
             setScore(s => s + 1)
             break
           }
+        }
+      }
+
+      for (let j = aliens.length - 1; j >= 0; j--) {
+        const a = aliens[j]
+        if (
+          ship.x < a.x + a.size &&
+          ship.x + ship.width > a.x &&
+          ship.y < a.y + a.size &&
+          ship.y + ship.height > a.y
+        ) {
+          aliens.splice(j, 1)
+          setHealth(h => Math.max(0, h - 5))
         }
       }
 
@@ -168,10 +180,18 @@ export default function Game() {
 
   return (
     <div className="game">
-      <h1 className="title game-title">Game</h1>
-      <div className="score">Score: {score}</div>
       <canvas ref={canvasRef} className="game-canvas" />
-      <button onClick={randomizeIcons} className="btn randomize-btn">Randomizza Icone</button>
+      <div className="game-overlay">
+        <h1 className="title game-title">Game</h1>
+        <div className="score">Score: {score}</div>
+        <div className="health">
+          <div className="health-bar">
+            <div className="health-fill" style={{ width: `${health}%` }} />
+          </div>
+          <span>{health}%</span>
+        </div>
+        <button onClick={randomizeIcons} className="btn randomize-btn">Randomizza Icone</button>
+      </div>
     </div>
   )
 }
