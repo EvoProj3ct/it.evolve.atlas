@@ -17,7 +17,7 @@
   width: 100%;
   border-top: 2px dashed var(--color-primary);
   transform: scaleX(0);
-  transform-origin: left;
+  transform-origin: center;
   transition: transform 0.3s ease;
 }
 
@@ -31,13 +31,14 @@
   font-size: 1.5rem;
 }
 
-.icons a {
-  color: inherit;
-  transition: color 0.3s ease;
+.icons .btn {
+  border-color: var(--color-white);
+  color: var(--color-white);
 }
 
-.icons a:hover {
-  color: var(--color-primary);
+.icons .btn:hover {
+  border-color: var(--color-black);
+  color: var(--color-black);
 }
 
 .copy {
