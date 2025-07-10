@@ -1,4 +1,5 @@
 .footer {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,6 +7,22 @@
   padding: 2rem 0;
   background: var(--color-black);
   color: var(--color-white);
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-top: 2px dashed var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.footer:hover::before {
+  transform: scaleX(1);
 }
 
 .icons {

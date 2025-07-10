@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navbar({ items = [] }) {
   const { data: session } = useSession();
@@ -26,6 +27,9 @@ export default function Navbar({ items = [] }) {
             <Link href="/login" className="link">Login</Link>
           </li>
         )}
+        <li className="item">
+          <ThemeToggle />
+        </li>
       </ul>
     </nav>
   );
