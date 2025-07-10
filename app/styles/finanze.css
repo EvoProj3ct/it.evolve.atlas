@@ -9,7 +9,7 @@
 
 .finance-chart {
   width: 100%;
-  max-width: 600px;
+  max-width: none;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -20,8 +20,9 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  height: 200px;
-  overflow-x: auto;
+  height: 400px;
+  padding: 2rem 0;
+  overflow: hidden;
 }
 
 .chart::before {
@@ -36,8 +37,8 @@
 
 .bar {
   position: relative;
-  flex: none;
-  width: 32px;
+  flex: 1;
+  min-width: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -95,6 +96,19 @@
   font-size: 0.75rem;
   white-space: nowrap;
   pointer-events: none;
+}
+
+.bar-label {
+  position: absolute;
+  bottom: calc(50% + var(--h, 0));
+  transform: translateY(-0.25rem);
+  font-size: 0.75rem;
+  pointer-events: none;
+}
+
+.bar.expense .bar-label {
+  bottom: calc(50% - var(--h, 0));
+  transform: translateY(calc(-100% - 0.25rem));
 }
 
 .pie-charts {
