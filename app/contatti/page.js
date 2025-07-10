@@ -1,4 +1,3 @@
-import '@/app/styles/buttons.css';
 import styles from './page.module.css';
 import { InstagramIcon, TwitterIcon, TikTokIcon } from '@/components/Icons';
 
