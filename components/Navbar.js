@@ -1,9 +1,12 @@
 'use client';
 import Link from 'next/link';
+import { useSession, signOut } from 'next-auth/react';
 import styles from './Navbar.module.css';
 import '../app/styles/buttons.css';
 
 export default function Navbar({ items = [] }) {
+  const { data: session } = useSession();
+
   return (
     <nav className={styles.nav}>
       <ul className={styles.menu}>
@@ -16,6 +19,15 @@ export default function Navbar({ items = [] }) {
             )}
           </li>
         ))}
+        {session ? (
+          <li className={styles.item}>
+            <button onClick={() => signOut({ callbackUrl: '/' })} className={styles.link}>Logout</button>
+          </li>
+        ) : (
+          <li className={styles.item}>
+            <Link href="/login" className={styles.link}>Login</Link>
+          </li>
+        )}
       </ul>
     </nav>
   );
