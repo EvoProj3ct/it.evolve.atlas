@@ -29,3 +29,10 @@
 .copy {
   font-size: 0.875rem;
 }
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 1rem 0;
+    gap: 0.5rem;
+  }
+}

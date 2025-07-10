@@ -59,3 +59,16 @@
   background: var(--color-primary);
   width: 100%;
 }
+
+@media (max-width: 480px) {
+  .game-overlay {
+    padding: 0.25rem;
+    gap: 0.25rem;
+  }
+  .game .title {
+    font-size: 1.25rem;
+  }
+  .health-bar {
+    width: 80px;
+  }
+}

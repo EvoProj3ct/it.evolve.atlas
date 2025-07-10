@@ -127,3 +127,12 @@
   border: none;
   font-size: 1rem;
 }
+
+@media (max-width: 480px) {
+  .magazzino {
+    padding: 1rem 0;
+  }
+  .inventory-list {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+}

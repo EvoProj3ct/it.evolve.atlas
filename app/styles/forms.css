@@ -19,3 +19,9 @@ html[data-theme='light'] input {
 button {
   border: none;
 }
+
+@media (max-width: 480px) {
+  input {
+    width: 100%;
+  }
+}
