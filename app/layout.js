@@ -7,6 +7,7 @@ import "./styles/navbar.css";
 import "./styles/footer.css";
 import "./styles/pages.css";
 import "./styles/icons.css";
+import "./styles/game.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";

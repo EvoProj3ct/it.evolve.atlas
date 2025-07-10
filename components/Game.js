@@ -1,25 +1,41 @@
 'use client'
 import { useRef, useEffect, useState } from 'react'
 
+const shipIcons = ['/ship.svg', '/vercel.svg', '/window.svg']
+const alienIcons = ['/alien1.svg', '/alien2.svg', '/alien3.svg', '/next.svg', '/file.svg']
+
 export default function Game() {
   const canvasRef = useRef(null)
+  const shipImgRef = useRef(new Image())
+  const [shipIcon, setShipIcon] = useState(shipIcons[0])
   const [score, setScore] = useState(0)
+
+  const randomizeIcons = () => {
+    const next = shipIcons[Math.floor(Math.random() * shipIcons.length)]
+    setShipIcon(next)
+  }
+
+  useEffect(() => {
+    shipImgRef.current.src = shipIcon
+  }, [shipIcon])
 
   useEffect(() => {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
     let animationId
     const width = (canvas.width = canvas.offsetWidth)
-    const height = (canvas.height = 400)
+    const height = (canvas.height = canvas.offsetHeight)
 
-    const ship = { x: width / 2 - 20, y: height - 30, width: 40, height: 20 }
+    const ship = { x: width / 2 - 20, y: height - 40, width: 40, height: 40 }
     const bullets = []
     const aliens = []
     let left = false
     let right = false
 
     const spawnAlien = () => {
-      aliens.push({ x: Math.random() * (width - 30), y: -20, size: 30 })
+      const img = new Image()
+      img.src = alienIcons[Math.floor(Math.random() * alienIcons.length)]
+      aliens.push({ x: Math.random() * (width - 40), y: -40, size: 40, img })
     }
 
     let spawnInterval = setInterval(spawnAlien, 1000)
@@ -92,11 +108,11 @@ export default function Game() {
       ctx.fillStyle = '#000'
       ctx.fillRect(0, 0, width, height)
 
-      ctx.fillStyle = '#39FF14'
-      ctx.fillRect(ship.x, ship.y, ship.width, ship.height)
+      ctx.drawImage(shipImgRef.current, ship.x, ship.y, ship.width, ship.height)
 
+      ctx.fillStyle = '#39FF14'
       bullets.forEach(b => ctx.fillRect(b.x, b.y, b.width, b.height))
-      aliens.forEach(a => ctx.fillRect(a.x, a.y, a.size, a.size))
+      aliens.forEach(a => ctx.drawImage(a.img, a.x, a.y, a.size, a.size))
 
       animationId = requestAnimationFrame(update)
     }
@@ -118,6 +134,7 @@ export default function Game() {
       <h1 className="title">Game</h1>
       <div>Score: {score}</div>
       <canvas ref={canvasRef} className="game-canvas" />
+      <button onClick={randomizeIcons} className="btn randomize-btn">Randomizza Icone</button>
     </div>
   )
 }
