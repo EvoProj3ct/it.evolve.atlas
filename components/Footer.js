@@ -14,7 +14,8 @@ export default function Footer() {
           <TikTokIcon />
         </a>
       </div>
-      <span className="copy">evolve srls</span>
+      <span className="copy">Evolve SRLS - P.IVA 12345678901</span>
+      <span className="copy">infoevolvecompany@gmail.com</span>
     </footer>
   );
 }

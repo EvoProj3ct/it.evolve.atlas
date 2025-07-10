@@ -9,6 +9,7 @@ import "./styles/pages.css";
 import "./styles/icons.css";
 import "./styles/game.css";
 import "./styles/magazzino.css";
+import "./styles/about.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
@@ -43,6 +44,7 @@ export default function RootLayout({ children }) {
           <Navbar
             items={[
               { label: 'Home', href: '/' },
+              { label: 'Chi Siamo', href: '/chi-siamo' },
               { label: 'Contatti', href: '/contatti' },
               { label: 'Game', href: '/game' },
               { label: 'Magazzino', href: '/magazzino' },
