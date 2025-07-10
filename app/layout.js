@@ -11,6 +11,7 @@ import "./styles/game.css";
 import "./styles/magazzino.css";
 import "./styles/about.css";
 import "./styles/finanze.css";
+import "./styles/spesatore.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
@@ -50,6 +51,7 @@ export default function RootLayout({ children }) {
               { label: 'Game', href: '/game' },
               { label: 'Magazzino', href: '/magazzino' },
               { label: 'Entrate/Uscite', href: '/entrate-uscite' },
+              { label: 'Spesatore', href: '/spesatore' },
             ]}
           />
           {children}
