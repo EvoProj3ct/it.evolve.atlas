@@ -4,6 +4,7 @@ import "./styles/main.css";
 import "./styles/buttons.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import AuthProvider from "@/components/AuthProvider";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -25,9 +26,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${geistMono.variable}`}>
-        <Navbar items={[{ label: 'Home', href: '/' }, { label: 'Contatti', href: '/contatti' }]} />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <Navbar items={[{ label: 'Home', href: '/' }, { label: 'Contatti', href: '/contatti' }]} />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );
