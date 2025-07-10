@@ -13,7 +13,7 @@ pnpm dev
 # or
 bun dev
 ```
-
+Before starting the server remember to configure the required environment variables. Copy `.env.example` to `.env.local` and update `MONGODB_URI` with your Mongo connection string.
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
