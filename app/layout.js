@@ -45,6 +45,7 @@ export default function RootLayout({ children }) {
               { label: 'Home', href: '/' },
               { label: 'Contatti', href: '/contatti' },
               { label: 'Game', href: '/game' },
+              { label: 'Magazzino', href: '/magazzino' },
             ]}
           />
           {children}
