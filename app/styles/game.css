@@ -1,0 +1,21 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  height: calc(100vh - 120px);
+}
+
+.game-canvas {
+  width: 100%;
+  max-width: 800px;
+  flex-grow: 1;
+  background: var(--color-black);
+  border: 2px solid var(--color-primary);
+  border-radius: 8px;
+}
+
+.randomize-btn {
+  margin-top: 1rem;
+}
