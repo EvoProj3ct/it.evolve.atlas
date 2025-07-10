@@ -1,7 +1,8 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const months = [
+  'Tutti',
   'Gennaio',
   'Febbraio',
   'Marzo',
@@ -16,12 +17,32 @@ const months = [
   'Dicembre',
 ]
 
-export default function FinanceChart({ records = [] }) {
+export default function FinanceChart({ records = [], onSummary }) {
   const [monthIdx, setMonthIdx] = useState(0)
   const [hoverIdx, setHoverIdx] = useState(null)
   const currentMonth = months[monthIdx]
-  const filtered = records.filter(r => r.mese === currentMonth)
+  const filtered =
+    currentMonth === 'Tutti'
+      ? [...records]
+      : records.filter(r => r.mese === currentMonth)
+  filtered.sort((a, b) => new Date(a.data) - new Date(b.data))
   const max = Math.max(...filtered.map(r => r.importo), 1)
+
+  const totalEntrate = filtered
+    .filter(r => r.tipo === 'entrata')
+    .reduce((s, r) => s + r.importo, 0)
+  const totalUscite = filtered
+    .filter(r => r.tipo === 'uscita')
+    .reduce((s, r) => s + r.importo, 0)
+
+  useEffect(() => {
+    onSummary?.({
+      month: currentMonth,
+      entrate: totalEntrate,
+      uscite: totalUscite,
+      totale: totalEntrate - totalUscite,
+    })
+  }, [monthIdx, records])
 
   return (
     <div className="finance-chart">
@@ -58,9 +79,14 @@ export default function FinanceChart({ records = [] }) {
             >
               <div className="bar-inner" style={{ '--h': height }} />
               {isHover && (
-                <span className="bar-tooltip">{rec.importo}€</span>
+                <span className="bar-tooltip">
+                  {rec.descrizione}
+                  <br />
+                  {rec.importo}€
+                  <br />
+                  {rec.data}
+                </span>
               )}
-              <small className="bar-label">{rec.descrizione}</small>
             </div>
           )
         })}
