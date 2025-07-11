@@ -59,6 +59,10 @@ export default function PieChart({ records = [], type = 'entrata', title }) {
   return (
     <div className="pie-wrapper">
       {title && <h2 className="subtitle">{title}</h2>}
+      <div className="pie-label">
+        {hoverIdx !== null &&
+          `${segments[hoverIdx].label} ${segments[hoverIdx].percent}%`}
+      </div>
       <svg viewBox="0 0 100 100" className="pie-chart">
         {segments.map((seg, i) => (
           seg.percent > 0 && (
@@ -72,11 +76,6 @@ export default function PieChart({ records = [], type = 'entrata', title }) {
           )
         ))}
       </svg>
-      {hoverIdx !== null && (
-        <div className="pie-tooltip">
-          {segments[hoverIdx].label} {segments[hoverIdx].percent}%
-        </div>
-      )}
     </div>
   )
 }
