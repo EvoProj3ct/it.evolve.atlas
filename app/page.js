@@ -2,6 +2,7 @@
 export default function Home() {
   return (
     <div className="home">
+      <p className="description">Ciao</p>
       <h1 className="title">Benvenuto in Evolve</h1>
       <p className="description">
         Evolve è una società di consulenza informatica e stampa 3D. Offriamo
