@@ -4,11 +4,7 @@ export default function Home() {
   return (
     <>
       <ScrollProgress />
-      <section
-        id="intro"
-        className="home-section parallax"
-        style={{ backgroundImage: "url('/alien1.svg')" }}
-      >
+      <section id="intro" className="home-section">
         <div className="content">
           <h2 className="title">Benvenuto in Evolve</h2>
           <p className="description">
@@ -19,11 +15,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="chi-siamo"
-        className="home-section parallax"
-        style={{ backgroundImage: "url('/alien2.svg')" }}
-      >
+      <section id="chi-siamo" className="home-section">
         <div className="content">
           <h2 className="title">Chi Siamo</h2>
           <p className="description">
@@ -33,11 +25,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="prodotti"
-        className="home-section parallax"
-        style={{ backgroundImage: "url('/alien3.svg')" }}
-      >
+      <section id="prodotti" className="home-section">
         <div className="content">
           <h2 className="title">I Nostri Prodotti</h2>
           <p className="description">
@@ -47,11 +35,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="servizi"
-        className="home-section parallax"
-        style={{ backgroundImage: "url('/ship.svg')" }}
-      >
+      <section id="servizi" className="home-section">
         <div className="content">
           <h2 className="title">I Nostri Servizi</h2>
           <p className="description">
@@ -61,22 +45,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="testimonianze"
-        className="home-section parallax"
-        style={{ backgroundImage: "url('/globe.svg')" }}
-      >
+      <section id="testimonianze" className="home-section">
         <div className="content">
           <h2 className="title">Cosa Dicono di Noi</h2>
           <p className="description">"Incredibile esperienza, consigliatissimi!"</p>
         </div>
       </section>
 
-      <section
-        id="contatti"
-        className="home-section parallax"
-        style={{ backgroundImage: "url('/window.svg')" }}
-      >
+      <section id="contatti" className="home-section">
         <div className="content">
           <h2 className="title">Contattaci</h2>
           <form
