@@ -1,19 +1,97 @@
+import ScrollProgress from "@/components/ScrollProgress";
 
 export default function Home() {
   return (
-    <div className="home">
-      <p className="description">Ciao</p>
-      <h1 className="title">Benvenuto in Evolve</h1>
-      <p className="description">
-        Evolve è una società di consulenza informatica e stampa 3D. Offriamo
-        supporto nello sviluppo software, nella gestione di infrastrutture e
-        nella realizzazione di prototipi e produzioni personalizzate tramite la
-        stampa tridimensionale.
-      </p>
-      <p className="description">
-        Scopri come i nostri servizi possono aiutarti a dare forma alle tue idee
-        e ottimizzare i processi della tua azienda.
-      </p>
-    </div>
+    <>
+      <ScrollProgress />
+      <section
+        id="intro"
+        className="home-section parallax"
+        style={{ backgroundImage: "url('/alien1.svg')" }}
+      >
+        <div className="content">
+          <h2 className="title">Benvenuto in Evolve</h2>
+          <p className="description">
+            Evolve è una società di consulenza informatica e stampa 3D. Offriamo
+            supporto nello sviluppo software, nella gestione di infrastrutture e
+            nella realizzazione di prototipi personalizzati.
+          </p>
+        </div>
+      </section>
+
+      <section
+        id="chi-siamo"
+        className="home-section parallax"
+        style={{ backgroundImage: "url('/alien2.svg')" }}
+      >
+        <div className="content">
+          <h2 className="title">Chi Siamo</h2>
+          <p className="description">
+            Siamo un team di appassionati di tecnologia con un tocco retro.
+            Crediamo nell'innovazione e nello stile 8-bit.
+          </p>
+        </div>
+      </section>
+
+      <section
+        id="prodotti"
+        className="home-section parallax"
+        style={{ backgroundImage: "url('/alien3.svg')" }}
+      >
+        <div className="content">
+          <h2 className="title">I Nostri Prodotti</h2>
+          <p className="description">
+            Dalla stampa 3D agli strumenti software, offriamo prodotti per dare
+            vita ai tuoi progetti.
+          </p>
+        </div>
+      </section>
+
+      <section
+        id="servizi"
+        className="home-section parallax"
+        style={{ backgroundImage: "url('/ship.svg')" }}
+      >
+        <div className="content">
+          <h2 className="title">I Nostri Servizi</h2>
+          <p className="description">
+            Consulenza, sviluppo e supporto tecnico per spingere la tua azienda
+            oltre i confini.
+          </p>
+        </div>
+      </section>
+
+      <section
+        id="testimonianze"
+        className="home-section parallax"
+        style={{ backgroundImage: "url('/globe.svg')" }}
+      >
+        <div className="content">
+          <h2 className="title">Cosa Dicono di Noi</h2>
+          <p className="description">"Incredibile esperienza, consigliatissimi!"</p>
+        </div>
+      </section>
+
+      <section
+        id="contatti"
+        className="home-section parallax"
+        style={{ backgroundImage: "url('/window.svg')" }}
+      >
+        <div className="content">
+          <h2 className="title">Contattaci</h2>
+          <form
+            className="form"
+            action="mailto:info@example.com"
+            method="post"
+            encType="text/plain"
+          >
+            <input type="text" name="name" placeholder="Nome" required />
+            <input type="email" name="email" placeholder="Email" required />
+            <textarea name="message" rows="4" placeholder="Messaggio" required />
+            <button type="submit">Invia</button>
+          </form>
+        </div>
+      </section>
+    </>
   );
 }
