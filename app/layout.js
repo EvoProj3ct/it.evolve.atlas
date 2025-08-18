@@ -6,6 +6,7 @@ import "./styles/forms.css";
 import "./styles/navbar.css";
 import "./styles/footer.css";
 import "./styles/pages.css";
+import "./styles/home.css";
 import "./styles/icons.css";
 import "./styles/game.css";
 import "./styles/magazzino.css";
