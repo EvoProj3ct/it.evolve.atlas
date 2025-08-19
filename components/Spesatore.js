@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 
-export default function Spesatore({ configs: initial }) {
+export default function Spesatore({ configs: initial, onItemsChange }) {
   const [configs, setConfigs] = useState(initial)
   const [currentIdx, setCurrentIdx] = useState(0)
 
@@ -19,7 +19,11 @@ export default function Spesatore({ configs: initial }) {
     localStorage.setItem('spesatoreConfigs', JSON.stringify(configs))
   }, [configs])
 
-  const current = configs[currentIdx]
+  const current = configs[currentIdx] || { items: [] }
+
+  useEffect(() => {
+    onItemsChange?.(current.items)
+  }, [configs, currentIdx, onItemsChange])
 
   const addConfig = () => {
     setConfigs([...configs, { name: 'Nuova', items: [] }])

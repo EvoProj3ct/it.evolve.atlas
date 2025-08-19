@@ -7,6 +7,12 @@
   text-align: center;
   color: var(--foreground);
   font-family: var(--font-press-start);
+  background-color: var(--color-black);
+  background-image:
+    linear-gradient(var(--color-primary) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-primary) 1px, transparent 1px);
+  background-size: 16px 16px;
+  image-rendering: pixelated;
 }
 
 .home-section .content {
@@ -16,12 +22,6 @@
   box-shadow: 4px 4px 0 var(--color-primary);
 }
 
-.parallax {
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
-  image-rendering: pixelated;
-}
 
 .progress-container {
   position: fixed;

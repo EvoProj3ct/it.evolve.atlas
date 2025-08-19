@@ -51,8 +51,7 @@ export default function RootLayout({ children }) {
               { label: 'Contatti', href: '/contatti' },
               { label: 'Game', href: '/game' },
               { label: 'Magazzino', href: '/magazzino' },
-              { label: 'Entrate/Uscite', href: '/entrate-uscite' },
-              { label: 'Spesatore', href: '/spesatore' },
+              { label: 'Overview', href: '/overview' },
             ]}
           />
           {children}
