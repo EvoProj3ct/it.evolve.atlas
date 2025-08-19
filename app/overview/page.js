@@ -1,5 +1,6 @@
-'use client'
+"use server"
 
+import OverviewClient from './OverviewClient'
 import OverviewClient from './OverviewClient'
 import Spesatore from '@/components/Spesatore'
 import FinanceChart from '@/components/FinanceChart'
@@ -13,6 +14,9 @@ export const metadata = {
 
 export default function OverviewPage() {
   return <OverviewClient />
+}
+
+
 
 const months = [
   'Gennaio',
