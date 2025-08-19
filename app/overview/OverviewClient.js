@@ -1,18 +1,10 @@
 'use client'
 
-import OverviewClient from './OverviewClient'
 import Spesatore from '@/components/Spesatore'
 import FinanceChart from '@/components/FinanceChart'
 import PieChart from '@/components/PieChart'
 import configs from './mockup.json'
 import { useState } from 'react'
-
-export const metadata = {
-  title: 'Overview',
-}
-
-export default function OverviewPage() {
-  return <OverviewClient />
 
 const months = [
   'Gennaio',
@@ -52,7 +44,7 @@ function buildRecords(items) {
   return records
 }
 
-export default function OverviewPage() {
+export default function OverviewClient() {
   const [items, setItems] = useState([])
   const [summary, setSummary] = useState({ entrate: 0, uscite: 0, totale: 0 })
   const records = buildRecords(items)
@@ -72,3 +64,4 @@ export default function OverviewPage() {
     </div>
   )
 }
+
