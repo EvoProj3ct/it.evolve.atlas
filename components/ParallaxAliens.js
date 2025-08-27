@@ -4,25 +4,31 @@ import { useEffect } from "react";
 export default function ParallaxAliens() {
   useEffect(() => {
     const handleScroll = () => {
-      const total = document.body.scrollHeight - window.innerHeight;
-      const progress = window.scrollY / total;
-
       const ship = document.querySelector('.bottom-ship');
-      if (ship) {
+      const bulletContainer = document.querySelector('.bullet-container');
+      if (ship && bulletContainer) {
         const maxX = window.innerWidth - ship.clientWidth;
-        ship.style.transform = `translateX(${progress * maxX}px)`;
+        const center = maxX / 2;
+        const shipX = center + Math.sin(window.scrollY / 50) * center;
+        const shipStep = Math.round(shipX / 20) * 20;
+        ship.style.transform = `translateX(${shipStep}px)`;
+        bulletContainer.style.transform = `translateX(${shipStep + ship.clientWidth / 2}px)`;
       }
 
       const bullets = document.querySelectorAll('.bullet');
       bullets.forEach((bullet, i) => {
-        bullet.style.transform = `translateY(${-(window.scrollY * 0.5 + i * 80)}px)`;
+        const y = window.scrollY * 0.5 + i * 80;
+        const yStep = Math.round(y / 20) * 20;
+        bullet.style.transform = `translateY(-${yStep}px)`;
       });
 
       const aliens = document.querySelectorAll('.alien');
       aliens.forEach((alien, i) => {
         const y = window.scrollY * (0.3 + i * 0.1);
         const x = Math.sin(window.scrollY / 80 + i) * 50;
-        alien.style.transform = `translate(${x}px, ${y}px)`;
+        const stepX = Math.round(x / 20) * 20;
+        const stepY = Math.round(y / 20) * 20;
+        alien.style.transform = `translate(${stepX}px, ${stepY}px)`;
       });
     };
 
