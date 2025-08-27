@@ -12,6 +12,7 @@
 
 .home-section .content {
   position: relative;
+  z-index: 2;
   background: var(--background);
   padding: 4rem 3rem;
   margin: 0 2rem;
@@ -107,9 +108,13 @@
 }
 
 .space-ship-container {
-  position: relative;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   height: 80px;
-  margin-bottom: 4rem;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .bottom-ship {
@@ -118,6 +123,67 @@
   left: 0;
   width: 60px;
   height: 60px;
+}
+
+.ship-fluo {
+  color: #ff00ff;
+  filter: drop-shadow(0 0 10px #ff00ff);
+}
+
+.bullet-container {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bullet {
+  position: absolute;
+  bottom: 0;
+  width: 4px;
+  height: 20px;
+  background: var(--color-primary);
+}
+
+.bullet:nth-child(1) {
+  left: -15px;
+}
+
+.bullet:nth-child(2) {
+  left: 0;
+}
+
+.bullet:nth-child(3) {
+  left: 15px;
+}
+
+.aliens-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.alien {
+  position: absolute;
+  top: -80px;
+  width: 80px;
+  height: 80px;
+}
+
+.aliens-layer .alien:nth-child(1) {
+  left: 10%;
+}
+
+.aliens-layer .alien:nth-child(2) {
+  left: 45%;
+}
+
+.aliens-layer .alien:nth-child(3) {
+  left: 80%;
 }
 
 @media (max-width: 600px) {
@@ -131,6 +197,9 @@
   .bottom-ship {
     width: 40px;
     height: 40px;
+  }
+  .progress-container {
+    display: none;
   }
 }
 
