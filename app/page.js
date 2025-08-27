@@ -15,9 +15,13 @@ export default function Home() {
           </div>
           <h2 className="title">Benvenuto in Evolve</h2>
           <p className="description">
-            Evolve è una società di consulenza informatica e stampa 3D. Offriamo
-            supporto nello sviluppo software, nella gestione di infrastrutture e
-            nella realizzazione di prototipi personalizzati.
+            Evolve è la tua officina digitale: realizziamo software su misura e
+            prototipi in stampa 3D con dispositivi PLA dotati di NFC. Con
+            soluzioni come E-Linker ed E-Talk aiutiamo persone e oggetti a
+            comunicare, offrendo a ogni impresa l'accesso all'innovazione. Offriamo
+            consulenza e strumenti integrati per ottimizzare e innovare i processi
+            aziendali delle piccole e medie imprese: anche tu ora te lo puoi
+            permettere!
           </p>
         </div>
       </section>
@@ -30,8 +34,9 @@ export default function Home() {
           </div>
           <h2 className="title">Chi Siamo</h2>
           <p className="description">
-            Siamo un team di appassionati di tecnologia con un tocco retro.
-            Crediamo nell'innovazione e nello stile 8-bit.
+            Siamo un team di professionisti appassionati di tecnologia e cultura
+            8-bit. Uniamo esperienza in sviluppo, IoT e design per accompagnarti
+            con cordialità verso il futuro digitale.
           </p>
         </div>
       </section>
@@ -44,8 +49,9 @@ export default function Home() {
           </div>
           <h2 className="title">I Nostri Prodotti</h2>
           <p className="description">
-            Dalla stampa 3D agli strumenti software, offriamo prodotti per dare
-            vita ai tuoi progetti.
+            Dal nostro E-Linker all'E-Talk, sviluppiamo dispositivi e piattaforme
+            che integrano NFC e stampa 3D per connettere ciò che conta. Ogni
+            prodotto è pensato per essere semplice, fluo e pronto all'uso.
           </p>
         </div>
       </section>
@@ -58,8 +64,9 @@ export default function Home() {
           </div>
           <h2 className="title">I Nostri Servizi</h2>
           <p className="description">
-            Consulenza, sviluppo e supporto tecnico per spingere la tua azienda
-            oltre i confini.
+            Offriamo soluzioni integrate e consulenza personalizzata per
+            ottimizzare i processi aziendali. Dallo sviluppo software alla
+            prototipazione rapida, ti guidiamo nell'innovazione della tua PMI.
           </p>
         </div>
       </section>
@@ -71,7 +78,11 @@ export default function Home() {
             <span className="window-btn close"></span>
           </div>
           <h2 className="title">Cosa Dicono di Noi</h2>
-          <p className="description">"Incredibile esperienza, consigliatissimi!"</p>
+          <p className="description">
+            "I ragazzi di Evolve hanno trasformato le nostre idee in realtà in
+            pochissimo tempo!"<br />"Finalmente un partner che parla la lingua
+            delle piccole imprese."
+          </p>
         </div>
       </section>
 
