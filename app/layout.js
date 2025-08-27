@@ -51,7 +51,7 @@ export default function RootLayout({ children }) {
               { label: 'Contatti', href: '/contatti' },
               {
                 label: 'Talk to LEO',
-                href: 'https://chatgpt.com/g/g-68a634b4bb888191b1209375250d95f1-leo?model=gpt-4o',
+                href: 'http://evolve3d.it/leo/virtual-assistant.html',
                 external: true,
               },
               { label: 'Game', href: '/game' },
