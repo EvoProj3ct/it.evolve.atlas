@@ -96,15 +96,28 @@
 }
 
 .blue {
-  color: #00f;
+  color: #0ff;
+  filter: drop-shadow(0 0 10px #0ff);
 }
 
 .red {
-  color: #f00;
+  color: #ff0000;
+  filter: drop-shadow(0 0 10px #ff0000);
 }
 
 .pink {
   color: #ff00ff;
+  filter: drop-shadow(0 0 10px #ff00ff);
+}
+
+.green {
+  color: #39FF14;
+  filter: drop-shadow(0 0 10px #39FF14);
+}
+
+.yellow {
+  color: #ffff00;
+  filter: drop-shadow(0 0 10px #ffff00);
 }
 
 .space-ship-container {
@@ -126,15 +139,14 @@
 }
 
 .ship-fluo {
-  color: #ff00ff;
-  filter: drop-shadow(0 0 10px #ff00ff);
+  color: #ff0000;
+  filter: drop-shadow(0 0 10px #ff0000);
 }
 
 .bullet-container {
   position: absolute;
   bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
 }
 
 .bullet {
@@ -142,7 +154,8 @@
   bottom: 0;
   width: 4px;
   height: 20px;
-  background: var(--color-primary);
+  background: #ff0000;
+  box-shadow: 0 0 10px #ff0000;
 }
 
 .bullet:nth-child(1) {
@@ -179,11 +192,19 @@
 }
 
 .aliens-layer .alien:nth-child(2) {
-  left: 45%;
+  left: 30%;
 }
 
 .aliens-layer .alien:nth-child(3) {
-  left: 80%;
+  left: 50%;
+}
+
+.aliens-layer .alien:nth-child(4) {
+  left: 70%;
+}
+
+.aliens-layer .alien:nth-child(5) {
+  left: 90%;
 }
 
 @media (max-width: 600px) {
