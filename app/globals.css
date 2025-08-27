@@ -4,24 +4,28 @@
   --color-primary: #39FF14;
   --color-black: #000000;
   --color-white: #ffffff;
+  --window-bg: rgba(0, 0, 0, 0.6);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     --background: #ffffff;
     --foreground: #000000;
+    --window-bg: rgba(255, 255, 255, 0.6);
   }
 }
 
 html[data-theme='light'] {
   --background: #ffffff;
   --foreground: #000000;
+  --window-bg: rgba(255, 255, 255, 0.6);
   color-scheme: light;
 }
 
 html[data-theme='dark'] {
   --background: #0a0a0a;
   --foreground: #ffffff;
+  --window-bg: rgba(0, 0, 0, 0.6);
   color-scheme: dark;
 }
 

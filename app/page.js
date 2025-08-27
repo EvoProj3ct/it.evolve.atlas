@@ -1,11 +1,21 @@
 import ScrollProgress from "@/components/ScrollProgress";
+import ParallaxAliens from "@/components/ParallaxAliens";
+import WindowManager from "@/components/WindowManager";
 
 export default function Home() {
   return (
     <>
       <ScrollProgress />
+      <ParallaxAliens />
+      <WindowManager />
+
       <section id="intro" className="home-section">
-        <div className="content">
+        <img src="/blue.png" alt="" className="alien alien-left" data-speed="2" />
+        <div className="content window">
+          <div className="window-bar">
+            <span className="window-btn minimize"></span>
+            <span className="window-btn close"></span>
+          </div>
           <h2 className="title">Benvenuto in Evolve</h2>
           <p className="description">
             Evolve è una società di consulenza informatica e stampa 3D. Offriamo
@@ -13,47 +23,77 @@ export default function Home() {
             nella realizzazione di prototipi personalizzati.
           </p>
         </div>
+        <img src="/red.png" alt="" className="alien alien-right" data-speed="2.5" />
       </section>
 
       <section id="chi-siamo" className="home-section">
-        <div className="content">
+        <img src="/pink.png" alt="" className="alien alien-left" data-speed="2" />
+        <div className="content window">
+          <div className="window-bar">
+            <span className="window-btn minimize"></span>
+            <span className="window-btn close"></span>
+          </div>
           <h2 className="title">Chi Siamo</h2>
           <p className="description">
             Siamo un team di appassionati di tecnologia con un tocco retro.
             Crediamo nell'innovazione e nello stile 8-bit.
           </p>
         </div>
+        <img src="/blue.png" alt="" className="alien alien-right" data-speed="2.5" />
       </section>
 
       <section id="prodotti" className="home-section">
-        <div className="content">
+        <img src="/red.png" alt="" className="alien alien-left" data-speed="2" />
+        <div className="content window">
+          <div className="window-bar">
+            <span className="window-btn minimize"></span>
+            <span className="window-btn close"></span>
+          </div>
           <h2 className="title">I Nostri Prodotti</h2>
           <p className="description">
             Dalla stampa 3D agli strumenti software, offriamo prodotti per dare
             vita ai tuoi progetti.
           </p>
         </div>
+        <img src="/pink.png" alt="" className="alien alien-right" data-speed="2.5" />
       </section>
 
       <section id="servizi" className="home-section">
-        <div className="content">
+        <img src="/blue.png" alt="" className="alien alien-left" data-speed="2" />
+        <div className="content window">
+          <div className="window-bar">
+            <span className="window-btn minimize"></span>
+            <span className="window-btn close"></span>
+          </div>
           <h2 className="title">I Nostri Servizi</h2>
           <p className="description">
             Consulenza, sviluppo e supporto tecnico per spingere la tua azienda
             oltre i confini.
           </p>
         </div>
+        <img src="/red.png" alt="" className="alien alien-right" data-speed="2.5" />
       </section>
 
       <section id="testimonianze" className="home-section">
-        <div className="content">
+        <img src="/pink.png" alt="" className="alien alien-left" data-speed="2" />
+        <div className="content window">
+          <div className="window-bar">
+            <span className="window-btn minimize"></span>
+            <span className="window-btn close"></span>
+          </div>
           <h2 className="title">Cosa Dicono di Noi</h2>
           <p className="description">"Incredibile esperienza, consigliatissimi!"</p>
         </div>
+        <img src="/blue.png" alt="" className="alien alien-right" data-speed="2.5" />
       </section>
 
       <section id="contatti" className="home-section">
-        <div className="content">
+        <img src="/red.png" alt="" className="alien alien-left" data-speed="2" />
+        <div className="content window">
+          <div className="window-bar">
+            <span className="window-btn minimize"></span>
+            <span className="window-btn close"></span>
+          </div>
           <h2 className="title">Contattaci</h2>
           <form
             className="form"
@@ -67,7 +107,12 @@ export default function Home() {
             <button type="submit">Invia</button>
           </form>
         </div>
+        <img src="/pink.png" alt="" className="alien alien-right" data-speed="2.5" />
       </section>
+
+      <div className="space-ship-container">
+        <img src="/ship.png" alt="" className="bottom-ship" />
+      </div>
     </>
   );
 }
