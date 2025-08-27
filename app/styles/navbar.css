@@ -54,8 +54,12 @@
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.theme-toggle {
+
+.actions {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .link {
@@ -128,7 +132,7 @@
     transform: translateY(-8px) rotate(-45deg);
   }
 
-  .theme-toggle {
+  .actions {
     margin-left: 0;
   }
 }

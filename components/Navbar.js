@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { useState } from 'react';
 import ThemeToggle from './ThemeToggle';
+import { LogInIcon, LogOutIcon } from './Icons';
 
 export default function Navbar({ items = [] }) {
   const { data: session } = useSession();
@@ -21,23 +22,42 @@ export default function Navbar({ items = [] }) {
         {items.map((item, idx) => (
           <li key={idx} className="item">
             {typeof item === 'object' && !item.type ? (
-              <Link href={item.href} className="link">{item.label}</Link>
+              item.external ? (
+                <a
+                  href={item.href}
+                  className="link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link href={item.href} className="link">
+                  {item.label}
+                </Link>
+              )
             ) : (
               item
             )}
           </li>
         ))}
-        {session ? (
-          <li className="item">
-            <button onClick={() => signOut({ callbackUrl: '/' })} className="link">Logout</button>
-          </li>
-        ) : (
-          <li className="item">
-            <Link href="/login" className="link">Login</Link>
-          </li>
-        )}
       </ul>
-      <ThemeToggle />
+      <div className="actions">
+        {session ? (
+          <button
+            onClick={() => signOut({ callbackUrl: '/' })}
+            className="btn"
+            aria-label="Logout"
+          >
+            <LogOutIcon />
+          </button>
+        ) : (
+          <Link href="/login" className="btn" aria-label="Login">
+            <LogInIcon />
+          </Link>
+        )}
+        <ThemeToggle />
+      </div>
     </nav>
   );
 }
