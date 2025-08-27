@@ -11,6 +11,11 @@
   gap: 1.5rem;
 }
 
+.contact,
+.about {
+  font-family: var(--font-press-start);
+}
+
 .title {
   font-size: 2.5rem;
 }
