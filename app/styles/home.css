@@ -79,21 +79,6 @@
   transform: translateY(-2px);
 }
 
-.alien {
-  position: absolute;
-  top: 50%;
-  width: 40px;
-  height: 40px;
-  z-index: 1;
-}
-
-.alien-left {
-  left: 5%;
-}
-
-.alien-right {
-  right: 5%;
-}
 
 .blue {
   color: #0ff;
@@ -143,10 +128,14 @@
   filter: drop-shadow(0 0 10px #ff0000);
 }
 
-.bullet-container {
-  position: absolute;
+.bullet-layer {
+  position: fixed;
   bottom: 60px;
   left: 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .bullet {
@@ -156,18 +145,6 @@
   height: 20px;
   background: #ff0000;
   box-shadow: 0 0 10px #ff0000;
-}
-
-.bullet:nth-child(1) {
-  left: -15px;
-}
-
-.bullet:nth-child(2) {
-  left: 0;
-}
-
-.bullet:nth-child(3) {
-  left: 15px;
 }
 
 .aliens-layer {
@@ -180,31 +157,11 @@
   z-index: 0;
 }
 
-.alien {
+.aliens-layer .alien {
   position: absolute;
   top: -80px;
   width: 80px;
   height: 80px;
-}
-
-.aliens-layer .alien:nth-child(1) {
-  left: 10%;
-}
-
-.aliens-layer .alien:nth-child(2) {
-  left: 30%;
-}
-
-.aliens-layer .alien:nth-child(3) {
-  left: 50%;
-}
-
-.aliens-layer .alien:nth-child(4) {
-  left: 70%;
-}
-
-.aliens-layer .alien:nth-child(5) {
-  left: 90%;
 }
 
 @media (max-width: 600px) {
@@ -212,7 +169,7 @@
     width: 90%;
     padding: 2rem 1rem;
   }
-  .alien {
+  .aliens-layer .alien {
     display: none;
   }
   .bottom-ship {
@@ -273,9 +230,22 @@
   animation: explode 0.5s forwards;
 }
 
+.content.fade-in {
+  animation: fadeIn 1s forwards;
+}
+
 @keyframes explode {
   to {
     opacity: 0;
     transform: scale(0.5) rotate(20deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

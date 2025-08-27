@@ -17,18 +17,23 @@ export default function WindowEffects() {
       const reset = () => {
         bar.style.display = 'none';
         win.classList.remove('destroy');
+        win.style.visibility = 'hidden';
+        setTimeout(() => {
+          win.style.visibility = 'visible';
+          win.classList.add('fade-in');
+          setTimeout(() => win.classList.remove('fade-in'), 1000);
+        }, 2000);
       };
 
       win.addEventListener('mouseenter', showBar);
 
-      closeBtn?.addEventListener('click', () => {
+      const destroyWindow = () => {
         win.classList.add('destroy');
         setTimeout(reset, 500);
-      });
-      minBtn?.addEventListener('click', () => {
-        win.classList.add('destroy');
-        setTimeout(reset, 500);
-      });
+      };
+
+      closeBtn?.addEventListener('click', destroyWindow);
+      minBtn?.addEventListener('click', destroyWindow);
     });
   }, []);
 
