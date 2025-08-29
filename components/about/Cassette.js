@@ -1,19 +1,20 @@
 "use client";
 import Image from "next/image";
 
-export default function Cassette({ name, image = "/avatar-placeholder.svg", active, onClick }) {
+export default function Cassette({ name, image = "/avatar-placeholder.svg", inserted, onClick }) {
     return (
         <button
             type="button"
-            className={`cassette ${active ? "active" : ""}`}
+            className={`cassette ${inserted ? "inserted" : ""}`}
             onClick={onClick}
-            aria-pressed={active}
+            aria-pressed={!!inserted}
             title={name}
         >
             <div className="cassette-img">
-                <Image src={image || "/avatar-placeholder.svg"} alt={name} fill sizes="180px" />
+                <Image src={image} alt={name} fill sizes="200px" />
             </div>
             <div className="cassette-label">{name}</div>
+            {/* Effetto flip/ombra via CSS con .inserted */}
         </button>
     );
 }

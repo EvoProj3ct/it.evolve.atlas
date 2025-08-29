@@ -1,6 +1,6 @@
-/* ===========================
-   PAGINA CHI SIAMO (8-bit)
-   =========================== */
+/* ======================================================
+   PAGINA CHI SIAMO — struttura, tipografia e spaziatura
+   ====================================================== */
 .about {
   display: flex;
   flex-direction: column;
@@ -18,40 +18,46 @@
   font-family: var(--font-press-start);
 }
 
+/* Titolo */
 .about .title {
   font-size: 1.6rem;
   text-align: center;
 }
 
+/* Intro più stretta e ariosa */
 .about .description {
-  max-width: 980px;
-  text-align: center;
-  line-height: 1.8;
+  max-width: 900px;
+  padding: 0.25rem 1rem;
+  margin: 0.5rem auto 1.5rem;
+  line-height: 1.9;
   font-size: 0.9rem;
   color: var(--foreground);
+  text-align: center;
 }
 
-/* ===========================
-   LAYOUT: GAME BOY CENTRALE
-   + CASSETTE LATERALI
-   =========================== */
+/* ======================================================
+   LAYOUT PRINCIPALE — Game Boy fisso centrale + cassette
+   ====================================================== */
 .gb-layout {
   display: grid;
-  grid-template-columns: 220px minmax(360px, 720px) 220px;
+  grid-template-columns: 220px 520px 220px; /* console fissa 520px */
   gap: 1.2rem;
   width: 100%;
-  max-width: 1280px;
+  max-width: 1140px;
   align-items: start;
+  justify-content: center;
 }
 
-/* Colonne cassette (sinistra/destra) */
+/* Colonne di cassette */
 .cassette-col {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-/* Cassette (cartridge) */
+/* ============================
+   CASSETTE (cartridge)
+   ============================ */
 .cassette {
   width: 100%;
   max-width: 220px;
@@ -63,18 +69,21 @@
   display: grid;
   grid-template-rows: 1fr auto;
   gap: 0.4rem;
-  transition: transform .12s ease;
+  transition: transform .15s ease, filter .15s ease;
+  transform-style: preserve-3d;
 }
 .cassette:hover { transform: translateY(-2px); }
-.cassette.active {
-  outline: 3px solid var(--color-primary);
-  outline-offset: 2px;
+
+/* Stato “inserita”: flip + scurimento */
+.cassette.inserted {
+  transform: rotateX(180deg);
+  filter: brightness(0.6) saturate(0.85);
 }
 
 .cassette-img {
   position: relative;
   width: 100%;
-  aspect-ratio: 4/3;
+  aspect-ratio: 4 / 3;
   border: 4px solid var(--color-primary);
   box-shadow: 3px 3px 0 var(--color-primary);
   overflow: hidden;
@@ -91,131 +100,186 @@
   color: var(--foreground);
 }
 
-/* ===========================
-   CONSOLE
-   =========================== */
-.gb-console {
+/* ============================
+   CONSOLE VERTICALE (Game Boy)
+   ============================ */
+.gb-console-vert {
   background: var(--background);
   border: 4px solid var(--color-primary);
   box-shadow: 4px 4px 0 var(--color-primary);
-  padding: 0.75rem;
+  padding: 0.9rem;
+  border-radius: 12px;                  /* un filo più tondeggiante */
 }
 
-/* SCHERMO UNICO (mostra: foto, nome, testi, ecc.) */
-.gb-screen {
+/* Schermo unico, dimensione fissa */
+.gb-screen-vert {
   position: relative;
-  background: #a6e28d; /* LCD */
+  width: 480px;
+  height: 300px;                        /* FISSO, “per lungo” */
+  background: #a6e28d;                  /* LCD */
   border: 4px solid var(--color-primary);
-  box-shadow: inset 0 0 0 4px var(--background), 3px 3px 0 var(--color-primary);
-  min-height: 320px;
-  max-height: 420px;
-  overflow: auto;
+  box-shadow: inset 0 0 0 4px var(--background),
+  3px 3px 0 var(--color-primary);
+  overflow: auto;                        /* testo lungo -> scroll con frecce */
 }
 
-/* Pagina di tipo immagine dentro lo schermo */
-.gb-photo { position: relative; width: 100%; height: 420px; }
-.gb-photo > span, .gb-photo img { object-fit: cover !important; }
-
-/* Nome dentro lo schermo (sovraimpressione) */
-.gb-caption {
-  position: absolute;
-  top: 6px; left: 6px;
-  padding: 2px 6px;
-  font-size: 0.8rem;
-  color: #203b1a;
-  background: rgba(166,226,141,0.7);
+/* Stato “nessuna cassetta” */
+.gb-screen-center {
+  width: 100%; height: 100%;
+  display: grid; place-items: center;
+}
+.gb-insert {
+  font-family: var(--font-press-start);
+  font-size: .95rem; color: #203b1a;
   border: 3px solid #203b1a;
+  padding: .6rem .8rem;
+  background: rgba(166,226,141,.8);
+  box-shadow: 3px 3px 0 #203b1a;
 }
 
-/* Pagine testuali dentro lo schermo */
+/* Pagina immagine nello schermo */
+.gb-screen-photo { position: relative; width: 100%; height: 100%; }
+.gb-screen-photo > span,
+.gb-screen-photo img { object-fit: cover !important; }
+
+/* Nome/etichetta dentro lo schermo */
+.gb-screen-name {
+  position: absolute; top: 6px; left: 6px;
+  font-family: var(--font-press-start);
+  font-size: .8rem; color: #203b1a;
+  background: rgba(166,226,141,.7);
+  border: 3px solid #203b1a;
+  padding: 2px 6px;
+}
+
+/* Hint ► sulla prima pagina */
+.gb-hint {
+  position: absolute; right: 8px; top: 50%;
+  transform: translateY(-50%);
+  color: #203b1a;
+  font-family: var(--font-press-start);
+  font-size: .9rem;
+  animation: gbBlink .9s steps(2, end) infinite;
+}
+@keyframes gbBlink { 50% { opacity: .2; } }
+
+/* Pagine di testo nello schermo */
 .gb-screen-inner { padding: .75rem; }
-.gb-name { color:#203b1a; margin-bottom: .4rem; }
+.gb-name { color: #203b1a; margin-bottom: .4rem; }
 .gb-text {
-  color:#203b1a;
+  color: #203b1a;
   font-family: var(--font-press-start);
   font-size: .78rem;
   line-height: 1.55;
-  white-space: pre-wrap; /* rispetta \n dai contenuti */
+  white-space: pre-wrap;                 /* rispetta \n dai contenuti */
 }
 
-/* Hint “vai avanti” sulla prima pagina (foto) */
-.gb-hint {
-  position: absolute;
-  right: 8px; top: 50%; transform: translateY(-50%);
-  color:#203b1a; font-family: var(--font-press-start); font-size:.9rem;
+/* Elenco contatti con selezione ↑/↓ */
+.gb-contacts { list-style: none; padding: 0; margin: .25rem 0 .6rem; }
+.gb-contacts li {
+  padding: .25rem 0;
+  color: #203b1a;
+  font-family: var(--font-press-start);
+}
+.gb-contacts li.active { text-decoration: underline; }
+
+.gb-cta {
+  font-family: var(--font-press-start);
+  font-size: .72rem;
+  color: #203b1a;
   animation: gbBlink .9s steps(2, end) infinite;
 }
-@keyframes gbBlink { 50% { opacity:.2 } }
 
-/* Indicatore pagina (in basso a destra dentro lo schermo) */
-.gb-page-indicator {
+/* Indicatore pagina in basso a destra */
+.gb-page-ind {
   position: absolute;
   right: 6px; bottom: 4px;
-  color:#203b1a; font-family: var(--font-press-start); font-size:.72rem;
+  color: #203b1a;
+  font-family: var(--font-press-start);
+  font-size: .72rem;
 }
 
-/* ===========================
-   PLANCIA COMANDI (sempre visibile)
-   =========================== */
-.gb-controls {
+/* =================================
+   PLANCIA — A/B a sinistra, D-Pad a destra
+   ================================= */
+.gb-controls-vert {
   margin-top: .9rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 2rem;
+  justify-content: space-between;
+  gap: 1.2rem;
 }
 
-/* D-Pad grande */
-.gb-dpad {
-  display: grid;
-  grid-template-rows: auto auto;
-  gap: .4rem;
-  align-items: center;
-  justify-items: center;
-}
-.gb-dpad-row { display: grid; grid-template-columns: auto auto auto; gap: .4rem; }
-
+/* Bottoni base */
 .gb-btn {
   font-family: var(--font-press-start);
   font-size: .9rem;
-  width: 54px; height: 54px;
+  width: 56px; height: 56px;
   border: 4px solid var(--color-primary);
   background: var(--background);
   color: var(--foreground);
   box-shadow: 4px 4px 0 var(--color-primary);
   cursor: pointer;
+  border-radius: 12px;
 }
 
-/* Bottoni A/B rotondi e più grandi */
-.gb-ab { display:flex; gap: .6rem; align-items: center; }
-.gb-a, .gb-b {
-  width: 62px; height: 62px;
-  border-radius: 50%;
-}
+/* A/B (rotondi e più grandi) */
+.gb-ab { display: flex; align-items: center; gap: .8rem; }
+.gb-a, .gb-b { width: 64px; height: 64px; border-radius: 50%; }
 
-/* ===========================
+/* D-Pad */
+.gb-dpad { display: grid; grid-template-rows: auto auto; gap: .4rem;
+  align-items: center; justify-items: center; }
+.gb-dpad-row { display: grid; grid-template-columns: auto auto auto; gap: .4rem; }
+
+/* ============================
    RESPONSIVE
-   - sotto 1024px le cassette diventano
-     una strip orizzontale; la console resta al centro
-   =========================== */
-@media (max-width: 1024px) {
-  .gb-layout { grid-template-columns: 1fr; }
-
-  .cassette-col.left, .cassette-col.right {
+   ============================ */
+@media (max-width: 1100px) {
+  /* console sotto, cassette in strip orizzontale sopra */
+  .gb-layout { grid-template-columns: 1fr; justify-items: center; }
+  .cassette-col {
     flex-direction: row;
     overflow-x: auto;
     padding-bottom: .5rem;
     gap: 0.8rem;
   }
-
   .cassette { min-width: 200px; }
-  .gb-console { order: 2; }
-  .gb-photo { height: 360px; }
 }
 
-/* Mobile piccolo */
-@media (max-width: 520px) {
-  .gb-photo { height: 280px; }
-  .gb-btn { width: 46px; height: 46px; }
-  .gb-a, .gb-b { width: 54px; height: 54px; }
+@media (max-width: 560px) {
+  /* schermo scalabile mantenendo proporzioni */
+  .gb-screen-vert {
+    width: 92vw;
+    height: 58vw;            /* ~16:10 verticale */
+    max-height: 360px;
+  }
+  .gb-btn { width: 48px; height: 48px; }
+  .gb-a, .gb-b { width: 56px; height: 56px; }
+}
+
+/* ======================================================
+   VARIANTE TEMA CHIARO (opzionale)
+   Applica .theme-light su body o su .gb-console-vert
+   ====================================================== */
+.theme-light .gb-screen-vert { background: #e5e5e5; }
+.theme-light .gb-screen-name,
+.theme-light .gb-text,
+.theme-light .gb-contacts li,
+.theme-light .gb-cta,
+.theme-light .gb-page-ind,
+.theme-light .gb-hint {
+  color: #111;
+  border-color: #111;
+  background: rgba(229,229,229,0.7);
+}
+.theme-light .cassette,
+.theme-light .gb-console-vert,
+.theme-light .gb-btn,
+.theme-light .gb-a,
+.theme-light .gb-b {
+  background: var(--color-white);
+  color: var(--color-black);
+  border-color: var(--color-primary);
+  box-shadow: 4px 4px 0 var(--color-primary);
 }
