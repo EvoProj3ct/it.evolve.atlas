@@ -61,6 +61,10 @@
   color: var(--color-black);
 }
 
+.window-btn.maximize {
+  background: #00ff00;
+}
+
 .window-btn.close {
   background: #ff0000;
 }
@@ -79,31 +83,12 @@
   transform: translateY(-2px);
 }
 
-
-.blue {
-  color: #0ff;
-  filter: drop-shadow(0 0 10px #0ff);
+.window-btn.maximize::before {
+  content: "\25A1";
+  transform: translateY(-1px);
 }
 
-.red {
-  color: #ff0000;
-  filter: drop-shadow(0 0 10px #ff0000);
-}
 
-.pink {
-  color: #ff00ff;
-  filter: drop-shadow(0 0 10px #ff00ff);
-}
-
-.green {
-  color: #39FF14;
-  filter: drop-shadow(0 0 10px #39FF14);
-}
-
-.yellow {
-  color: #ffff00;
-  filter: drop-shadow(0 0 10px #ffff00);
-}
 
 .space-ship-container {
   position: fixed;
@@ -124,8 +109,8 @@
 }
 
 .ship-fluo {
-  color: #ff0000;
-  filter: drop-shadow(0 0 10px #ff0000);
+  color: var(--foreground);
+  filter: drop-shadow(0 0 10px var(--foreground));
 }
 
 .bullet-layer {
@@ -143,8 +128,8 @@
   bottom: 0;
   width: 4px;
   height: 20px;
-  background: #ff0000;
-  box-shadow: 0 0 10px #ff0000;
+  background: var(--foreground);
+  box-shadow: 0 0 10px var(--foreground);
 }
 
 .aliens-layer {
@@ -162,6 +147,32 @@
   top: -80px;
   width: 80px;
   height: 80px;
+  color: var(--foreground);
+  filter: drop-shadow(0 0 10px var(--foreground));
+}
+
+.icon-tray {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 3;
+}
+
+.window-icon {
+  width: 2rem;
+  height: 2rem;
+  background: var(--color-primary);
+  color: var(--color-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-press-start);
+  font-size: 0.75rem;
+  cursor: pointer;
+  border: 2px solid var(--color-primary);
+  box-shadow: 2px 2px 0 var(--color-primary);
 }
 
 @media (max-width: 600px) {

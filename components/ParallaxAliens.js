@@ -6,7 +6,6 @@ export default function ParallaxAliens() {
     const ship = document.querySelector(".bottom-ship");
     const bulletLayer = document.querySelector(".bullet-layer");
     const alienLayer = document.querySelector(".aliens-layer");
-    const colors = ["pink", "red", "blue", "green", "yellow"];
     const bullets = [];
     const aliens = [];
 
@@ -33,8 +32,7 @@ export default function ParallaxAliens() {
       const alien = document.createElement("img");
       const idx = Math.floor(Math.random() * 3) + 1;
       alien.src = `/alien${idx}.svg`;
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      alien.className = `alien ${color}`;
+      alien.className = "alien";
       alien.style.left = `${Math.random() * (window.innerWidth - 80)}px`;
       alien.style.top = `-80px`;
       alienLayer.appendChild(alien);
