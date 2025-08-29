@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="icons">
-        <a href="#" className="btn" aria-label="Instagram">
+        <a href="https://www.instagram.com/evolve3dcompany/" className="btn" aria-label="Instagram">
           <InstagramIcon />
         </a>
         <a href="#" className="btn" aria-label="Twitter">
