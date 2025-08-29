@@ -1,13 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import ParallaxAliens from "./ParallaxAliens";
 
-/**
- * Strati del mini-gioco: navicella, proiettili, alieni.
- * Il CSS che hai postato posiziona e stila questi layer.
- */
 export default function HomeParallax() {
+    const [mode, setMode] = useState("ALIEN"); // "ALIEN" | "GHOST"
+    const toggleMode = () => setMode((m) => (m === "ALIEN" ? "GHOST" : "ALIEN"));
+
     return (
         <>
             <div className="space-ship-container">
@@ -15,7 +14,18 @@ export default function HomeParallax() {
             </div>
             <div className="bullet-layer" />
             <div className="aliens-layer" />
-            <ParallaxAliens />
+            <ParallaxAliens mode={mode} />
+
+            {/* Bottone switch set nemici */}
+            <button
+                type="button"
+                className="game-toggle"
+                aria-label="Cambia tipo nemici"
+                title={mode === "ALIEN" ? "Passa ai fantasmini 👻" : "Torna agli alieni 👾"}
+                onClick={toggleMode}
+            >
+                {mode === "ALIEN" ? "👾→👻" : "👻→👾"}
+            </button>
         </>
     );
 }

@@ -3,71 +3,105 @@
 import React, { useEffect } from "react";
 
 /**
- * Logica del gioco:
- * - navicella segue il puntatore (pointermove).
- * - spara proiettili a intervalli.
- * - alieni scendono: posizioni gestite in JS e applicate con transform (niente layout thrashing).
- * - collisioni AABB su numeri in memoria.
- * - cleanup completo (RAF + eventi).
- *
- * NOTA: perché gli alieni si vedano, applica il patch CSS sui z-index (vedi inizio risposta).
+ * Props:
+ *  - mode: "ALIEN" (blocchi neon) | "GHOST" (fantasmini stile Pac-Man)
  */
-export default function ParallaxAliens() {
+export default function ParallaxAliens({ mode = "ALIEN" }) {
   useEffect(() => {
     const ship = document.querySelector(".bottom-ship");
     const bulletLayer = document.querySelector(".bullet-layer");
     const alienLayer = document.querySelector(".aliens-layer");
     if (!ship || !bulletLayer || !alienLayer) return;
 
-    // Se vuoi usare immagini /alien1.svg..3.svg metti true; altrimenti emoji 👾 (sempre visibile)
-    const USE_IMAGES = false;
+    // Palette fluo per gli alieni (👾)
+    const ALIEN_COLORS = ["#39FF14", "#00FFFF", "#F7FF00", "#FF00FF", "#FF66CC"];
+    // Palette classica dei fantasmi (👻) + viola fluo
+    const GHOST_COLORS = ["#FF0000", "#FFB8DE", "#00FFFF", "#FFA500", "#7F00FF"];
 
     const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const bullets = []; // { el, x, y, w, h }
-    const aliens  = []; // { el, x, y, w, h }
+    const aliens  = []; // { el, x, y, w, h, color }
+
+    const SIZE = 120; // molto visibili
+    const BULLET_H = 20, BULLET_W = 4;
 
     let shipX = 0;
 
     const onPointerMove = (e) => {
       shipX = e.clientX - ship.clientWidth / 2;
-      ship.style.left = `${shipX}px`; // coerente col tuo CSS (ship usa left/bottom)
-      // NB: se preferisci transform, puoi usare: ship.style.transform = `translate3d(${shipX}px,0,0)`
+      ship.style.left = `${shipX}px`;
     };
     window.addEventListener("pointermove", onPointerMove, { passive: true });
 
     const spawnBullet = () => {
       const el = document.createElement("span");
       el.className = "bullet";
-      const x = shipX + ship.clientWidth / 2 - 2;
-      const y = 0; // parte dal basso
+      const x = shipX + ship.clientWidth / 2 - BULLET_W / 2;
+      const y = 0;
       el.style.left = `${x}px`;
       el.style.bottom = `${y}px`;
       bulletLayer.appendChild(el);
-      bullets.push({ el, x, y, w: 4, h: 20 }); // h=20 come nel tuo CSS
+      bullets.push({ el, x, y, w: BULLET_W, h: BULLET_H });
+    };
+
+    const createGhost = (color) => {
+      const el = document.createElement("div");
+      el.className = "alien ghost"; // nessun alone: CSS rimuove filter
+      el.style.width = `${SIZE}px`;
+      el.style.height = `${SIZE}px`;
+      el.style.background = color;
+      // testata tonda e base "ondulata"
+      el.style.borderRadius = "50% 50% 14% 14%";
+      el.style.clipPath =
+          "polygon(0 0,100% 0,100% 80%,86% 90%,72% 80%,58% 90%,44% 80%,30% 90%,16% 80%,0 90%)";
+      // occhi
+      const eye = () => {
+        const e = document.createElement("span");
+        e.className = "eye";
+        const p = document.createElement("span");
+        p.className = "pupil";
+        e.appendChild(p);
+        return e;
+      };
+      const e1 = eye(), e2 = eye();
+      e1.style.left = "32%"; e2.style.left = "58%";
+      el.appendChild(e1); el.appendChild(e2);
+      return el;
+    };
+
+    const createAlienBlock = (color) => {
+      const el = document.createElement("div");
+      el.className = "alien block"; // nessun alone: CSS rimuove filter
+      el.style.width = `${SIZE}px`;
+      el.style.height = `${SIZE}px`;
+      el.style.background = color;
+      el.style.borderRadius = "12%";
+      return el;
     };
 
     const spawnAlien = () => {
-      let el;
-      if (USE_IMAGES) {
-        el = document.createElement("img");
-        const idx = (Math.random() * 3 | 0) + 1;
-        el.src = `/alien${idx}.svg`;
-        el.alt = "Alien";
-      } else {
-        el = document.createElement("div");
-        el.textContent = "👾";
-        el.style.fontSize = "40px";
-        el.style.display = "grid";
-        el.style.placeItems = "center";
-      }
-      el.className = "alien";
-      const x = Math.random() * (window.innerWidth - 80);
-      const y = -80; // top iniziale (coerente col tuo CSS .alien { top: -80px })
+      const palette = mode === "GHOST" ? GHOST_COLORS : ALIEN_COLORS;
+      const color = palette[(Math.random() * palette.length) | 0];
+
+      const el = mode === "GHOST" ? createGhost(color) : createAlienBlock(color);
+      const x = Math.random() * (window.innerWidth - SIZE);
+      const y = -SIZE;
+
       el.style.left = `${x}px`;
       el.style.top = `${y}px`;
       alienLayer.appendChild(el);
-      aliens.push({ el, x, y, w: 80, h: 80 });
+      aliens.push({ el, x, y, w: SIZE, h: SIZE, color });
+    };
+
+    const spawnExplosion = (cx, cy, color) => {
+      const ex = document.createElement("span");
+      ex.className = "explosion";
+      ex.style.left = `${cx - 8}px`;
+      ex.style.top = `${cy - 8}px`;
+      ex.style.background = `radial-gradient(circle, ${color} 0%, ${color} 40%, transparent 70%)`;
+      alienLayer.appendChild(ex);
+      setTimeout(() => ex.remove(), 500);
     };
 
     let rafId = 0;
@@ -76,9 +110,9 @@ export default function ParallaxAliens() {
     let alienTimer = 0;
 
     const BULLET_INTERVAL = prefersReduce ? 0.6 : 0.3; // sec
-    const ALIEN_INTERVAL  = prefersReduce ? 1.8 : 1.0;
-    const BULLET_SPEED = prefersReduce ? 300 : 500;    // px/s
-    const ALIEN_SPEED  = prefersReduce ? 80  : 120;
+    const ALIEN_INTERVAL  = prefersReduce ? 1.6 : 0.9;
+    const BULLET_SPEED = prefersReduce ? 300 : 520;    // px/s
+    const ALIEN_SPEED  = prefersReduce ? 90  : 140;
 
     const update = (now) => {
       const dt = (now - last) / 1000;
@@ -89,7 +123,7 @@ export default function ParallaxAliens() {
       if (bulletTimer >= BULLET_INTERVAL) { spawnBullet(); bulletTimer = 0; }
       if (alienTimer >= ALIEN_INTERVAL)  { spawnAlien();  alienTimer  = 0; }
 
-      // Proiettili: si muovono verso l'alto (incremento bottom)
+      // proiettili: verso l'alto
       for (let i = bullets.length - 1; i >= 0; i--) {
         const b = bullets[i];
         b.y += BULLET_SPEED * dt;
@@ -99,7 +133,7 @@ export default function ParallaxAliens() {
         b.el.style.bottom = `${b.y}px`;
       }
 
-      // Alieni: scendono (incremento top)
+      // alieni: verso il basso
       for (let i = aliens.length - 1; i >= 0; i--) {
         const a = aliens[i];
         a.y += ALIEN_SPEED * dt;
@@ -109,15 +143,18 @@ export default function ParallaxAliens() {
         a.el.style.top = `${a.y}px`;
       }
 
-      // Collisioni AABB calcolate sui numeri (nessun getBoundingClientRect)
+      // collisioni AABB
       for (let bi = bullets.length - 1; bi >= 0; bi--) {
         const b = bullets[bi];
-        const bL = b.x, bR = b.x + b.w, bT = window.innerHeight - (b.y + b.h), bB = window.innerHeight - b.y;
-        // Nota: bullet usa bottom -> per collisione calcolo top/bottom in coordinate pagina
+        const bL = b.x, bR = b.x + b.w;
+        const bT = window.innerHeight - (b.y + b.h);
+        const bB = window.innerHeight - b.y;
         for (let ai = aliens.length - 1; ai >= 0; ai--) {
           const a = aliens[ai];
           const aL = a.x, aR = a.x + a.w, aT = a.y, aB = a.y + a.h;
           if (bL < aR && bR > aL && bT < aB && bB > aT) {
+            // esplosione al centro dell'alieno
+            spawnExplosion(a.x + a.w / 2, a.y + a.h / 2, a.color);
             a.el.remove(); aliens.splice(ai, 1);
             b.el.remove(); bullets.splice(bi, 1);
             break;
@@ -133,10 +170,10 @@ export default function ParallaxAliens() {
     return () => {
       window.removeEventListener("pointermove", onPointerMove);
       cancelAnimationFrame(rafId);
-      bullets.forEach(b => b.el.remove());
-      aliens.forEach(a => a.el.remove());
+      bullets.forEach((b) => b.el.remove());
+      aliens.forEach((a) => a.el.remove());
     };
-  }, []);
+  }, [mode]);
 
   return null;
 }

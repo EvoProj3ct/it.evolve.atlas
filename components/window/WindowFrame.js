@@ -1,44 +1,45 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useWindows } from "./WindowManager";
 
-/**
- * Finestra riutilizzabile.
- * - Barra con 3 pulsanti (minimize / maximize / close).
- * - "Pin" dopo primo hover/focus (barra e zoom persistono).
- * - Rispetta le classi del tuo CSS: .home-section, .content, .window-bar, .window-btn...
- */
 export default function WindowFrame({ id, title, maximizeHref = "/chi-siamo", children }) {
-    const { state, register, pin, minimize, close } = useWindows();
+    const { state, register, pin, minimize, close, restore } = useWindows();
     const w = state.byId[id] || { pinned: false, minimized: false, closed: false };
 
-    // Registra la finestra quando compare
-    useEffect(() => { register(id, title); }, [id, title, register]);
+    // timer per auto-restore e flag per animazione fade-in
+    const reopenTimerRef = useRef(null);
+    const [reopening, setReopening] = useState(false);
 
-    // Nascosta se minimized o closed
+    useEffect(() => { register(id, title); }, [id, title, register]);
+    useEffect(() => () => { if (reopenTimerRef.current) clearTimeout(reopenTimerRef.current); }, []);
+
     const isHidden = w.minimized || w.closed;
-    // Pinned = barra visibile e zoom persistenti (classe keep-bar)
     const contentClass =
-        "content" + (isHidden ? " is-hidden" : "") + (w.pinned ? " keep-bar" : "");
+        "content" +
+        (isHidden ? " is-hidden" : "") +
+        (w.pinned ? " keep-bar" : "") +
+        (reopening ? " fade-in" : "");
 
     const onClose = () => {
         close(id);
-        // Scroll alla prossima sezione (pari al tuo comportamento originario)
+        // riapertura automatica dopo 20 secondi con fade-in
+        if (reopenTimerRef.current) clearTimeout(reopenTimerRef.current);
+        reopenTimerRef.current = setTimeout(() => {
+            setReopening(true);
+            restore(id);
+            setTimeout(() => setReopening(false), 1000); // durata animazione
+        }, 20000);
+
+        // scroll alla sezione successiva (comportamento precedente)
         const section = document.getElementById(id)?.closest("section");
         const next = section?.nextElementSibling;
         next?.scrollIntoView({ behavior: "smooth", block: "start" });
     };
 
-    const onMinimize = () => {
-        minimize(id);
-        // niente scroll: l'utente ha l'icona in tray per ripristinare
-    };
-
-    const onFirstHoverOrFocus = () => {
-        if (!w.pinned) pin(id); // pin una sola volta
-    };
+    const onMinimize = () => { minimize(id); };
+    const onFirstHoverOrFocus = () => { if (!w.pinned) pin(id); };
 
     return (
         <section id={id} className="home-section" aria-labelledby={`${id}-title`}>
@@ -49,7 +50,6 @@ export default function WindowFrame({ id, title, maximizeHref = "/chi-siamo", ch
                 onMouseEnter={onFirstHoverOrFocus}
                 onFocusCapture={onFirstHoverOrFocus}
             >
-                {/* BARRA: i bottoni sono vuoti perché il TUO CSS aggiunge i simboli via ::before */}
                 <div className="window-bar">
                     <button
                         type="button"
