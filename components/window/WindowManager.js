@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useReducer, useMemo, useCallback } from "react";
+import React, {
+    createContext,
+    useContext,
+    useReducer,
+    useMemo,
+    useCallback,
+} from "react";
 
 /**
  * Stato per ogni finestra:
@@ -48,22 +54,28 @@ const Ctx = createContext(null);
 export function WindowProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    // Azioni esposte ai componenti
-    const register  = useCallback((id, title) => dispatch({ type: "REGISTER", id, title }), []);
-    const pin       = useCallback((id) => dispatch({ type: "PIN", id }), []);
-    const minimize  = useCallback((id) => dispatch({ type: "MINIMIZE", id }), []);
-    const restore   = useCallback((id) => dispatch({ type: "RESTORE", id }), []);
-    const close     = useCallback((id) => dispatch({ type: "CLOSE", id }), []);
+    const register = useCallback((id, title) => dispatch({ type: "REGISTER", id, title }), []);
+    const pin      = useCallback((id) => dispatch({ type: "PIN", id }), []);
+    const minimize = useCallback((id) => dispatch({ type: "MINIMIZE", id }), []);
+    const restore  = useCallback((id) => dispatch({ type: "RESTORE", id }), []);
+    const close    = useCallback((id) => dispatch({ type: "CLOSE", id }), []);
 
-    const value = useMemo(() => ({ state, register, pin, minimize, restore, close }), [
-        state, register, pin, minimize, restore, close,
-    ]);
+    const value = useMemo(
+        () => ({ state, register, pin, minimize, restore, close }),
+        [state, register, pin, minimize, restore, close]
+    );
 
     return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
+/** Hook “ufficiale” */
 export function useWindows() {
     const ctx = useContext(Ctx);
     if (!ctx) throw new Error("useWindows deve essere usato dentro <WindowProvider>.");
     return ctx;
+}
+
+/** Alias per compatibilità (così funzionano anche import vecchi) */
+export function useWindowManager() {
+    return useWindows();
 }
