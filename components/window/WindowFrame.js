@@ -10,7 +10,7 @@ import { useWindowManager } from "./WindowManager";
  * - Barra con 3 pulsanti: minimizza (va in tray), ingrandisci (Link), chiudi (nasconde)
  * - La barra si "pinna": dopo primo hover/focus, resta visibile.
  */
-export default function Window({
+export default function WindowFrame({
                                    id,
                                    title,
                                    maximizeHref = "/chi-siamo",

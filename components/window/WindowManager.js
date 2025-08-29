@@ -1,73 +1,69 @@
 "use client";
 
-import React, { createContext, useContext, useMemo, useReducer, useCallback } from "react";
+import React, { createContext, useContext, useReducer, useMemo, useCallback } from "react";
 
 /**
- * Stato centralizzato di tutte le finestre.
- * Ogni finestra (id) ha: title, visible (in pagina), minimized (in tray).
+ * Stato per ogni finestra:
+ *  - pinned:   dopo primo hover/focus la barra resta visibile e la card resta "zoomata"
+ *  - minimized: nascosta e presente nella tray
+ *  - closed:    nascosta, NON presente nella tray
  */
-const initialState = { windows: {} };
+const initialState = { byId: {} };
+
+function ensure(state, id, title) {
+    const existing = state.byId[id];
+    if (existing) return existing;
+    return { id, title: title || id, pinned: false, minimized: false, closed: false };
+}
 
 function reducer(state, action) {
     switch (action.type) {
         case "REGISTER": {
-            const prev = state.windows[action.id];
-            const next = prev
-                ? { ...prev, title: action.title }
-                : { id: action.id, title: action.title, visible: true, minimized: false };
-            return { windows: { ...state.windows, [action.id]: next } };
+            const w = ensure(state, action.id, action.title);
+            return { byId: { ...state.byId, [action.id]: w } };
         }
-        case "UNREGISTER": {
-            const { [action.id]: _unused, ...rest } = state.windows;
-            return { windows: rest };
+        case "PIN": {
+            const w = ensure(state, action.id);
+            return { byId: { ...state.byId, [action.id]: { ...w, pinned: true } } };
         }
         case "MINIMIZE": {
-            const w = state.windows[action.id];
-            if (!w) return state;
-            return { windows: { ...state.windows, [action.id]: { ...w, visible: false, minimized: true } } };
+            const w = ensure(state, action.id);
+            return { byId: { ...state.byId, [action.id]: { ...w, minimized: true, closed: false } } };
         }
-        case "REOPEN": {
-            const w = state.windows[action.id];
-            if (!w) return state;
-            return { windows: { ...state.windows, [action.id]: { ...w, visible: true, minimized: false } } };
+        case "RESTORE": {
+            const w = ensure(state, action.id);
+            return { byId: { ...state.byId, [action.id]: { ...w, minimized: false, closed: false } } };
         }
         case "CLOSE": {
-            const w = state.windows[action.id];
-            if (!w) return state;
-            return { windows: { ...state.windows, [action.id]: { ...w, visible: false, minimized: false } } };
+            const w = ensure(state, action.id);
+            return { byId: { ...state.byId, [action.id]: { ...w, minimized: false, closed: true } } };
         }
         default:
             return state;
     }
 }
 
-const WindowManagerContext = createContext(null);
+const Ctx = createContext(null);
 
-/**
- * Provider: avvolgi la pagina con questo per usare lo stato delle finestre.
- */
 export function WindowProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    // Azioni (memoizzate) per registrare/deregistrare e cambiare stato delle finestre
-    const register = useCallback((id, title) => dispatch({ type: "REGISTER", id, title }), []);
-    const unregister = useCallback((id) => dispatch({ type: "UNREGISTER", id }), []);
-    const minimize = useCallback((id) => dispatch({ type: "MINIMIZE", id }), []);
-    const reopen   = useCallback((id) => dispatch({ type: "REOPEN", id }), []);
-    const close    = useCallback((id) => dispatch({ type: "CLOSE", id }), []);
+    // Azioni esposte ai componenti
+    const register  = useCallback((id, title) => dispatch({ type: "REGISTER", id, title }), []);
+    const pin       = useCallback((id) => dispatch({ type: "PIN", id }), []);
+    const minimize  = useCallback((id) => dispatch({ type: "MINIMIZE", id }), []);
+    const restore   = useCallback((id) => dispatch({ type: "RESTORE", id }), []);
+    const close     = useCallback((id) => dispatch({ type: "CLOSE", id }), []);
 
-    const value = useMemo(() => ({ state, register, unregister, minimize, reopen, close }), [
-        state, register, unregister, minimize, reopen, close,
+    const value = useMemo(() => ({ state, register, pin, minimize, restore, close }), [
+        state, register, pin, minimize, restore, close,
     ]);
 
-    return <WindowManagerContext.Provider value={value}>{children}</WindowManagerContext.Provider>;
+    return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
-/**
- * Hook per usare il manager: fornisce stato + azioni.
- */
-export function useWindowManager() {
-    const ctx = useContext(WindowManagerContext);
-    if (!ctx) throw new Error("useWindowManager deve essere usato dentro <WindowProvider>.");
+export function useWindows() {
+    const ctx = useContext(Ctx);
+    if (!ctx) throw new Error("useWindows deve essere usato dentro <WindowProvider>.");
     return ctx;
 }

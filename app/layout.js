@@ -16,7 +16,7 @@ import "./styles/spesatore.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
-import HomeParallax from "@/components/HomeParallax";
+import HomeParallax from "@/components/game/HomeParallax";
 
 const poppins = Poppins({
   variable: "--font-poppins",
