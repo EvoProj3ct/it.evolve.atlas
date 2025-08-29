@@ -8,15 +8,14 @@ export default function HomeParallax() {
 
     return (
         <>
-            <div className="space-ship-container">
-                {/* emoji nave al posto della freccia */}
-                <div className="ship-emoji" aria-hidden="true">🚀</div>
-            </div>
+            {/* Layer VUOTI: la nave/mostri vengono creati in ParallaxAliens */}
+            <div className="space-ship-container" />
             <div className="bullet-layer" />
             <div className="aliens-layer" />
+
             <ParallaxAliens mode={mode} />
 
-            {/* Switch in basso a destra (non interferisce con navbar) */}
+            {/* Switch in basso a destra */}
             <button
                 type="button"
                 className="game-toggle"
