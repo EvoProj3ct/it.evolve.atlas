@@ -60,7 +60,6 @@ export default function RootLayout({ children }) {
           />
           {children}
           <Footer />
-          <HomeParallax />
         </AuthProvider>
       </body>
     </html>

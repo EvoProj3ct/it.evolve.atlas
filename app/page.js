@@ -1,10 +1,12 @@
 import ScrollProgress from "@/components/ScrollProgress";
 import WindowEffects from "@/components/WindowEffects";
 import Link from "next/link";
+import HomeParallax from "@/components/HomeParallax";
 
 export default function Home() {
   return (
     <>
+      <HomeParallax />
       <ScrollProgress />
       <WindowEffects />
 
