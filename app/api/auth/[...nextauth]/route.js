@@ -25,12 +25,14 @@ export const authOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role
+        token.name = user.user       // <— importante per saluto
       }
       return token
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.role = token.role
+        session.user.name = token.name // <— salveremo qui lo username
       }
       return session
     }
