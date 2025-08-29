@@ -14,13 +14,6 @@ const USERS = [
 // Esempio: import dbConnect from '@/lib/dbConnect';  poi: await dbConnect();
 
 export async function POST() {
-    // sicurezza minimale: disattiva in produzione
-    if (process.env.NODE_ENV === 'production') {
-        return NextResponse.json(
-            { ok: false, error: 'Seeding disabilitato in produzione.' },
-            { status: 403 }
-        )
-    }
 
     const results = []
     for (const { user, pass, role } of USERS) {
