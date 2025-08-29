@@ -39,24 +39,34 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
     // Sagome: costruisco forme con più blocchi pieni (nessuna trasparenza),
     //        occhi/oblò sono "fori" riempiti col var(--background)
 
-    // 🚀 Nave a forma di freccia grossa/pixelata (stile bussola / navigatore)
+    // 🚀 Nave basata su ship.svg in /public
     const createShip = () => {
-      const ship = document.createElement("div");
+      const ship = document.createElement("img");
       ship.className = "ship-shape";
+      ship.src = "/ship.svg";
+      ship.alt = "Ship";
+
       ship.style.position   = "absolute";
       ship.style.left       = "0px";
       ship.style.bottom     = `${SHIP_MIN_BOTTOM}px`;
       ship.style.width      = "60px";
       ship.style.height     = "60px";
-      ship.style.background = "var(--foreground)";
+      ship.style.objectFit  = "contain";
       ship.style.filter     = "drop-shadow(0 0 10px var(--foreground))";
 
-      // Clip-path per dare la forma di freccia grossa
-      ship.style.clipPath =
-          "polygon(50% 0%, 100% 50%, 70% 50%, 70% 100%, 30% 100%, 30% 50%, 0% 50%)";
+      // ✅ colora la nave bianca quando il tema è scuro
+      // (assumendo che il tema dark setti --background scuro e --foreground chiaro)
+      const isDark = getComputedStyle(document.documentElement)
+          .getPropertyValue("--background")
+          .trim()
+          .toLowerCase() === "#000000"; // oppure usa una tua logica di tema
+      if (isDark) {
+        ship.style.filter = "invert(1) drop-shadow(0 0 10px var(--foreground))";
+      }
 
       return ship;
     };
+
 
 
 
