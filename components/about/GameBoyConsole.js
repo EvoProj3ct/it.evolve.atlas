@@ -5,24 +5,26 @@ import Image from "next/image";
 import Cassette from "./Cassette";
 
 /**
- * Props:
- *  - members: Array<{
- *      slug: string,
- *      name: string,
- *      image?: string,
- *      pages: Array<
- *        | { type: "image", src?: string, caption?: string }
- *        | { type: "text", content: string, kind?: "bio" | "skill" }
- *        | { type: "contacts", contacts: Array<{ label: string, href: string }> }
- *      >
- *    }>
+ * Props attese:
+ * members: [
+ *   {
+ *     slug: string,
+ *     name: string,
+ *     image?: string,
+ *     pages: [
+ *       { type: "image", src?: string },              // foto
+ *       { type: "text", content: string, kind?: "bio" | "skill" },
+ *       { type: "contacts", contacts: [{ label, href }] }
+ *     ]
+ *   }, ...
+ * ]
  */
 export default function GameBoyConsole({ members = [] }) {
-    // Indice della cassetta inserita (null = nessuna)
+    // indice della cassetta inserita (null = nessuna)
     const [inserted, setInserted] = useState(null);
-    // Indice pagina corrente
+    // indice pagina corrente
     const [pi, setPi] = useState(0);
-    // Selettore per la lista contatti
+    // indice contatto selezionato per la pagina Contatti
     const [contactIndex, setContactIndex] = useState(0);
 
     const screenRef = useRef(null);
@@ -31,18 +33,9 @@ export default function GameBoyConsole({ members = [] }) {
     const pages = current?.pages || [];
     const page = pages[pi];
 
-    // Quando inserisco/espello una cassetta → reset pagina e selettore contatti
-    useEffect(() => {
-        setPi(0);
-        setContactIndex(0);
-        screenRef.current?.scrollTo({ top: 0, left: 0 });
-    }, [inserted]);
-
-    // Cambio pagina → reset scroll schermo
-    useEffect(() => {
-        screenRef.current?.scrollTo({ top: 0, left: 0 });
-    }, [pi]);
-
+    /* -----------------------------
+       Helpers
+    ------------------------------*/
     const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
     const nextPage = () => setPi(p => clamp(p + 1, 0, Math.max((pages.length || 1) - 1, 0)));
     const prevPage = () => setPi(p => clamp(p - 1, 0, Math.max((pages.length || 1) - 1, 0)));
@@ -53,63 +46,75 @@ export default function GameBoyConsole({ members = [] }) {
         el.scrollBy({ left: dx, top: dy, behavior: "smooth" });
     };
 
-    // A: su contatti apre il link selezionato, altrimenti avanza pagina
-    const actionA = () => {
-        if (page?.type === "contacts") {
-            const c = page.contacts?.[contactIndex];
-            if (c?.label && c?.href) window.open(c.href, "_blank", "noopener,noreferrer");
-            return;
-        }
-        nextPage();
-    };
+    /* -----------------------------
+       Effetti
+    ------------------------------*/
+    // Inserimento/espulsione: reset pagina/contatti/scroll
+    useEffect(() => {
+        setPi(0);
+        setContactIndex(0);
+        screenRef.current?.scrollTo({ top: 0, left: 0 });
+    }, [inserted]);
 
-    // B: se sono alla prima pagina, espelle la cassetta; altrimenti torna indietro
-    const actionB = () => {
-        if (inserted != null && pi === 0) {
-            setInserted(null);
-            return;
-        }
-        prevPage();
-    };
+    // Cambio pagina: reset scroll
+    useEffect(() => {
+        screenRef.current?.scrollTo({ top: 0, left: 0 });
+    }, [pi]);
 
-    // Tastiera: frecce + A/B (o Enter/Backspace)
+    // Tastiera (freccette + A/B | Enter/Backspace)
     useEffect(() => {
         const onKey = (e) => {
-            const key = e.key.toLowerCase();
-            if (key === "arrowright") nextPage();
-            if (key === "arrowleft") prevPage();
-            if (key === "arrowup") {
+            const k = e.key.toLowerCase();
+            if (k === "arrowright") nextPage();
+            if (k === "arrowleft") prevPage();
+            if (k === "arrowup") {
                 if (page?.type === "contacts") {
                     setContactIndex(i => clamp(i - 1, 0, (page.contacts?.length || 1) - 1));
                 } else {
                     scrollBy(0, -90);
                 }
             }
-            if (key === "arrowdown") {
+            if (k === "arrowdown") {
                 if (page?.type === "contacts") {
                     setContactIndex(i => clamp(i + 1, 0, (page.contacts?.length || 1) - 1));
                 } else {
                     scrollBy(0, 90);
                 }
             }
-            if (key === "a" || key === "enter") actionA();
-            if (key === "b" || key === "backspace") actionB();
+            if (k === "a" || k === "enter") actionA();
+            if (k === "b" || k === "backspace") actionB();
         };
         window.addEventListener("keydown", onKey);
         return () => window.removeEventListener("keydown", onKey);
     }, [page, contactIndex, inserted, pi, pages.length]);
 
-    // Etichetta categoria (in alto a sx dentro lo schermo)
-    const categoryOf = (p) => {
-        if (!p) return "";
-        if (p.type === "image") return "Foto";
-        if (p.type === "contacts") return "Contatti";
-        if (p.type === "text") return p.kind === "skill" ? "Skill" : "Bio";
-        return "";
+    /* -----------------------------
+       Azioni tasti A / B
+    ------------------------------*/
+    // A: se contatti → apri link; altrimenti avanti pagina
+    const actionA = () => {
+        if (page?.type === "contacts") {
+            const c = page.contacts?.[contactIndex];
+            if (c?.href) window.open(c.href, "_blank", "noopener,noreferrer");
+            return;
+        }
+        nextPage();
     };
 
-    // Render contenuto dello schermo
+    // B: alla prima pagina espelle cassetta, altrimenti indietro pagina
+    const actionB = () => {
+        if (inserted != null && pi === 0) {
+            setInserted(null);
+        } else {
+            prevPage();
+        }
+    };
+
+    /* -----------------------------
+       Render contenuto schermo
+    ------------------------------*/
     const renderScreen = () => {
+        // Stato senza cassetta
         if (inserted == null) {
             return (
                 <div className="gb-screen-center">
@@ -118,39 +123,37 @@ export default function GameBoyConsole({ members = [] }) {
             );
         }
 
-        // Pagina immagine
+        // Foto
         if (page?.type === "image") {
             return (
                 <div className="gb-screen-photo">
-                    <span className="gb-category">{categoryOf(page)}</span>
                     <Image
                         src={page.src || current.image || "/avatar-placeholder.svg"}
                         alt={current.name}
                         fill
                         sizes="480px"
                     />
-                    {/* Nome UNA SOLA VOLTA, in basso a sinistra */}
+                    {/* Nome UNA SOLA VOLTA: in basso a sinistra */}
                     <div className="gb-name">{current.name}</div>
 
-                    {/* Hint solo sulla prima pagina se esistono altre pagine */}
-                    {pi === 0 && pages.length > 1 && <div className="gb-hint">▶</div>}
+                    {/* Spacer per non sovrapporre la barra hint */}
+                    <div className="gb-bottom-safe" />
 
-                    {/* Istruzioni contestuali + numero pagina */}
+                    {/* Istruzioni contestuali e indice pagina */}
                     <div className="gb-footer-hint">
                         <span>Premi A per andare avanti</span>
-                        <span>Premi B per tornare indietro</span>
+                        <span>Premi B per uscire</span>
                     </div>
                     <div className="gb-page-ind">{pi + 1}/{pages.length || 1}</div>
                 </div>
             );
         }
 
-        // Pagina contatti
+        // Contatti
         if (page?.type === "contacts") {
             const list = page.contacts || [];
             return (
                 <div className="gb-screen-inner">
-                    <span className="gb-category">{categoryOf(page)}</span>
                     <div className="gb-name">{current.name}</div>
 
                     <ul className="gb-contacts" style={{ marginTop: "1.8rem" }}>
@@ -161,6 +164,7 @@ export default function GameBoyConsole({ members = [] }) {
                         ))}
                     </ul>
 
+                    <div className="gb-bottom-safe" />
                     <div className="gb-footer-hint">
                         <span>Seleziona con ↑ / ↓</span>
                         <span>Premi A per aprire</span>
@@ -170,16 +174,18 @@ export default function GameBoyConsole({ members = [] }) {
             );
         }
 
-        // Pagine di testo: Bio / Skill
+        // Testo (Bio / Skill)
         return (
             <div className="gb-screen-inner">
-                <span className="gb-category">{categoryOf(page)}</span>
                 <div className="gb-name">{current.name}</div>
 
                 <div className="gb-text" style={{ marginTop: "1.8rem" }}>
-                    {(page?.content || "").split("\n").map((l, i) => <div key={i}>{l}</div>)}
+                    {(page?.content || "")
+                        .split("\n")
+                        .map((l, i) => <div key={i}>{l}</div>)}
                 </div>
 
+                <div className="gb-bottom-safe" />
                 <div className="gb-footer-hint">
                     <span>Premi A per andare avanti</span>
                     <span>Premi B per uscire</span>
@@ -189,6 +195,9 @@ export default function GameBoyConsole({ members = [] }) {
         );
     };
 
+    /* -----------------------------
+       Layout completo
+    ------------------------------*/
     return (
         <div className="gb-layout">
             {/* Colonna cassette sinistra */}
@@ -225,9 +234,10 @@ export default function GameBoyConsole({ members = [] }) {
                     <div className="gb-dpad">
                         <button
                             className="gb-btn"
-                            onClick={() => (page?.type === "contacts"
-                                ? setContactIndex(i => clamp(i - 1, 0, (page.contacts?.length || 1) - 1))
-                                : scrollBy(0, -90))}
+                            onClick={() =>
+                                (page?.type === "contacts"
+                                    ? setContactIndex(i => clamp(i - 1, 0, (page.contacts?.length || 1) - 1))
+                                    : scrollBy(0, -90))}
                             aria-label="Su"
                         >
                             ▲
@@ -237,9 +247,10 @@ export default function GameBoyConsole({ members = [] }) {
                             <button className="gb-btn" onClick={prevPage} aria-label="Sinistra">◀</button>
                             <button
                                 className="gb-btn"
-                                onClick={() => (page?.type === "contacts"
-                                    ? setContactIndex(i => clamp(i + 1, 0, (page.contacts?.length || 1) - 1))
-                                    : scrollBy(0, 90))}
+                                onClick={() =>
+                                    (page?.type === "contacts"
+                                        ? setContactIndex(i => clamp(i + 1, 0, (page.contacts?.length || 1) - 1))
+                                        : scrollBy(0, 90))}
                                 aria-label="Giù"
                             >
                                 ▼

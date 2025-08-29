@@ -1,5 +1,5 @@
 /* ======================================================
-   PAGINA CHI SIAMO — struttura, tipografia e spaziatura
+   CHI SIAMO — struttura, tipografia e spaziatura
    ====================================================== */
 .about {
   display: flex;
@@ -13,7 +13,6 @@
 .about .title,
 .about .description,
 .cassette-label,
-.gb-caption,
 .gb-name {
   font-family: var(--font-press-start);
 }
@@ -24,7 +23,7 @@
   text-align: center;
 }
 
-/* Intro più stretta e ariosa */
+/* Intro stretta e ariosa */
 .about .description {
   max-width: 900px;
   padding: 0.25rem 1rem;
@@ -36,9 +35,10 @@
 }
 
 /* ======================================================
-   LAYOUT PRINCIPALE — Game Boy fisso centrale + cassette
+   LAYOUT — Game Boy fisso centrale + cassette
    ====================================================== */
 .gb-layout {
+  --gb-footer-h: 28px;               /* fascia riservata in basso allo schermo */
   display: grid;
   grid-template-columns: 220px 520px 220px; /* console fissa 520px */
   gap: 1.2rem;
@@ -48,7 +48,7 @@
   justify-content: center;
 }
 
-/* Colonne di cassette */
+/* Colonne cassette */
 .cassette-col {
   display: flex;
   flex-direction: column;
@@ -69,16 +69,25 @@
   display: grid;
   grid-template-rows: 1fr auto;
   gap: 0.4rem;
-  transition: transform .2s ease, filter .2s ease;
+  transition: transform .18s ease, filter .18s ease, opacity .18s ease;
   transform-style: preserve-3d;
   backface-visibility: hidden;
+  will-change: transform, filter, opacity;
 }
-.cassette:hover { transform: translateY(-2px); }
 
-/* Stato “inserita”: flip orizzontale (retro) + opacizzazione */
+/* galleggiamento morbido */
+.cassette:hover { transform: translateY(-6px); }
+
+.cassette:active {
+  transform: translateY(-2px) scale(0.99);
+  box-shadow: 3px 3px 0 var(--color-primary);
+}
+
+/* Inserita: riflesso orizzontale + opacità, MA resta visibile */
 .cassette.inserted {
-  transform: rotateY(180deg) scale(0.98);
-  filter: brightness(0.6) saturate(0.85);
+  transform: scale(0.98) rotateY(180deg);
+  opacity: 0.45;
+  filter: saturate(0.85);
 }
 
 .cassette-img {
@@ -102,26 +111,26 @@
 }
 
 /* ============================
-   CONSOLE VERTICALE (Game Boy)
+   CONSOLE (Game Boy verticale)
    ============================ */
 .gb-console-vert {
   background: var(--background);
   border: 4px solid var(--color-primary);
   box-shadow: 4px 4px 0 var(--color-primary);
   padding: 0.9rem;
-  border-radius: 12px; /* un filo più tondeggiante */
+  border-radius: 12px;
 }
 
-/* Schermo unico, dimensione fissa */
+/* Schermo fisso “per lungo” */
 .gb-screen-vert {
   position: relative;
   width: 480px;
-  height: 300px; /* FISSO, “per lungo” */
-  background: #a6e28d; /* LCD */
+  height: 300px;                     /* fisso */
+  background: #a6e28d;               /* LCD */
   border: 4px solid var(--color-primary);
   box-shadow: inset 0 0 0 4px var(--background),
   3px 3px 0 var(--color-primary);
-  overflow: auto; /* testo lungo -> scroll con frecce */
+  overflow: auto;
 }
 
 /* Stato “nessuna cassetta” */
@@ -138,24 +147,14 @@
   box-shadow: 3px 3px 0 #203b1a;
   animation: gbBlink .9s steps(2,end) infinite; /* lampeggia */
 }
+@keyframes gbBlink { 50% { opacity: .25; } }
 
 /* Pagina immagine nello schermo */
 .gb-screen-photo { position: relative; width: 100%; height: 100%; }
 .gb-screen-photo > span,
 .gb-screen-photo img { object-fit: cover !important; }
 
-/* Etichetta categoria (in alto a sinistra) */
-.gb-category {
-  position: absolute;
-  top: 6px; left: 6px;
-  font-family: var(--font-press-start);
-  font-size: .72rem; color: #203b1a;
-  background: rgba(166,226,141,.7);
-  border: 3px solid #203b1a;
-  padding: 1px 6px;
-}
-
-/* Nome in basso a sinistra (unico luogo dove appare) */
+/* Nome SOLO in basso a sinistra */
 .gb-name {
   position: absolute; left: 6px; bottom: 6px;
   font-size: .8rem; color: #203b1a;
@@ -164,26 +163,21 @@
   padding: 2px 6px;
 }
 
-/* Hint ► sulla prima pagina */
-.gb-hint {
-  position: absolute; right: 8px; top: 50%;
-  transform: translateY(-50%);
-  color: #203b1a; font-family: var(--font-press-start); font-size: .9rem;
-  animation: gbBlink .9s steps(2, end) infinite;
-}
-@keyframes gbBlink { 50% { opacity: .2; } }
-
-/* Pagine di testo nello schermo */
+/* contenuto testuale con padding e fascia di sicurezza in basso */
 .gb-screen-inner { position: relative; padding: .75rem; }
 .gb-text {
   color: #203b1a;
   font-family: var(--font-press-start);
   font-size: .78rem;
   line-height: 1.55;
-  white-space: pre-wrap; /* rispetta \n dai contenuti */
+  white-space: pre-wrap;
+  padding-right: .5rem;               /* per non toccare scrollbar */
 }
 
-/* Elenco contatti con selezione ↑/↓ (lampeggia l’attivo) */
+/* “spacer” invisibile per non far toccare le istruzioni */
+.gb-bottom-safe { height: var(--gb-footer-h); }
+
+/* lista contatti */
 .gb-contacts { list-style: none; padding: 0; margin: .25rem 0 .6rem; }
 .gb-contacts li {
   padding: .25rem 0;
@@ -195,13 +189,15 @@
   animation: gbBlink .9s steps(2,end) infinite;
 }
 
-/* Footer hint (istruzioni contestuali) */
+/* Istruzioni: barra fissa in basso (non sovrappone contenuto perché c'è lo spacer) */
 .gb-footer-hint {
-  position: absolute; left: 6px; right: 6px; bottom: 6px;
+  position: absolute; left: 4px; right: 54px; bottom: 4px;
   display: flex; justify-content: space-between; gap: .5rem;
   font-family: var(--font-press-start);
   font-size: .72rem; color: #203b1a;
-  opacity: .9;
+  background: rgba(166,226,141,.9);
+  border: 2px solid #203b1a;
+  padding: 1px 4px;
 }
 
 /* Indicatore pagina in basso a destra */
@@ -224,7 +220,7 @@
   gap: 1.2rem;
 }
 
-/* Bottoni base */
+/* Bottoni base + feedback “soft” */
 .gb-btn {
   font-family: var(--font-press-start);
   font-size: .9rem;
@@ -235,9 +231,9 @@
   box-shadow: 4px 4px 0 var(--color-primary);
   cursor: pointer;
   border-radius: 12px;
-  transition: transform .08s ease, box-shadow .08s ease; /* feedback morbido */
+  transition: transform .08s ease, box-shadow .08s ease;
+  will-change: transform, box-shadow;
 }
-/* Feedback “premuto” */
 .gb-btn:active {
   transform: translateY(2px);
   box-shadow: 2px 2px 0 var(--color-primary);
@@ -256,7 +252,6 @@
    RESPONSIVE
    ============================ */
 @media (max-width: 1100px) {
-  /* console sotto, cassette in strip orizzontale sopra */
   .gb-layout { grid-template-columns: 1fr; justify-items: center; }
   .cassette-col {
     flex-direction: row;
@@ -268,10 +263,9 @@
 }
 
 @media (max-width: 560px) {
-  /* schermo scalabile mantenendo proporzioni */
   .gb-screen-vert {
     width: 92vw;
-    height: 58vw; /* ~16:10 verticale */
+    height: 58vw;               /* ~16:10 verticale */
     max-height: 360px;
   }
   .gb-btn { width: 48px; height: 48px; }
@@ -282,16 +276,14 @@
    VARIANTE TEMA CHIARO (opzionale)
    ====================================================== */
 .theme-light .gb-screen-vert { background: #e5e5e5; }
-.theme-light .gb-category,
 .theme-light .gb-name,
 .theme-light .gb-text,
 .theme-light .gb-contacts li,
 .theme-light .gb-footer-hint,
-.theme-light .gb-page-ind,
-.theme-light .gb-hint {
+.theme-light .gb-page-ind {
   color: #111;
   border-color: #111;
-  background: rgba(229,229,229,0.7);
+  background: rgba(229,229,229,0.85);
 }
 .theme-light .cassette,
 .theme-light .gb-console-vert,

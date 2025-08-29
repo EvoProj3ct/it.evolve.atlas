@@ -6,10 +6,10 @@ const founders = [
     {
         slug: "emanuele-i",
         name: "Emanuele I.",
-        image: "/avatars/emanuele.jpg",
+        image: "/avatars/emanuele.png",
         pages: [
             { type: "image", src: "/avatars/emanuele.jpg", caption: "Emanuele I." },
-            { type: "text",  content: "Programmatore Full Stack e bonsai guru. Ama far crescere codice e alberi con la stessa pazienza." },
+            { type: "text",  content: "Programmatore Full Stack e bonsai guru. Ama far crescere codice e alberi con la stessa pazienza. aaaaaaaaaaaaa. aaaaaaaaaaaaaa. aaaaaaaaaaaaa." },
             { type: "text",  content: "Skill:\n- Node/Next\n- IoT\n- Design Systems\n- DevOps" },
             { type: "contacts", contacts: [
                     { label: "Email", href: "mailto:emanuele@evolve3d.it" },
