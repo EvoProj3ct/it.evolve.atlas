@@ -2,7 +2,7 @@
 
 import React from "react";
 import ScrollProgress from "@/components/ScrollProgress";
-import WindowEffects from "@/components/WindowEffects"; // monta la tray
+import WindowEffects from "@/components/window/WindowEffects"; // monta la tray
 import HomeParallax from "@/components/HomeParallax";
 import { WindowProvider } from "@/components/window/WindowManager";
 import Window from "@/components/window/Window";
