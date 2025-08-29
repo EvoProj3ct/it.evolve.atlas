@@ -39,76 +39,25 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
     // Sagome: costruisco forme con più blocchi pieni (nessuna trasparenza),
     //        occhi/oblò sono "fori" riempiti col var(--background)
 
-    // 🚀 Nave stile arcade/Galaga
+    // 🚀 Nave a forma di freccia (razzo stilizzato)
     const createShip = () => {
       const ship = document.createElement("div");
       ship.className = "ship-shape";
-      ship.style.position = "absolute";
-      ship.style.left = "0px";
-      ship.style.bottom = `${SHIP_MIN_BOTTOM}px`;
-      ship.style.width = "64px";
-      ship.style.height = "72px";
-      ship.style.filter = "drop-shadow(0 0 10px var(--foreground))"; // glow solo nave
+      ship.style.position   = "absolute";
+      ship.style.left       = "0px";
+      ship.style.bottom     = `${SHIP_MIN_BOTTOM}px`;
+      ship.style.width      = "50px";
+      ship.style.height     = "60px";
+      ship.style.background = "var(--foreground)";
+      ship.style.filter     = "drop-shadow(0 0 10px var(--foreground))"; // glow solo nave
 
-      // contenitore per pezzi (tutti dello stesso colore)
-      const color = getComputedStyle(document.documentElement).getPropertyValue("--foreground") || "#fff";
-      const addBlock = (left, top, w, h, r = 6) => {
-        const b = document.createElement("div");
-        b.style.position = "absolute";
-        b.style.left = left + "px";
-        b.style.top = top + "px";
-        b.style.width = w + "px";
-        b.style.height = h + "px";
-        b.style.background = color.trim();
-        b.style.borderRadius = r + "px";
-        return b;
-      };
-
-      // Torre centrale
-      ship.appendChild(addBlock(28, 0, 8, 60, 4));   // stelo lungo
-      ship.appendChild(addBlock(24, 60, 16, 8, 4));  // base torre
-
-      // Ali/bracci laterali (4 piloni)
-      ship.appendChild(addBlock(4, 32, 10, 28, 4));   // far left
-      ship.appendChild(addBlock(16, 24, 10, 36, 4));  // left
-      ship.appendChild(addBlock(38, 24, 10, 36, 4));  // right
-      ship.appendChild(addBlock(50, 32, 10, 28, 4));  // far right
-
-      // Fuseliera bassa
-      ship.appendChild(addBlock(8, 52, 48, 14, 6));
-      ship.appendChild(addBlock(18, 64, 28, 8, 6));   // coda
-
-      // Cockpit a crocetta (foro)
-      const cockpit = document.createElement("div");
-      cockpit.style.position = "absolute";
-      cockpit.style.left = "26px";
-      cockpit.style.top = "40px";
-      cockpit.style.width = "12px";
-      cockpit.style.height = "16px";
-      cockpit.style.background = "var(--background)";
-      cockpit.style.borderRadius = "3px";
-      ship.appendChild(cockpit);
-
-      // micro-fori in punta bracci
-      const tips = [
-        [7, 34], [19, 26], [41, 26], [53, 34]
-      ];
-      tips.forEach(([x, y]) => {
-        const p = document.createElement("div");
-        Object.assign(p.style, {
-          position: "absolute",
-          left: x + "px",
-          top: y + "px",
-          width: "5px",
-          height: "5px",
-          background: "var(--background)",
-          borderRadius: "2px",
-        });
-        ship.appendChild(p);
-      });
+      // Clip-path: sagoma a freccia
+      ship.style.clipPath =
+          "polygon(50% 0%, 65% 25%, 55% 25%, 55% 70%, 75% 70%, 50% 100%, 25% 70%, 45% 70%, 45% 25%, 35% 25%)";
 
       return ship;
     };
+
 
     // 👻 Fantasma (come già fatto)
     const createGhost = (color) => {
