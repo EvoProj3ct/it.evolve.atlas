@@ -1,5 +1,6 @@
 import ScrollProgress from "@/components/ScrollProgress";
 import WindowEffects from "@/components/WindowEffects";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -10,8 +11,24 @@ export default function Home() {
       <section id="intro" className="home-section">
         <div className="content window">
           <div className="window-bar">
-            <span className="window-btn minimize"></span>
-            <span className="window-btn close"></span>
+            <span
+              className="window-btn minimize"
+              title="Riduci"
+              aria-label="Riduci"
+            ></span>
+            <Link
+              href="/chi-siamo"
+              className="window-btn maximize"
+              title="Ingrandisci"
+              aria-label="Ingrandisci"
+            >
+              {" "}
+            </Link>
+            <span
+              className="window-btn close"
+              title="Chiudi"
+              aria-label="Chiudi"
+            ></span>
           </div>
           <h2 className="title">Benvenuto in Evolve</h2>
           <p className="description">
@@ -29,8 +46,24 @@ export default function Home() {
       <section id="chi-siamo" className="home-section">
         <div className="content window">
           <div className="window-bar">
-            <span className="window-btn minimize"></span>
-            <span className="window-btn close"></span>
+            <span
+              className="window-btn minimize"
+              title="Riduci"
+              aria-label="Riduci"
+            ></span>
+            <Link
+              href="/chi-siamo"
+              className="window-btn maximize"
+              title="Ingrandisci"
+              aria-label="Ingrandisci"
+            >
+              {" "}
+            </Link>
+            <span
+              className="window-btn close"
+              title="Chiudi"
+              aria-label="Chiudi"
+            ></span>
           </div>
           <h2 className="title">Chi Siamo</h2>
           <p className="description">
@@ -44,8 +77,24 @@ export default function Home() {
       <section id="prodotti" className="home-section">
         <div className="content window">
           <div className="window-bar">
-            <span className="window-btn minimize"></span>
-            <span className="window-btn close"></span>
+            <span
+              className="window-btn minimize"
+              title="Riduci"
+              aria-label="Riduci"
+            ></span>
+            <Link
+              href="/chi-siamo"
+              className="window-btn maximize"
+              title="Ingrandisci"
+              aria-label="Ingrandisci"
+            >
+              {" "}
+            </Link>
+            <span
+              className="window-btn close"
+              title="Chiudi"
+              aria-label="Chiudi"
+            ></span>
           </div>
           <h2 className="title">I Nostri Prodotti</h2>
           <p className="description">
@@ -59,8 +108,24 @@ export default function Home() {
       <section id="servizi" className="home-section">
         <div className="content window">
           <div className="window-bar">
-            <span className="window-btn minimize"></span>
-            <span className="window-btn close"></span>
+            <span
+              className="window-btn minimize"
+              title="Riduci"
+              aria-label="Riduci"
+            ></span>
+            <Link
+              href="/chi-siamo"
+              className="window-btn maximize"
+              title="Ingrandisci"
+              aria-label="Ingrandisci"
+            >
+              {" "}
+            </Link>
+            <span
+              className="window-btn close"
+              title="Chiudi"
+              aria-label="Chiudi"
+            ></span>
           </div>
           <h2 className="title">I Nostri Servizi</h2>
           <p className="description">
@@ -74,8 +139,24 @@ export default function Home() {
       <section id="testimonianze" className="home-section">
         <div className="content window">
           <div className="window-bar">
-            <span className="window-btn minimize"></span>
-            <span className="window-btn close"></span>
+            <span
+              className="window-btn minimize"
+              title="Riduci"
+              aria-label="Riduci"
+            ></span>
+            <Link
+              href="/chi-siamo"
+              className="window-btn maximize"
+              title="Ingrandisci"
+              aria-label="Ingrandisci"
+            >
+              {" "}
+            </Link>
+            <span
+              className="window-btn close"
+              title="Chiudi"
+              aria-label="Chiudi"
+            ></span>
           </div>
           <h2 className="title">Cosa Dicono di Noi</h2>
           <p className="description">
@@ -89,8 +170,24 @@ export default function Home() {
       <section id="contatti" className="home-section">
         <div className="content window">
           <div className="window-bar">
-            <span className="window-btn minimize"></span>
-            <span className="window-btn close"></span>
+            <span
+              className="window-btn minimize"
+              title="Riduci"
+              aria-label="Riduci"
+            ></span>
+            <Link
+              href="/chi-siamo"
+              className="window-btn maximize"
+              title="Ingrandisci"
+              aria-label="Ingrandisci"
+            >
+              {" "}
+            </Link>
+            <span
+              className="window-btn close"
+              title="Chiudi"
+              aria-label="Chiudi"
+            ></span>
           </div>
           <h2 className="title">Contattaci</h2>
           <form

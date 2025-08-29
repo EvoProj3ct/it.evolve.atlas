@@ -3,37 +3,39 @@ import { useEffect } from "react";
 
 export default function WindowEffects() {
   useEffect(() => {
-    const windows = Array.from(document.querySelectorAll('.home-section .content'));
+    const windows = Array.from(document.querySelectorAll(".home-section .content"));
 
-    windows.forEach(win => {
-      const bar = win.querySelector('.window-bar');
-      const closeBtn = bar?.querySelector('.close');
-      const minBtn = bar?.querySelector('.minimize');
+    let tray = document.querySelector(".icon-tray");
+    if (!tray) {
+      tray = document.createElement("div");
+      tray.className = "icon-tray";
+      document.body.appendChild(tray);
+    }
 
-      const showBar = () => {
-        bar.style.display = 'flex';
-      };
+    windows.forEach((win) => {
+      const closeBtn = win.querySelector(".close");
+      const minBtn = win.querySelector(".minimize");
 
-      const reset = () => {
-        bar.style.display = 'none';
-        win.classList.remove('destroy');
-        win.style.visibility = 'hidden';
-        setTimeout(() => {
-          win.style.visibility = 'visible';
-          win.classList.add('fade-in');
-          setTimeout(() => win.classList.remove('fade-in'), 1000);
-        }, 2000);
-      };
+      closeBtn?.addEventListener("click", () => {
+        win.style.display = "none";
+        const next = win.parentElement.nextElementSibling;
+        if (next) next.scrollIntoView({ behavior: "smooth" });
+      });
 
-      win.addEventListener('mouseenter', showBar);
-
-      const destroyWindow = () => {
-        win.classList.add('destroy');
-        setTimeout(reset, 500);
-      };
-
-      closeBtn?.addEventListener('click', destroyWindow);
-      minBtn?.addEventListener('click', destroyWindow);
+      minBtn?.addEventListener("click", () => {
+        win.style.display = "none";
+        const icon = document.createElement("span");
+        icon.className = "window-icon";
+        icon.textContent =
+          win.querySelector(".title")?.textContent?.charAt(0) || "?";
+        icon.title = win.querySelector(".title")?.textContent || "";
+        icon.addEventListener("click", () => {
+          win.style.display = "block";
+          icon.remove();
+          win.scrollIntoView({ behavior: "smooth" });
+        });
+        tray.appendChild(icon);
+      });
     });
   }, []);
 

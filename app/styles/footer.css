@@ -7,6 +7,7 @@
   padding: 2rem 0;
   background: var(--color-black);
   color: var(--color-white);
+  z-index: 2;
 }
 
 .footer::before {
