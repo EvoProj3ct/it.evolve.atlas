@@ -211,6 +211,7 @@
   background: var(--color-primary);
   height: 0;
 }
+
 .home-section form {
   display: flex;
   flex-direction: column;
