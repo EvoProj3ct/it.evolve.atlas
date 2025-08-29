@@ -8,10 +8,8 @@ import "@/styles/pages.css";
 import "@/styles/home.css";
 import "@/styles/icons.css";
 import "@/styles/game.css";
-import "@/styles/magazzino.css";
 import "@/styles/about.css";
-import "@/styles/finanze.css";
-import "@/styles/spesatore.css";
+
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
