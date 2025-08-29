@@ -20,8 +20,7 @@ export default function DashboardLayout({ children }) {
                     { label: "Reports", href: "/dashboard/reports" },
                     { label: "Finanze", href: "/dashboard/finanze" },
                     { label: "Magazzino", href: "/dashboard/magazzino" },
-                    { label: "Instagram", href: "/dashboard/instagram" },
-                    { label: "Logout", href: "/api/auth/signout" },
+                    { label: "E Molto Altro", href: "/dashboard/altro" },
                 ]}
             />
             <main
