@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import ParallaxAliens from "./ParallaxAliens";
 
@@ -10,13 +9,14 @@ export default function HomeParallax() {
     return (
         <>
             <div className="space-ship-container">
-                <img src="/ship.svg" alt="" className="bottom-ship ship-fluo" />
+                {/* emoji nave al posto della freccia */}
+                <div className="ship-emoji" aria-hidden="true">🚀</div>
             </div>
             <div className="bullet-layer" />
             <div className="aliens-layer" />
             <ParallaxAliens mode={mode} />
 
-            {/* Bottone switch set nemici */}
+            {/* Switch in basso a destra (non interferisce con navbar) */}
             <button
                 type="button"
                 className="game-toggle"

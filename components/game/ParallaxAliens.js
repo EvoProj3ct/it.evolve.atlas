@@ -1,21 +1,17 @@
 "use client";
-
 import React, { useEffect } from "react";
 
 /**
- * Props:
- *  - mode: "ALIEN" (blocchi neon) | "GHOST" (fantasmini stile Pac-Man)
+ * mode: "ALIEN" (pixel-art 👾 con colori fluo) | "GHOST" (👻 stile Pac-Man)
  */
 export default function ParallaxAliens({ mode = "ALIEN" }) {
   useEffect(() => {
-    const ship = document.querySelector(".bottom-ship");
+    const ship = document.querySelector(".ship-emoji");          // <-- emoji nave
     const bulletLayer = document.querySelector(".bullet-layer");
     const alienLayer = document.querySelector(".aliens-layer");
     if (!ship || !bulletLayer || !alienLayer) return;
 
-    // Palette fluo per gli alieni (👾)
     const ALIEN_COLORS = ["#39FF14", "#00FFFF", "#F7FF00", "#FF00FF", "#FF66CC"];
-    // Palette classica dei fantasmi (👻) + viola fluo
     const GHOST_COLORS = ["#FF0000", "#FFB8DE", "#00FFFF", "#FFA500", "#7F00FF"];
 
     const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -23,13 +19,17 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
     const bullets = []; // { el, x, y, w, h }
     const aliens  = []; // { el, x, y, w, h, color }
 
-    const SIZE = 120; // molto visibili
+    const SIZE = 96;                               // più piccoli di prima
     const BULLET_H = 20, BULLET_W = 4;
+    const BULLET_INTERVAL = prefersReduce ? 0.6 : 0.35;
+    const ALIEN_INTERVAL  = prefersReduce ? 1.8 : 1.2;
+    const BULLET_SPEED    = prefersReduce ? 300 : 520;   // px/s
+    const ALIEN_SPEED     = prefersReduce ? 70  : 95;    // un po' più lenti
 
     let shipX = 0;
 
     const onPointerMove = (e) => {
-      shipX = e.clientX - ship.clientWidth / 2;
+      shipX = e.clientX - 23; // centratura rispetto a font-size 46px circa
       ship.style.left = `${shipX}px`;
     };
     window.addEventListener("pointermove", onPointerMove, { passive: true });
@@ -37,7 +37,7 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
     const spawnBullet = () => {
       const el = document.createElement("span");
       el.className = "bullet";
-      const x = shipX + ship.clientWidth / 2 - BULLET_W / 2;
+      const x = shipX + 23 - BULLET_W / 2;
       const y = 0;
       el.style.left = `${x}px`;
       el.style.bottom = `${y}px`;
@@ -47,15 +47,12 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
 
     const createGhost = (color) => {
       const el = document.createElement("div");
-      el.className = "alien ghost"; // nessun alone: CSS rimuove filter
+      el.className = "alien ghost";
       el.style.width = `${SIZE}px`;
       el.style.height = `${SIZE}px`;
       el.style.background = color;
-      // testata tonda e base "ondulata"
       el.style.borderRadius = "50% 50% 14% 14%";
-      el.style.clipPath =
-          "polygon(0 0,100% 0,100% 80%,86% 90%,72% 80%,58% 90%,44% 80%,30% 90%,16% 80%,0 90%)";
-      // occhi
+      el.style.clipPath = "polygon(0 0,100% 0,100% 80%,86% 90%,72% 80%,58% 90%,44% 80%,30% 90%,16% 80%,0 90%)";
       const eye = () => {
         const e = document.createElement("span");
         e.className = "eye";
@@ -70,13 +67,13 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
       return el;
     };
 
-    const createAlienBlock = (color) => {
+    const createAlienSprite = (color) => {
       const el = document.createElement("div");
-      el.className = "alien block"; // nessun alone: CSS rimuove filter
+      el.className = "alien sprite";
+      el.style.setProperty("--alien-size", `${SIZE}px`);
+      el.style.setProperty("--alien-color", color);
       el.style.width = `${SIZE}px`;
       el.style.height = `${SIZE}px`;
-      el.style.background = color;
-      el.style.borderRadius = "12%";
       return el;
     };
 
@@ -84,7 +81,7 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
       const palette = mode === "GHOST" ? GHOST_COLORS : ALIEN_COLORS;
       const color = palette[(Math.random() * palette.length) | 0];
 
-      const el = mode === "GHOST" ? createGhost(color) : createAlienBlock(color);
+      const el = mode === "GHOST" ? createGhost(color) : createAlienSprite(color);
       const x = Math.random() * (window.innerWidth - SIZE);
       const y = -SIZE;
 
@@ -97,22 +94,16 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
     const spawnExplosion = (cx, cy, color) => {
       const ex = document.createElement("span");
       ex.className = "explosion";
-      ex.style.left = `${cx - 8}px`;
-      ex.style.top = `${cy - 8}px`;
+      ex.style.left = `${cx - 12}px`;
+      ex.style.top = `${cy - 12}px`;
+      ex.style.color = color; // per i ring ::before/::after
       ex.style.background = `radial-gradient(circle, ${color} 0%, ${color} 40%, transparent 70%)`;
       alienLayer.appendChild(ex);
-      setTimeout(() => ex.remove(), 500);
+      setTimeout(() => ex.remove(), 600);
     };
 
-    let rafId = 0;
-    let last = performance.now();
-    let bulletTimer = 0;
-    let alienTimer = 0;
-
-    const BULLET_INTERVAL = prefersReduce ? 0.6 : 0.3; // sec
-    const ALIEN_INTERVAL  = prefersReduce ? 1.6 : 0.9;
-    const BULLET_SPEED = prefersReduce ? 300 : 520;    // px/s
-    const ALIEN_SPEED  = prefersReduce ? 90  : 140;
+    let rafId = 0, last = performance.now();
+    let bulletTimer = 0, alienTimer = 0;
 
     const update = (now) => {
       const dt = (now - last) / 1000;
@@ -121,9 +112,9 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
       bulletTimer += dt;
       alienTimer += dt;
       if (bulletTimer >= BULLET_INTERVAL) { spawnBullet(); bulletTimer = 0; }
-      if (alienTimer >= ALIEN_INTERVAL)  { spawnAlien();  alienTimer  = 0; }
+      if (alienTimer  >= ALIEN_INTERVAL)  { spawnAlien();  alienTimer  = 0; }
 
-      // proiettili: verso l'alto
+      // BULLETS
       for (let i = bullets.length - 1; i >= 0; i--) {
         const b = bullets[i];
         b.y += BULLET_SPEED * dt;
@@ -133,7 +124,7 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
         b.el.style.bottom = `${b.y}px`;
       }
 
-      // alieni: verso il basso
+      // ALIENS
       for (let i = aliens.length - 1; i >= 0; i--) {
         const a = aliens[i];
         a.y += ALIEN_SPEED * dt;
@@ -143,7 +134,7 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
         a.el.style.top = `${a.y}px`;
       }
 
-      // collisioni AABB
+      // COLLISIONI
       for (let bi = bullets.length - 1; bi >= 0; bi--) {
         const b = bullets[bi];
         const bL = b.x, bR = b.x + b.w;
@@ -153,7 +144,6 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
           const a = aliens[ai];
           const aL = a.x, aR = a.x + a.w, aT = a.y, aB = a.y + a.h;
           if (bL < aR && bR > aL && bT < aB && bB > aT) {
-            // esplosione al centro dell'alieno
             spawnExplosion(a.x + a.w / 2, a.y + a.h / 2, a.color);
             a.el.remove(); aliens.splice(ai, 1);
             b.el.remove(); bullets.splice(bi, 1);
