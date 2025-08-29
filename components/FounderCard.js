@@ -1,7 +1,7 @@
 "use client";
 import { useState, useMemo } from "react";
 import Image from "next/image";
-import GameBoyPanel from "./ui/GameBoyPanel";
+import GameBoyConsole from "./about/GameBoyConsole";
 
 const placeholder = "/avatar-placeholder.svg";
 
@@ -38,7 +38,7 @@ export default function FounderCard({ name, slug, image = placeholder, descripti
             </button>
 
             {open && (
-                <GameBoyPanel id={`gb-${name}`} onClose={() => setOpen(false)} pages={pages} />
+                <GameBoyConsole id={`gb-${name}`} onClose={() => setOpen(false)} pages={pages} />
             )}
         </div>
     );

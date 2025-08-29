@@ -21,7 +21,6 @@ export default function SiteLayout({ children }) {
                 items={[
                     { label: "Home", href: "/" },
                     { label: "Chi Siamo", href: "/chi-siamo" },
-                    { label: "Game", href: "/game" },
                     {
                         label: "Talk to LEO",
                         href: "http://evolve3d.it/leo/virtual-assistant.html",
