@@ -8,7 +8,7 @@ const founders = [
         name: "Emanuele I.",
         image: "/avatars/emanuele.png",
         pages: [
-            { type: "image", src: "/avatars/emanuele.jpg", caption: "Emanuele I." },
+            { type: "image", src: "/avatars/emanuele.png", caption: "Emanuele I." },
             { type: "text",  content: "Programmatore Full Stack e bonsai guru. Ama far crescere codice e alberi con la stessa pazienza. aaaaaaaaaaaaa. aaaaaaaaaaaaaa. aaaaaaaaaaaaa." },
             { type: "text",  content: "Skill:\n- Node/Next\n- IoT\n- Design Systems\n- DevOps" },
             { type: "contacts", contacts: [
@@ -21,9 +21,9 @@ const founders = [
     {
         slug: "gianmarco",
         name: "Gianmarco",
-        image: "/avatars/gianmarco.jpg",
+        image: "/avatars/gianmarco.png",
         pages: [
-            { type: "image", src: "/avatars/gianmarco.jpg", caption: "Gianmarco" },
+            { type: "image", src: "/avatars/gianmarco.png", caption: "Gianmarco" },
             { type: "text",  content: "Analista ed esploratore di Metaversi. Traduce i dataset in storie leggibili." },
             { type: "text",  content: "Skill:\n- Data viz\n- Unity/VR\n- Product Analytics" },
             { type: "contacts", contacts: [
@@ -35,9 +35,9 @@ const founders = [
     {
         slug: "luca-d",
         name: "Luca D.",
-        image: "/avatars/luca-d.jpg",
+        image: "/avatars/lucad.png",
         pages: [
-            { type: "image", src: "/avatars/luca-d.jpg", caption: "Luca D." },
+            { type: "image", src: "/avatars/lucad.png", caption: "Luca D." },
             { type: "text",  content: "Progettista 3D e Solution Designer. Converte idee in prototipi stampabili." },
             { type: "text",  content: "Skill:\n- CAD/3D\n- Stampa PLA/NFC\n- Prototipazione rapida" },
             { type: "contacts", contacts: [
