@@ -272,6 +272,16 @@
   font-size: 1rem;
 }
 
+/* PATCH: allinea i proiettili al sistema a "top" in viewport */
+.bullet-layer {
+  bottom: 0;         /* prima 60px */
+  height: 100%;      /* prima calc(100% - 60px) */
+}
+.bullet {
+  bottom: auto;      /* override */
+  top: 0;            /* gestito inline dal JS frame-by-frame */
+}
+
 /* ===========================
    ANIMAZIONI OPZIONALI
    =========================== */
