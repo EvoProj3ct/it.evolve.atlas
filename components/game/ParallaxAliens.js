@@ -39,24 +39,25 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
     // Sagome: costruisco forme con più blocchi pieni (nessuna trasparenza),
     //        occhi/oblò sono "fori" riempiti col var(--background)
 
-    // 🚀 Nave a forma di freccia (razzo stilizzato)
+    // 🚀 Nave a forma di freccia grossa/pixelata (stile bussola / navigatore)
     const createShip = () => {
       const ship = document.createElement("div");
       ship.className = "ship-shape";
       ship.style.position   = "absolute";
       ship.style.left       = "0px";
       ship.style.bottom     = `${SHIP_MIN_BOTTOM}px`;
-      ship.style.width      = "50px";
+      ship.style.width      = "60px";
       ship.style.height     = "60px";
       ship.style.background = "var(--foreground)";
-      ship.style.filter     = "drop-shadow(0 0 10px var(--foreground))"; // glow solo nave
+      ship.style.filter     = "drop-shadow(0 0 10px var(--foreground))";
 
-      // Clip-path: sagoma a freccia
+      // Clip-path per dare la forma di freccia grossa
       ship.style.clipPath =
-          "polygon(50% 0%, 65% 25%, 55% 25%, 55% 70%, 75% 70%, 50% 100%, 25% 70%, 45% 70%, 45% 25%, 35% 25%)";
+          "polygon(50% 0%, 100% 50%, 70% 50%, 70% 100%, 30% 100%, 30% 50%, 0% 50%)";
 
       return ship;
     };
+
 
 
     // 👻 Fantasma (come già fatto)
