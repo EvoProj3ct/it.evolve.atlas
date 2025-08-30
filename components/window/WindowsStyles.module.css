@@ -1,40 +1,53 @@
+/* Scope locale per le CSS vars dello stack finestre */
+.varsScope {
+    --z-nav: 100;        /* navbar / menu */
+    --z-menu: 120;       /* eventuale overlay menù */
+    --z-windows: 20;     /* stack finestre */
+    --z-windowbar: 21;   /* barra finestra sopra la card */
+    --z-icons: 60;       /* icone minimizzate trascinabili */
+}
+
+/* SEZIONI / LAYOUT ------------------------------------------------------- */
 .section {
     position: relative;
-    min-height: calc(100vh - var(--nav-height) - var(--footer-safe));
-    padding: 4rem 1rem;
+    min-height: calc(100vh - var(--nav-height, 56px) - var(--footer-safe, 0px));
+    padding: clamp(2rem, 6vh, 4rem) 1rem;
     display: flex;
     justify-content: center;
     align-items: flex-start;
 }
 
+/* CARD DELLA FINESTRA ---------------------------------------------------- */
 .content {
     position: relative;
-    z-index: 10;
+    z-index: var(--z-windows);
     background: var(--background);
-    padding: 4rem 3rem;
-    margin: 2rem 0;
-    width: 90%;
-    max-width: 700px;
+    padding: 3rem 2rem;
+    margin: 1.75rem auto;
+    width: min(92vw, 700px);
     border: 4px solid var(--color-primary);
     box-shadow: 4px 4px 0 var(--color-primary);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, filter .2s ease;
+    will-change: transform;
+    font-family: var(--font-press-start, "Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif);
+    letter-spacing: .02em;
+    line-height: 1.6;
+}
+.content :where(h1,h2,h3,h4,button,input,textarea,a,p,li,label,small,strong,em){font-family:inherit}
+
+/* Zoom al passaggio SOLO su device con hover */
+@media (hover: hover) and (pointer: fine) {
+    .content:hover { transform: scale(1.05); }
 }
 
-.content:hover {
-    transform: scale(1.05);
-}
+/* Stato con barra fissata (dopo primo hover/focus) */
+.keepBar .windowBar { display: flex; }
+.keepBar { transform: scale(1.05); }
 
-.keepBar .windowBar {
-    display: flex;
-}
-.keepBar {
-    transform: scale(1.05);
-}
+/* Nascosta */
+.isHidden { display: none; }
 
-.isHidden {
-    display: none;
-}
-
+/* BARRA TITOLI & CONTROLLI ----------------------------------------------- */
 .windowBar {
     position: absolute;
     top: -2.5rem;
@@ -47,34 +60,88 @@
     display: none;
     align-items: center;
     justify-content: flex-end;
-    gap: 0.5rem;
+    gap: 0.4rem;
     padding-right: 0.5rem;
+    z-index: var(--z-windowbar);
 }
 
-.content:hover .windowBar {
-    display: flex;
+/* Mobile: barra sempre visibile, niente hover-zoom */
+@media (max-width: 640px) {
+    .windowBar { display: flex; position: sticky; top: -2rem; }
+    .content { transform: none !important; padding: 2.25rem 1.25rem; margin: 1.25rem auto; }
 }
 
+/* PULSANTI stile Windows (-  □  ✕) -------------------------------------- */
 .btn {
-    width: 1.5rem;
-    height: 1.5rem;
-    display: flex;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-press-start);
-    font-size: 0.8rem;
-    line-height: 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1;
     border: 2px solid var(--color-white);
     background: var(--color-white);
     color: var(--color-black);
+    user-select: none;
+}
+.btn::before { content: ""; display: block; transform: translateY(-1px); }
+.min::before { content: "–"; }     /* minimize */
+.max::before { content: "☐"; }     /* maximize */
+.cls::before { content: "✕"; }     /* close  */
+
+.min { background: #0000ff; color: #fff; }
+.max { background: #00ff00; color: #000; }
+.cls { background: #ff0000; color: #000; }
+
+/* ANIMAZIONI ------------------------------------------------------------- */
+.fadeIn { animation: fadeIn .9s forwards; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Effetto “shrink” quando minimizzi (aggiunto da JS per 250ms) */
+.minimizing { animation: shrinkOut 250ms ease-in forwards; filter: brightness(1.15); }
+@keyframes shrinkOut {
+    0%   { transform: scale(1);    opacity: 1; }
+    100% { transform: scale(0.85); opacity: 0; }
 }
 
-.btn.min { background: #0000ff; color: #fff; }
-.btn.max { background: #00ff00; color: #000; }
-.btn.cls { background: #ff0000; color: #000; }
-
-.fadeIn { animation: fadeIn 1s forwards; }
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+/* ICONA MINIMIZZATA TRASCINABILE ---------------------------------------- */
+.trayLayer {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-icons);
+    pointer-events: none;
 }
+.iconTile {
+    position: fixed;
+    width: 42px;
+    height: 42px;
+    border: 3px solid var(--color-primary);
+    background: var(--background);
+    box-shadow: 3px 3px 0 var(--color-primary);
+    display: grid;
+    place-items: center;
+    color: var(--color-primary);
+    font-family: var(--font-press-start);
+    font-size: .9rem;
+    pointer-events: auto;
+    touch-action: none;
+    cursor: grab;
+    border-radius: 6px;
+}
+.ring { animation: ring 1.1s ease-in-out infinite; }
+@keyframes ring {
+    0%{transform:translate(0,0) rotate(0)}
+    15%{transform:translate(-1px,0) rotate(-6deg)}
+    30%{transform:translate(1px,0) rotate(6deg)}
+    45%{transform:translate(-1px,0) rotate(-4deg)}
+    60%{transform:translate(1px,0) rotate(4deg)}
+    75%{transform:translate(-1px,0) rotate(-2deg)}
+    100%{transform:translate(0,0) rotate(0)}
+}
+.dragging { cursor: grabbing; animation: none; box-shadow: 4px 4px 0 var(--color-primary); }
+
+/* Migliorie micro-UI */
+.title { margin-bottom: 1rem; }
+.description p + p { margin-top: .75rem; }

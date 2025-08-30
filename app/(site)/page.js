@@ -14,7 +14,7 @@ export default function Home() {
             <WindowTray />
 
             {/* Sezioni come finestre */}
-            <WindowFrame id="intro" title="Benvenuto in Evolve" maximizeHref="/portfolio">
+            <WindowFrame id="intro" title="Benvenuto in Evolve" maximizeHref="/">
                 <p>
                     Evolve è la tua officina digitale: realizziamo software su misura e
                     prototipi in stampa 3D con dispositivi PLA dotati di NFC. Con soluzioni
@@ -33,7 +33,7 @@ export default function Home() {
                 </p>
             </WindowFrame>
 
-            <WindowFrame id="prodotti" title="I Nostri Prodotti" maximizeHref="/stampa-3d">
+            <WindowFrame id="prodotti" title="I Nostri Prodotti" maximizeHref="/portfolio">
                 <p>
                     Dal nostro E-Linker all'E-Talk, sviluppiamo dispositivi e piattaforme
                     che integrano NFC e stampa 3D per connettere ciò che conta. Ogni prodotto
@@ -41,7 +41,7 @@ export default function Home() {
                 </p>
             </WindowFrame>
 
-            <WindowFrame id="servizi" title="I Nostri Servizi" maximizeHref="/chi-siamo">
+            <WindowFrame id="servizi" title="I Nostri Servizi" maximizeHref="/portfolio">
                 <p>
                     Offriamo soluzioni integrate e consulenza personalizzata per ottimizzare
                     i processi aziendali. Dallo sviluppo software alla prototipazione rapida,
@@ -56,7 +56,7 @@ export default function Home() {
                 </p>
             </WindowFrame>
 
-            <WindowFrame id="contatti" title="Contattaci" maximizeHref="/chi-siamo">
+            <WindowFrame id="contatti" title="Contattaci" maximizeHref="/contatti">
                 <form
                     className="form"
                     action="mailto:info@example.com"

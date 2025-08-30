@@ -18,7 +18,7 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
 
     // ─────────────────────────────────────────────────────────────────────────
     // Config
-    const ALIEN_COLORS = ["#39FF14", "#00FFFF", "#F7FF00", "#FF00FF", "#FF66CC"];
+    const ALIEN_COLORS = ["#39FF14", "#00FFFF", "#F7FF00", "#FF00FF", "#FF66CC", "#FF0000", "#7F00FF"];
     const GHOST_COLORS = ["#FF0000", "#FFB8DE", "#00FFFF", "#FFA500", "#7F00FF"];
 
     const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -27,90 +27,37 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
     const BULLET_W      = 4;
     const BULLET_H      = 20;
     const BULLET_SPEED  = prefersReduce ? 300 : 520; // px/s
-    const ALIEN_SPEED   = prefersReduce ? 70  : 92;  // px/s
+    const ALIEN_SPEED   = prefersReduce ? 60  : 82;  // px/s
     const BULLET_EVERY  = prefersReduce ? 0.6 : 0.35; // s
-    const ALIEN_EVERY   = prefersReduce ? 1.8 : 1.15; // s
+    const ALIEN_EVERY   = prefersReduce ? 0.85 : 0.50; // s
 
     const FOOTER_SELECTOR       = ".site-footer";
     const SHIP_MIN_BOTTOM       = 4;
     const SHIP_GAP_FROM_FOOTER  = 1;
 
     // ─────────────────────────────────────────────────────────────────────────
-    // Sagome: costruisco forme con più blocchi pieni (nessuna trasparenza),
-    //        occhi/oblò sono "fori" riempiti col var(--background)
-
-    // 🚀 Nave stile arcade/Galaga
+    // Nave: SOLO la punta (triangolo) tipo navigatore, nessuno stelo/coda
     const createShip = () => {
-      const ship = document.createElement("div");
-      ship.className = "ship-shape";
+      const svgNS = "http://www.w3.org/2000/svg";
+      const ship = document.createElementNS(svgNS, "svg");
+      ship.classList.add("ship-shape");
+      ship.setAttribute("width", "64");
+      ship.setAttribute("height", "72");
       ship.style.position = "absolute";
       ship.style.left = "0px";
       ship.style.bottom = `${SHIP_MIN_BOTTOM}px`;
-      ship.style.width = "64px";
-      ship.style.height = "72px";
-      ship.style.filter = "drop-shadow(0 0 10px var(--foreground))"; // glow solo nave
+      ship.style.filter = "drop-shadow(0 0 10px var(--foreground))";
 
-      // contenitore per pezzi (tutti dello stesso colore)
-      const color = getComputedStyle(document.documentElement).getPropertyValue("--foreground") || "#fff";
-      const addBlock = (left, top, w, h, r = 6) => {
-        const b = document.createElement("div");
-        b.style.position = "absolute";
-        b.style.left = left + "px";
-        b.style.top = top + "px";
-        b.style.width = w + "px";
-        b.style.height = h + "px";
-        b.style.background = color.trim();
-        b.style.borderRadius = r + "px";
-        return b;
-      };
+      // punta (triangolo allungato)
+      const tip = document.createElementNS(svgNS, "polygon");
+      tip.setAttribute("points", "32,0 54,46 32,38 10,46");
+      tip.style.fill = "var(--foreground)";
 
-      // Torre centrale
-      ship.appendChild(addBlock(28, 0, 8, 60, 4));   // stelo lungo
-      ship.appendChild(addBlock(24, 60, 16, 8, 4));  // base torre
-
-      // Ali/bracci laterali (4 piloni)
-      ship.appendChild(addBlock(4, 32, 10, 28, 4));   // far left
-      ship.appendChild(addBlock(16, 24, 10, 36, 4));  // left
-      ship.appendChild(addBlock(38, 24, 10, 36, 4));  // right
-      ship.appendChild(addBlock(50, 32, 10, 28, 4));  // far right
-
-      // Fuseliera bassa
-      ship.appendChild(addBlock(8, 52, 48, 14, 6));
-      ship.appendChild(addBlock(18, 64, 28, 8, 6));   // coda
-
-      // Cockpit a crocetta (foro)
-      const cockpit = document.createElement("div");
-      cockpit.style.position = "absolute";
-      cockpit.style.left = "26px";
-      cockpit.style.top = "40px";
-      cockpit.style.width = "12px";
-      cockpit.style.height = "16px";
-      cockpit.style.background = "var(--background)";
-      cockpit.style.borderRadius = "3px";
-      ship.appendChild(cockpit);
-
-      // micro-fori in punta bracci
-      const tips = [
-        [7, 34], [19, 26], [41, 26], [53, 34]
-      ];
-      tips.forEach(([x, y]) => {
-        const p = document.createElement("div");
-        Object.assign(p.style, {
-          position: "absolute",
-          left: x + "px",
-          top: y + "px",
-          width: "5px",
-          height: "5px",
-          background: "var(--background)",
-          borderRadius: "2px",
-        });
-        ship.appendChild(p);
-      });
-
+      ship.appendChild(tip);
       return ship;
     };
 
-    // 👻 Fantasma (come già fatto)
+    // 👻 Fantasma
     const createGhost = (color) => {
       const el = document.createElement("div");
       el.className = "alien ghost";
@@ -136,7 +83,7 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
       return el;
     };
 
-    // 👾 Invader (sagoma a blocchi con antenne/piedi)
+    // 👾 Invader (blocchi)
     const createAlien = (color) => {
       const el = document.createElement("div");
       el.className = "alien invader";
@@ -145,7 +92,6 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
       el.style.height = `${SIZE}px`;
       el.style.background = "transparent";
 
-      // funzione helper per blocchi pieni
       const add = (left, top, w, h) => {
         const b = document.createElement("div");
         Object.assign(b.style, {
@@ -160,21 +106,14 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
         return b;
       };
 
-      // proporzioni basate su griglia 10x10 circa
-      const u = SIZE / 10; // unit
+      const u = SIZE / 10;
 
-      // corpo principale (rettangolone)
       add(1.5*u, 3.2*u, 7*u, 3.2*u);
-
-      // braccia a “scalino”
       add(0.5*u, 4.0*u, 1*u, 1.2*u);
       add(8.5*u, 4.0*u, 1*u, 1.2*u);
-
-      // antenne
       add(2.0*u, 2.0*u, 0.9*u, 0.9*u);
       add(7.1*u, 2.0*u, 0.9*u, 0.9*u);
 
-      // occhi (fori)
       const eye = (x) => {
         const e = document.createElement("div");
         Object.assign(e.style, {
@@ -189,30 +128,71 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
       };
       eye(3.0*u); eye(5.8*u);
 
-      // fascia vita
       add(1.2*u, 6.4*u, 7.6*u, 0.9*u);
-
-      // piedi
       add(2.0*u, 7.6*u, 1.6*u, 0.9*u);
       add(6.4*u, 7.6*u, 1.6*u, 0.9*u);
 
       return el;
     };
 
-    // esplosione ad anelli (colore = del nemico)
     const spawnExplosion = (cx, cy, color) => {
       const ex = document.createElement("span");
       ex.className = "explosion";
-      ex.style.left = `${cx - 12}px`;
-      ex.style.top  = `${cy - 12}px`;
-      ex.style.color = color;
-      ex.style.background = `radial-gradient(circle, ${color} 0%, ${color} 40%, transparent 70%)`;
+      // centro più grande per densità
+      ex.style.left = `${cx - 22}px`;
+      ex.style.top  = `${cy - 22}px`;
+      ex.style.width = "44px";
+      ex.style.height = "44px";
+      ex.style.color = color; // usata come currentColor
+
+      // struttura interna: core + halo + 6 sparks
+      const core = document.createElement("span");
+      core.className = "ex-core";
+      const halo = document.createElement("span");
+      halo.className = "ex-halo";
+
+      ex.appendChild(core);
+      ex.appendChild(halo);
+
+      // 6 schegge in direzioni fisse (distribuzione esagonale)
+      const angles = [0, 60, 120, 180, 240, 300];
+      const radius = 40; // px (prima del fattore animazione)
+      angles.forEach((deg) => {
+        const s = document.createElement("span");
+        s.className = "ex-spark";
+        const rad = (deg * Math.PI) / 180;
+        const dx = Math.cos(rad) * radius;
+        const dy = Math.sin(rad) * radius;
+        s.style.setProperty("--dx", dx + "px");
+        s.style.setProperty("--dy", dy + "px");
+        ex.appendChild(s);
+      });
+
+      // bagliore fondo “pieno”: aggiungo un gradient di base molto denso
+      ex.style.background = `radial-gradient(circle,
+    #fff 0%,
+    #fff 12%,
+    ${color} 28%,
+    ${color} 62%,
+    rgba(0,0,0,0) 85%
+  )`;
+
+      // glow spesso (tre corone, tutte sul colore pieno)
+      ex.style.boxShadow = `
+    0 0 26px 10px ${color},
+    0 0 44px 18px ${color},
+    0 0 58px 28px #ffffffaa
+  `;
+
+      ex.style.opacity = "0.98";
+
       alienLayer.appendChild(ex);
-      setTimeout(() => ex.remove(), 600);
+      setTimeout(() => ex.remove(), 1000);
     };
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // Runtime state (viewport top/left ovunque)
+
+
+    // Runtime state
     const bullets = []; // { el, x, yTop, w, h }
     const aliens  = []; // { el, x, yTop, w, h, color }
 
@@ -221,13 +201,11 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
 
     let shipX = 0;
 
-    // top della "punta" nave rispetto alla viewport
     const shipTipTop = () => {
       const bottom = parseFloat(ship.style.bottom || `${SHIP_MIN_BOTTOM}`);
       return window.innerHeight - (bottom + ship.clientHeight);
     };
 
-    // clamp contro footer
     const clampShipBottomAgainstFooter = () => {
       const footer = document.querySelector(FOOTER_SELECTOR);
       if (!footer) { ship.style.bottom = `${SHIP_MIN_BOTTOM}px`; return; }
@@ -254,12 +232,12 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
     window.addEventListener("resize", onResizeOrScroll, { passive: true });
     window.addEventListener("scroll", onResizeOrScroll, { passive: true });
 
-    // Spawner (sempre da sopra per i nemici)
+    // Spawner
     const spawnBullet = () => {
       const el = document.createElement("span");
       el.className = "bullet";
       const x = shipX + ship.clientWidth / 2 - BULLET_W / 2;
-      let yTop = shipTipTop() - BULLET_H * 0.4; // appena sopra la punta
+      let yTop = shipTipTop() - BULLET_H * 0.4;
       Object.assign(el.style, { position: "absolute", left: `${x}px`, top: `${yTop}px` });
       bulletLayer.appendChild(el);
       bullets.push({ el, x, yTop, w: BULLET_W, h: BULLET_H });
@@ -270,7 +248,7 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
       const color   = palette[(Math.random() * palette.length) | 0];
       const el      = mode === "GHOST" ? createGhost(color) : createAlien(color);
       const x       = Math.random() * (window.innerWidth - SIZE);
-      const yTop    = -SIZE; // sempre da sopra
+      const yTop    = -SIZE;
 
       Object.assign(el.style, { left: `${x}px`, top: `${yTop}px` });
       alienLayer.appendChild(el);
@@ -326,7 +304,7 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
       rafId = requestAnimationFrame(update);
     };
 
-    clampShipBottomAgainstFooter(); // iniziale
+    clampShipBottomAgainstFooter();
     rafId = requestAnimationFrame(update);
 
     return () => {
