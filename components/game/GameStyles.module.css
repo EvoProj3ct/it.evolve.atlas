@@ -1,111 +1,139 @@
-/* grandezza alien predefinita */
-:root{ --alien-size: 96px; }
+/* Wrapper locale richiesto da CSS Modules: rende "puri" i selettori */
+.gameRoot {}
 
-/* LAYER DEL GIOCO --------------------------------------------------------- */
-.shipLayer{
+/* Tutto il gioco viene esposto come classi globali,
+   così JS può continuare a fare querySelector su nomi semplici. */
+
+.gameRoot :global(.space-ship-container) {
     position: fixed;
+    bottom: 0;
     left: 0;
-    bottom: var(--footer-safe, 0px);
     width: 100%;
     height: 80px;
     pointer-events: none;
-    z-index: 2;              /* sotto le finestre (che stanno a z 10) */
+    z-index: 2; /* sotto le finestre (che stanno a z 10) */
 }
 
-.bullets{
+.gameRoot :global(.ship-shape) {
+    position: absolute;
+    left: 0;
+    bottom: 4px;
+    width: 64px;
+    height: 72px;
+    filter: drop-shadow(0 0 10px var(--foreground)); /* glow nave */
+}
+
+/* Layer proiettili a pieno schermo */
+.gameRoot :global(.bullet-layer) {
     position: fixed;
-    top: var(--nav-height, 72px);
+    bottom: 0;
     left: 0;
     width: 100%;
-    height: calc(100% - var(--nav-height, 72px) - var(--footer-safe, 0px));
+    height: 100%;
     pointer-events: none;
     z-index: 2;
 }
-.bullet{
+
+/* Proiettile (dimensioni allineate a BULLET_W/H nello script) */
+.gameRoot :global(.bullet) {
     position: absolute;
-    top: 0;                  /* aggiornato via JS */
-    width: 4px; height: 20px;
+    top: 0; /* aggiornato via JS */
+    width: 4px;
+    height: 20px;
     background: var(--foreground);
     box-shadow: 0 0 10px var(--foreground);
 }
 
-.aliens{
+/* Layer nemici */
+.gameRoot :global(.aliens-layer) {
     position: fixed;
-    top: var(--nav-height, 72px);
+    top: 0;
     left: 0;
     width: 100%;
-    height: calc(100% - var(--nav-height, 72px) - var(--footer-safe, 0px));
+    height: 100%;
     pointer-events: none;
-    z-index: 1;
+    z-index: 1; /* ancora più sotto */
 }
 
-/* NAVE (usa /public/ship.svg) */
-.ship{
-    position:absolute;
-    bottom: 0;
-    left: 0;
-    width: 60px; height: 60px;
-    filter: drop-shadow(0 0 10px var(--foreground));
-}
-
-/* ALIENI ------------------------------------------------------------------ */
-.alien{
+/* Fantasmini 👻 (occhi/pupille) */
+.gameRoot :global(.aliens-layer .alien.ghost .eye) {
     position: absolute;
-    width: var(--alien-size);
-    height: var(--alien-size);
-    top: calc(var(--alien-size) * -1);
-    filter: none !important;
+    top: 36%;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+}
+.gameRoot :global(.aliens-layer .alien.ghost .eye .pupil) {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    width: 6px;
+    height: 6px;
+    background: #000;
+    border-radius: 50%;
 }
 
-/* fantasmino */
-.alien.ghost .eye{ position:absolute; top:36%; width:16px; height:16px; background:#fff; border-radius:50%; }
-.alien.ghost .eye .pupil{ position:absolute; top:40%; left:40%; width:6px; height:6px; background:#000; border-radius:50%; }
-
-/* space-invader */
-.alien.sprite{ background:transparent; }
-.alien.sprite::before{
-    content:""; position:absolute; left:50%; top:50%;
-    width:6px; height:6px; background:var(--alien-color, #39FF14);
-    box-shadow:
-            -24px -24px 0 0 var(--alien-color), -12px -24px 0 0 var(--alien-color), 12px -24px 0 0 var(--alien-color), 24px -24px 0 0 var(--alien-color),
-            -30px -12px 0 0 var(--alien-color), -18px -12px 0 0 var(--alien-color), -6px -12px 0 0 var(--alien-color), 6px -12px 0 0 var(--alien-color), 18px -12px 0 0 var(--alien-color), 30px -12px 0 0 var(--alien-color),
-            -36px 0 0 0 var(--alien-color), -24px 0 0 0 var(--alien-color), -12px 0 0 0 var(--alien-color), 0 0 0 0 var(--alien-color), 12px 0 0 0 var(--alien-color), 24px 0 0 0 var(--alien-color), 36px 0 0 0 var(--alien-color),
-            -36px 12px 0 0 var(--alien-color), -24px 12px 0 0 var(--alien-color), -12px 12px 0 0 var(--alien-color), 12px 12px 0 0 var(--alien-color), 24px 12px 0 0 var(--alien-color), 36px 12px 0 0 var(--alien-color),
-            -48px 24px 0 0 var(--alien-color), -36px 24px 0 0 var(--alien-color), -24px 24px 0 0 var(--alien-color), 24px 24px 0 0 var(--alien-color), 36px 24px 0 0 var(--alien-color), 48px 24px 0 0 var(--alien-color),
-            -36px 36px 0 0 var(--alien-color), -12px 36px 0 0 var(--alien-color), 12px 36px 0 0 var(--alien-color), 36px 36px 0 0 var(--alien-color);
-    transform: translate(-50%, -50%) scale(calc(var(--alien-size) / 96));
+/* Invader 👾 composto da blocchi (gli "add()" nello script).
+   Qui lasciamo trasparente: i blocchi interni fanno il corpo. */
+.gameRoot :global(.aliens-layer .alien.invader) {
+    position: absolute;
+    background: transparent;
 }
 
-/* esplosione */
-.explosion{
-    position:absolute; width:24px; height:24px; border-radius:50%;
-    pointer-events:none; z-index:3;
-    animation:gBoom .9s ease-out forwards;
-    box-shadow: 0 0 25px currentColor, 0 0 50px currentColor;
+/* Esplosione coreografica */
+.gameRoot :global(.explosion) {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+    animation: boom 0.55s ease-out forwards;
 }
-@keyframes gBoom{
-    0%{ transform:scale(.6); opacity:1; }
-    70%{ transform:scale(2.1); opacity:.75; }
-    100%{ transform:scale(2.6); opacity:0; }
+.gameRoot :global(.explosion::before),
+.gameRoot :global(.explosion::after) {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 3px solid currentColor;
+    opacity: .6;
+    animation: boom-ring .55s ease-out forwards;
+}
+.gameRoot :global(.explosion::after) {
+    inset: -12px;
+    opacity: .35;
+    border-width: 2px;
+    animation-delay: .05s;
 }
 
-/* toggle in basso a SINISTRA */
-.toggle{
+@keyframes boom {
+    0%   { transform: scale(0.5); opacity: 1; }
+    100% { transform: scale(4.2); opacity: 0; }
+}
+@keyframes boom-ring {
+    0%   { transform: scale(0.6); opacity: .7; }
+    100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* Toggle in basso a SINISTRA, lontano dalla navbar */
+.gameRoot :global(.game-toggle) {
     position: fixed;
+    bottom: 14px;
     left: 14px;
-    bottom: calc(14px + var(--footer-safe, 0px));
     z-index: 30;
-    padding:.4rem .6rem;
+    padding: .4rem .6rem;
     background: var(--color-primary);
     color: var(--color-black);
-    border:2px solid var(--color-primary);
-    box-shadow:2px 2px 0 var(--color-primary);
+    border: 2px solid var(--color-primary);
+    cursor: pointer;
     font-family: var(--font-press-start);
-    font-size:.8rem;
-    cursor:pointer;
+    font-size: .8rem;
+    box-shadow: 2px 2px 0 var(--color-primary);
 }
 
-/* mobile */
-@media (max-width: 768px){
-    .ship{ width:48px; height:48px; }
+/* Mobile: nave leggermente più piccola */
+@media (max-width: 600px) {
+    .gameRoot :global(.ship-shape) { width: 54px; height: 60px; }
 }

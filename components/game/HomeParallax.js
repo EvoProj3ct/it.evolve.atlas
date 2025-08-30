@@ -1,30 +1,30 @@
 "use client";
-import React, { useState } from "react";
-import ParallaxAliens from "./ParallaxAliens";
+import { useState } from "react";
 import styles from "./GameStyles.module.css";
+import ParallaxAliens from "./ParallaxAliens";
 
 export default function HomeParallax() {
-    const [mode, setMode] = useState("ALIEN");
-    const toggleMode = () => setMode(m => (m === "ALIEN" ? "GHOST" : "ALIEN"));
+    const [mode, setMode] = useState("ALIEN"); // "ALIEN" | "GHOST"
+    const toggleMode = () => setMode((m) => (m === "ALIEN" ? "GHOST" : "ALIEN"));
 
     return (
-        <>
-            {/* data-attributes: ParallaxAliens li usa per agganciarsi */}
-            <div data-game="ship-layer" className={styles.shipLayer} />
-            <div data-game="bullets"    className={styles.bullets} />
-            <div data-game="aliens"     className={styles.aliens} />
+        <div className={styles.gameRoot}>
+            {/* Layer VUOTI: ParallaxAliens aggiunge nave, proiettili e alieni */}
+            <div className="space-ship-container" />
+            <div className="bullet-layer" />
+            <div className="aliens-layer" />
 
             <ParallaxAliens mode={mode} />
 
             <button
                 type="button"
-                className={styles.toggle}
+                className="game-toggle"
                 aria-label="Cambia tipo nemici"
                 title={mode === "ALIEN" ? "Passa ai fantasmini 👻" : "Torna agli alieni 👾"}
                 onClick={toggleMode}
             >
                 {mode === "ALIEN" ? "👾→👻" : "👻→👾"}
             </button>
-        </>
+        </div>
     );
 }
