@@ -5,7 +5,9 @@ import styles from "./WindowsStyles.module.css";
 /** IconTray: mostra un bottone per ogni finestra minimizzata. */
 export default function WindowTray() {
   const { state, restore } = useWindows();
-  const minimized = Object.values(state.byId).filter(w => w.minimized && !w.closed);
+  const minimized = Object.values(state.byId).filter(
+      (w) => w.minimized && !w.closed
+  );
 
   if (minimized.length === 0) return null;
 

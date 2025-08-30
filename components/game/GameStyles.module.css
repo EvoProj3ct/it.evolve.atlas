@@ -1,6 +1,6 @@
-:root{
-    --nav-height: 72px;   /* setta questi valori nel layout (inline style sul <body>) */
-    --footer-safe: 0px;   /* spazio da riservare se hai footer sticky */
+:global(:root){
+    --nav-height: 72px;   /* set dal layout (inline sul body) */
+    --footer-safe: 0px;   /* se footer sticky, alza questo */
 }
 
 /* LAYERS del gioco */
@@ -11,12 +11,8 @@
     width: 100%;
     height: 80px;
     pointer-events: none;
-    z-index: 2; /* sotto le windows (che stanno a z 10) ma sopra gli alieni */
+    z-index: 2; /* sotto le windows (z 10) ma sopra gli alieni */
 }
-
-/* se vuoi visualizzare una nave fissa via DOM, puoi inserirla in .shipLayer:
-   es: .shipEmoji { position:absolute; bottom:2px; left:0; font-size:46px; filter:drop-shadow(0 0 10px var(--foreground)); }
-*/
 
 .bullets{
     position: fixed;
@@ -47,7 +43,7 @@
 }
 
 /* dimensione base degli alieni */
-:root{ --alien-size: 96px; }
+:global(:root){ --alien-size: 96px; }
 
 .alien{
     position: absolute;
@@ -82,7 +78,7 @@
     transform: translate(-50%, -50%) scale(calc(var(--alien-size) / 96));
 }
 
-/* Esplosione coerente con la tua funzione JS */
+/* Esplosione */
 .explosion{
     position:absolute; width:24px; height:24px; border-radius:50%;
     pointer-events:none; z-index:2;
@@ -113,5 +109,5 @@
 
 /* Mobile: mantengo tutto visibile ma più piccolo */
 @media (max-width: 600px){
-    :root{ --alien-size: 78px; }
+    :global(:root){ --alien-size: 78px; }
 }

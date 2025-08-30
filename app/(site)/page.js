@@ -3,9 +3,7 @@
 import React from "react";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import HomeParallax from "@/components/game/HomeParallax";
-import { WindowProvider } from "@/components/window/WindowManager";
-import WindowFrame from "@/components/window/WindowFrame";
-import WindowTray from "@/components/window/WindowTray";
+import WindowFrame, { WindowProvider, WindowTray } from "@/components/window";
 
 export default function Home() {
     return (

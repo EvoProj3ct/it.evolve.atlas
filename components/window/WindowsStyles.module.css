@@ -1,4 +1,4 @@
-:root{
+:global(:root){
     --nav-height: 72px;  /* imposta nel layout */
     --footer-safe: 0px;
 }

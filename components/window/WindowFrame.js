@@ -17,7 +17,7 @@ export default function WindowFrame({
                                         title,
                                         maximizeHref = "/chi-siamo",
                                         children,
-                                        reopenMs = 8000, // puoi cambiare a piacere (ms)
+                                        reopenMs = 8000, // ms; puoi modificarlo dove usi il componente
                                     }) {
     const { state, register, pin, minimize, close, restore } = useWindows();
     const w = state.byId[id] || { pinned: false, minimized: false, closed: false };
@@ -30,7 +30,9 @@ export default function WindowFrame({
     }, [id, title, register]);
 
     useEffect(() => {
-        return () => { if (reopenTimerRef.current) clearTimeout(reopenTimerRef.current); };
+        return () => {
+            if (reopenTimerRef.current) clearTimeout(reopenTimerRef.current);
+        };
     }, []);
 
     const isHidden = w.minimized || w.closed;
@@ -57,8 +59,12 @@ export default function WindowFrame({
         next?.scrollIntoView({ behavior: "smooth", block: "start" });
     };
 
-    const onMinimize = () => { minimize(id); };
-    const onFirstHoverOrFocus = () => { if (!w.pinned) pin(id); };
+    const onMinimize = () => {
+        minimize(id);
+    };
+    const onFirstHoverOrFocus = () => {
+        if (!w.pinned) pin(id);
+    };
 
     if (w.closed && !reopening) return null;
 
@@ -94,7 +100,9 @@ export default function WindowFrame({
                     />
                 </div>
 
-                <h2 id={`${id}-title`} className="title">{title}</h2>
+                <h2 id={`${id}-title`} className="title">
+                    {title}
+                </h2>
                 <div className="description">{children}</div>
             </div>
         </section>
