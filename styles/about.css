@@ -17,7 +17,6 @@
   font-family: var(--font-press-start);
 }
 
-/* Titolo */
 .about .title {
   font-size: 1.6rem;
   text-align: center;
@@ -38,7 +37,7 @@
    LAYOUT — Game Boy fisso centrale + cassette
    ====================================================== */
 .gb-layout {
-  --gb-footer-h: 36px;                /* fascia riservata in basso allo schermo */
+  --gb-footer-h: 36px;                /* fascia riservata per le istruzioni */
   display: grid;
   grid-template-columns: 220px 520px 220px; /* console fissa 520px */
   gap: 1.2rem;
@@ -74,7 +73,7 @@
           filter .2s ease, opacity .2s ease,
           box-shadow .2s ease;
   transform-style: preserve-3d;
-  backface-visibility: visible;   /* resta visibile anche quando riflessa */
+  backface-visibility: visible;   /* visibile anche riflessa */
   will-change: transform, filter, opacity, box-shadow;
 }
 
@@ -96,7 +95,7 @@
   box-shadow: 3px 3px 0 var(--color-primary);
 }
 
-/* Inserita: riflesso orizzontale + opacità ridotta (ma resta visibile) */
+/* Inserita: riflesso orizzontale + opacità ridotta (resta visibile) */
 .cassette.inserted {
   transform: scaleX(-1) scale(0.98);
   opacity: 0.45;
@@ -134,16 +133,18 @@
   border-radius: 12px;
 }
 
-/* Schermo fisso “per lungo” */
+/* Schermo “per lungo”: fissa dimensione, no scroll globale */
 .gb-screen-vert {
   position: relative;
   width: 480px;
-  height: 300px;                      /* fisso */
+  height: 300px;
   background: #a6e28d;                /* LCD */
   border: 4px solid var(--color-primary);
   box-shadow: inset 0 0 0 4px var(--background),
   3px 3px 0 var(--color-primary);
-  overflow: auto;
+  overflow: hidden;                    /* il testo scorre nel layer interno */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Stato “nessuna cassetta” */
@@ -158,40 +159,43 @@
   padding: .6rem .8rem;
   background: rgba(166,226,141,.8);
   box-shadow: 3px 3px 0 #203b1a;
-  animation: gbBlink .9s steps(2,end) infinite; /* lampeggio */
+  animation: gbBlink .9s steps(2,end) infinite;
 }
 @keyframes gbBlink { 50% { opacity: .25; } }
 
-/* Pagina immagine nello schermo */
+/* Pagina foto: occupa tutto lo schermo */
 .gb-screen-photo { position: relative; width: 100%; height: 100%; }
 .gb-screen-photo > span,
 .gb-screen-photo img { object-fit: cover !important; }
 
-/* Nome SOLO in basso a sinistra — sopra la fascia istruzioni */
+/* Nome fisso in basso a sinistra (sopra la fascia istruzioni) */
 .gb-name {
   position: absolute;
   left: 6px;
   bottom: calc(var(--gb-footer-h) + 6px);
-  font-size: .8rem; color: #203b1a;
+  font-size: .8rem;
+  color: #203b1a;
   background: rgba(166,226,141,.9);
   border: 3px solid #203b1a;
   padding: 2px 6px;
   z-index: 2;
 }
 
-/* contenuto testuale con padding */
-.gb-screen-inner { position: relative; padding: .75rem; }
+/* Layer scrollabile per testo/contatti */
+.gb-screen-inner {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 0.75rem calc(var(--gb-footer-h) + 1.2rem); /* spazio per nome+hint */
+}
+
 .gb-text {
   color: #203b1a;
   font-family: var(--font-press-start);
   font-size: .78rem;
   line-height: 1.55;
   white-space: pre-wrap;
-  padding-right: .5rem;               /* evita contatto con scrollbar */
+  padding-right: .5rem; /* evita contatto con scrollbar */
 }
-
-/* “spacer” invisibile per fascia istruzioni */
-.gb-bottom-safe { height: var(--gb-footer-h); }
 
 /* lista contatti */
 .gb-contacts { list-style: none; padding: 0; margin: .25rem 0 .6rem; }
@@ -205,7 +209,7 @@
   animation: gbBlink .9s steps(2,end) infinite;
 }
 
-/* Istruzioni: barra fissa in basso (non copre il contenuto grazie allo spacer) */
+/* Barra istruzioni fissa in basso (mai sovrapposta al contenuto) */
 .gb-footer-hint {
   position: absolute;
   left: 4px; right: 54px; bottom: 4px;
@@ -218,7 +222,7 @@
   z-index: 1;
 }
 
-/* Indicatore pagina in basso a destra */
+/* Indicatore pagina fisso */
 .gb-page-ind {
   position: absolute;
   right: 6px; bottom: 6px;

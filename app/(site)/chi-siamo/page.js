@@ -49,9 +49,9 @@ const founders = [
     {
         slug: "luca-m",
         name: "Luca M.",
-        image: "/avatars/luca-m.jpg",
+        image: "/avatars/lucam.png",
         pages: [
-            { type: "image", src: "/avatars/luca-m.jpg", caption: "Luca M." },
+            { type: "image", src: "/avatars/lucam.png", caption: "Luca M." },
             { type: "text",  content: "Esperto di Blockchain e nuove tecnologie. Tokenizza tutto, tranne il caffè." },
             { type: "text",  content: "Skill:\n- Solidity\n- Web3\n- Security" },
             { type: "contacts", contacts: [
