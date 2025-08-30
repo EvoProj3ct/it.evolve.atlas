@@ -159,17 +159,47 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
       return el;
     };
 
-    // esplosione ad anelli (colore = del nemico)
+    // esplosione arcade multicolore (del colore della vittima)
     const spawnExplosion = (cx, cy, color) => {
       const ex = document.createElement("span");
       ex.className = "explosion";
-      ex.style.left = `${cx - 12}px`;
-      ex.style.top  = `${cy - 12}px`;
-      ex.style.color = color;
-      ex.style.background = `radial-gradient(circle, ${color} 0%, ${color} 40%, transparent 70%)`;
+      ex.style.left = `${cx - 25}px`; // più grande
+      ex.style.top  = `${cy - 25}px`;
+      ex.style.width = "50px";
+      ex.style.height = "50px";
+      ex.style.borderRadius = "50%";
+      ex.style.pointerEvents = "none";
+      ex.style.zIndex = 999;
+
+      // gradient multicolore (sfumatura con colore nemico + giallo/arancio)
+      ex.style.background = `
+    radial-gradient(circle,
+      ${color} 0%,
+      ${color}aa 30%,
+      gold 55%,
+      orange 70%,
+      transparent 90%
+    )
+  `;
+
+      // glow extra
+      ex.style.boxShadow = `0 0 25px ${color}, 0 0 50px ${color}`;
+
+      // animazione con keyframes inline
+      ex.animate([
+        { transform: "scale(0.6)", opacity: 1 },
+        { transform: "scale(1.8)", opacity: 0.7 },
+        { transform: "scale(2.6)", opacity: 0 }
+      ], {
+        duration: 900, // più persistente
+        easing: "ease-out",
+        fill: "forwards"
+      });
+
       alienLayer.appendChild(ex);
-      setTimeout(() => ex.remove(), 600);
+      setTimeout(() => ex.remove(), 950);
     };
+
 
     // ─────────────────────────────────────────────────────────────────────────
     // Runtime state (viewport top/left ovunque)

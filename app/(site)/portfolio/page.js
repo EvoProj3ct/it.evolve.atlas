@@ -3,7 +3,6 @@ import PortfolioConsole from "@/components/portfolio/PortfolioConsole";
 
 export const metadata = { title: "Portfolio" };
 
-// Aggiungi quante cassette vuoi
 const projects = [
     {
         slug: "smart-plant",
@@ -88,7 +87,7 @@ export default function PortfolioPage() {
         <section className="portfolio">
             <h1 className="title">Portfolio</h1>
             <p className="description">
-                Seleziona una cassetta dal carosello e naviga le schermate con A/B e il D-Pad.
+                Questi sono i progetti che abbiamo realizzato finora. Dagli un'occhiata caricandoli nella console.
             </p>
             <PortfolioConsole projects={projects} />
         </section>
