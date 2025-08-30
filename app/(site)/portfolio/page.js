@@ -1,48 +1,85 @@
-// "use client" NON serve: la page è server, i component dentro sono client.
+// server component
 import PortfolioConsole from "@/components/portfolio/PortfolioConsole";
 
 export const metadata = { title: "Portfolio" };
 
-// Esempio dati: quante cassette vuoi, ogni cassetta = progetto
+// Puoi aggiungere quanti progetti vuoi
 const projects = [
     {
         slug: "smart-plant",
         name: "Smart Plant",
-        image: "/portfolio/smart-plant.jpg",
+        image: "/portfolio/smart_plant.png",
         pages: [
-            { type: "image", src: "/portfolio/smart-plant.png" },
-            { type: "text", kind: "bio", content: "Monitoraggio IoT per bonsai. Sensori BLE, gateway MQTT, dashboard Next.js." },
-            { type: "text", kind: "skill", content: "Stack: ESP32 • BLE • MQTT • Next.js • Tailwind • MongoDB" },
+            { type: "image", src: "/portfolio/smart_plant.png" },
+            { type: "image", src: "/portfolio/smart_plant2.png" },
+            { type: "text", kind: "bio", content: "IoT per bonsai: sensori su ESP32, gateway MQTT, dashboard Next.js." },
+            { type: "text", kind: "skill", content: "Stack: ESP32 • BLE • MQTT • Next.js • MongoDB • Tailwind" },
             { type: "contacts", contacts: [
                     { label: "Demo Live", href: "https://example.com/demo" },
-                    { label: "Repo Git", href: "https://github.com/you/smart-plant" },
-                ]},
+                    { label: "GitHub", href: "https://github.com/you/smart-plant" },
+                ] },
         ],
     },
     {
         slug: "e-linker",
         name: "E-Linker",
-        image: "/portfolio/e-linker.jpg",
+        image: "/portfolio/elinker.png",
         pages: [
-            { type: "image", src: "/portfolio/e-linker.jpg" },
-            { type: "text", content: "Hub NFC per oggetti fisici e card. Provisioning da mobile, webhooks e short links." },
+            { type: "image", src: "/portfolio/elinker.png" },
+            { type: "text", content: "Hub NFC per oggetti fisici e card. Provisioning mobile, webhooks e short link." },
             { type: "contacts", contacts: [
                     { label: "Landing", href: "https://evolve3d.it/e-linker" },
-                    { label: "Contattaci", href: "/contatti" },
-                ]},
+                    { label: "Contatti", href: "/contatti" },
+                ] },
         ],
     },
     {
-        slug: "voice-bot",
+        slug: "e-talk",
         name: "E-Talk",
         image: "/portfolio/e-talk.jpg",
         pages: [
             { type: "image", src: "/portfolio/e-talk.jpg" },
-            { type: "text", content: "Assistente vocale per PMI. Prompt tools, memorie e interfacce telefoniche." },
-            { type: "text", kind: "skill", content: "Stack: Next.js • Edge Functions • WebRTC • RAG • VAD" },
+            { type: "text", content: "Assistente vocale per PMI con prompt tools, memorie e IVR." },
+            { type: "text", kind: "skill", content: "Stack: Next.js • Edge • WebRTC • RAG • VAD" },
             { type: "contacts", contacts: [
-                    { label: "Case study", href: "https://example.com/case-etalk" },
-                ]},
+                    { label: "Case Study", href: "https://example.com/case-etalk" },
+                ] },
+        ],
+    },
+    {
+        slug: "e-spesatore",
+        name: "E-Spesatore",
+        image: "/portfolio/e-spesatore.jpg",
+        pages: [
+            { type: "image", src: "/portfolio/e-spesatore.jpg" },
+            { type: "text", content: "Gestione spese e ricevute con OCR e categorizzazione automatica." },
+            { type: "contacts", contacts: [
+                    { label: "Repo", href: "https://github.com/you/e-spesatore" },
+                ] },
+        ],
+    },
+    {
+        slug: "e-magazzino",
+        name: "E-Magazzino",
+        image: "/portfolio/e-magazzino.jpg",
+        pages: [
+            { type: "image", src: "/portfolio/e-magazzino.jpg" },
+            { type: "text", content: "Inventario con QR/NFC, prenotazioni e tracciamento prestiti." },
+            { type: "contacts", contacts: [
+                    { label: "Demo", href: "https://example.com/e-magazzino" },
+                ] },
+        ],
+    },
+    {
+        slug: "e-finanze",
+        name: "E-Finanze",
+        image: "/portfolio/e-finanze.jpg",
+        pages: [
+            { type: "image", src: "/portfolio/e-finanze.jpg" },
+            { type: "text", content: "Planner finanziario e KPI con widget custom, PDF export e connettori bancari." },
+            { type: "contacts", contacts: [
+                    { label: "Landing", href: "https://example.com/e-finanze" },
+                ] },
         ],
     },
 ];

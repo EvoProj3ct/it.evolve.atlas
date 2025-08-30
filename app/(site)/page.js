@@ -16,7 +16,7 @@ export default function Home() {
             <WindowTray />
 
             {/* FINESTRE (contenuti nella pagina, come preferisci) */}
-            <WindowFrame id="intro" title="Benvenuto in Evolve" maximizeHref="/">
+            <WindowFrame id="intro" title="Benvenuto in Evolve" maximizeHref="/portfolio">
                 <p className="description">
                     Evolve è la tua officina digitale: realizziamo software su misura e
                     prototipi in stampa 3D con dispositivi PLA dotati di NFC. Con soluzioni
