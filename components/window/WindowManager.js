@@ -12,7 +12,13 @@ const initialState = { byId: {} };
 
 function ensure(state, id, title) {
     const existing = state.byId[id];
-    if (existing) return existing;
+    if (existing) {
+        // se arriva un nuovo title, aggiorno
+        if (title && title !== existing.title) {
+            return { ...existing, title };
+        }
+        return existing;
+    }
     return { id, title: title || id, pinned: false, minimized: false, closed: false };
 }
 
@@ -48,12 +54,11 @@ const Ctx = createContext(null);
 export function WindowProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    // Azioni esposte ai componenti
-    const register  = useCallback((id, title) => dispatch({ type: "REGISTER", id, title }), []);
-    const pin       = useCallback((id) => dispatch({ type: "PIN", id }), []);
-    const minimize  = useCallback((id) => dispatch({ type: "MINIMIZE", id }), []);
-    const restore   = useCallback((id) => dispatch({ type: "RESTORE", id }), []);
-    const close     = useCallback((id) => dispatch({ type: "CLOSE", id }), []);
+    const register = useCallback((id, title) => dispatch({ type: "REGISTER", id, title }), []);
+    const pin      = useCallback((id) => dispatch({ type: "PIN", id }), []);
+    const minimize = useCallback((id) => dispatch({ type: "MINIMIZE", id }), []);
+    const restore  = useCallback((id) => dispatch({ type: "RESTORE", id }), []);
+    const close    = useCallback((id) => dispatch({ type: "CLOSE", id }), []);
 
     const value = useMemo(() => ({ state, register, pin, minimize, restore, close }), [
         state, register, pin, minimize, restore, close,

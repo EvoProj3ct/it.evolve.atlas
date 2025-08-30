@@ -1,292 +1,42 @@
-/* ===========================
-   SEZIONI / FINESTRE
-   =========================== */
-.home-section {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: var(--foreground);
-  font-family: var(--font-press-start);
-  background-color: var(--background);
-}
+/* HOME */
 
-.home-section .content {
-  position: relative;
-  z-index: 10; /* le finestre sopra il gioco */
-  background: var(--background);
-  padding: 4rem 3rem;
-  margin: 0 2rem;
-  width: 90%;
-  max-width: 700px;
-  border: 4px solid var(--color-primary);
-  box-shadow: 4px 4px 0 var(--color-primary);
-  transition: transform 0.3s ease;
-}
-
-.home-section .content:hover { transform: scale(1.05); }
-
-/* --- PIN persistente della barra (e dello zoom) dopo primo passaggio --- */
-.home-section .content.keep-bar .window-bar { display: flex; }
-.home-section .content.keep-bar { transform: scale(1.05); }
-
-/* --- Nascondi davvero una finestra (minimized o closed) --- */
-.home-section .content.is-hidden { display: none; }
-
-/* ===========================
-   BARRA FINESTRA + BOTTONI
-   =========================== */
-.window-bar {
-  position: absolute;
-  top: -2.5rem;
-  left: 0;
-  width: 100%;
-  height: 2rem;
-  background: var(--background);
-  border: 4px solid var(--color-primary);
-  border-bottom: none;
-  display: none;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-.content:hover .window-bar { display: flex; }
-
-.window-btn {
-  width: 1.5rem; height: 1.5rem;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-press-start);
-  font-size: 0.8rem; line-height: 1.5rem;
-  border: 2px solid var(--color-white);
-  background: var(--color-white);
-  color: var(--color-black);
-}
-
-.window-btn:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
-
-.window-btn.maximize { background: #00ff00; }
-.window-btn.close    { background: #ff0000; }
-.window-btn.minimize { background: #0000ff; color: var(--color-white); }
-
-.window-btn.close::before    { content: "X"; }
-.window-btn.minimize::before { content: "_"; transform: translateY(-2px); }
-.window-btn.maximize::before { content: "\25A1"; transform: translateY(-1px); }
-
-/* ===========================
-   GIOCO: NAVICELLA / PROIETTILI / ALIENI / TOGGLE
-   =========================== */
-.space-ship-container {
+/* Progress a lato */
+.progress-container{
   position: fixed;
-  bottom: 0; left: 0;
-  width: 100%; height: 80px;
-  pointer-events: none;
-  z-index: 2; /* sotto le finestre */
-}
-
-/* NAVICELLA: emoji grande con alone */
-.ship-emoji {
-  position: absolute;
-  bottom: 2px;
-  left: 0;
-  font-size: 46px;             /* nave più grande della freccia precedente */
-  line-height: 1;
-  filter: drop-shadow(0 0 10px var(--foreground));
-}
-
-.bullet-layer {
-  position: fixed;
-  bottom: 60px; left: 0;
-  width: 100%; height: calc(100% - 60px);
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* proiettile: sempre visibile in entrambi i temi */
-.bullet {
-  position: absolute;
-  bottom: 0;
-  width: 4px; height: 20px;
-  background: var(--foreground);
-  box-shadow: 0 0 10px var(--foreground);
-}
-
-.aliens-layer {
-  position: fixed; top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Alien base: niente alone; colore impostato inline; ridotto un po' */
-:root { --alien-size: 96px; } /* leggermente più piccoli */
-.aliens-layer .alien {
-  position: absolute;
-  top: calc(var(--alien-size) * -1);
-  width: var(--alien-size);
-  height: var(--alien-size);
-  filter: none !important;
-  color: inherit;
-}
-
-/* Fantasmino (👻): occhi */
-.aliens-layer .alien.ghost .eye {
-  position: absolute; top: 36%;
-  width: 16px; height: 16px; background: #fff; border-radius: 50%;
-}
-.aliens-layer .alien.ghost .eye .pupil {
-  position: absolute; top: 40%; left: 40%;
-  width: 6px; height: 6px; background: #000; border-radius: 50%;
-}
-
-/* Alienetto (👾) in pixel-art CSS: usa --alien-color */
-.aliens-layer .alien.sprite {
-  position: absolute;
-  background: transparent;
-}
-.aliens-layer .alien.sprite::before {
-  /* pixel art 11x8 semplificata stile space-invader */
-  content: "";
-  position: absolute;
-  left: 50%; top: 50%;
-  width: 6px; height: 6px;
-  background: var(--alien-color, #39FF14);
-  box-shadow:
-    /* riga 1 */ -24px -24px 0 0 var(--alien-color), -12px -24px 0 0 var(--alien-color), 12px -24px 0 0 var(--alien-color), 24px -24px 0 0 var(--alien-color),
-    /* riga 2 */ -30px -12px 0 0 var(--alien-color), -18px -12px 0 0 var(--alien-color), -6px -12px 0 0 var(--alien-color), 6px -12px 0 0 var(--alien-color), 18px -12px 0 0 var(--alien-color), 30px -12px 0 0 var(--alien-color),
-    /* riga 3 */ -36px 0 0 0 var(--alien-color), -24px 0 0 0 var(--alien-color), -12px 0 0 0 var(--alien-color), 0 0 0 0 var(--alien-color), 12px 0 0 0 var(--alien-color), 24px 0 0 0 var(--alien-color), 36px 0 0 0 var(--alien-color),
-    /* riga 4 */ -36px 12px 0 0 var(--alien-color), -24px 12px 0 0 var(--alien-color), -12px 12px 0 0 var(--alien-color), 12px 12px 0 0 var(--alien-color), 24px 12px 0 0 var(--alien-color), 36px 12px 0 0 var(--alien-color),
-    /* riga 5 (braccia) */ -48px 24px 0 0 var(--alien-color), -36px 24px 0 0 var(--alien-color), -24px 24px 0 0 var(--alien-color), 24px 24px 0 0 var(--alien-color), 36px 24px 0 0 var(--alien-color), 48px 24px 0 0 var(--alien-color),
-    /* riga 6 (gambe)  */ -36px 36px 0 0 var(--alien-color), -12px 36px 0 0 var(--alien-color), 12px 36px 0 0 var(--alien-color), 36px 36px 0 0 var(--alien-color);
-  transform: translate(-50%, -50%) scale(calc(var(--alien-size) / 96));
-}
-
-/* Esplosione: molto più ampia + anello + scintille */
-.explosion {
-  position: absolute;
-  width: 24px; height: 24px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 2;
-  animation: boom 0.55s ease-out forwards;
-}
-.explosion::before, .explosion::after {
-  content: ""; position: absolute; inset: -6px;
-  border-radius: 50%;
-  border: 3px solid currentColor; opacity: .6;
-  animation: boom-ring .55s ease-out forwards;
-}
-.explosion::after {
-  inset: -12px; opacity: .35; border-width: 2px;
-  animation-delay: .05s;
-}
-@keyframes boom {
-  0%   { transform: scale(0.5); opacity: 1; }
-  100% { transform: scale(4.2); opacity: 0; }
-}
-@keyframes boom-ring {
-  0%   { transform: scale(0.6); opacity: .7; }
-  100% { transform: scale(2.6); opacity: 0; }
-}
-
-/* Toggle modalità gioco: in BASSO a DESTRA */
-.game-toggle {
-  position: fixed;
-  bottom: 14px;
-  right: 14px;
-  z-index: 20;
-  padding: .4rem .6rem;
-  background: var(--color-primary);
-  color: var(--color-black);
-  border: 2px solid var(--color-primary);
-  cursor: pointer;
-  font-family: var(--font-press-start);
-  font-size: .8rem;
-  box-shadow: 2px 2px 0 var(--color-primary);
-}
-
-/* ===========================
-   TRAY DELLE FINESTRE
-   =========================== */
-.icon-tray {
-  position: fixed;
-  bottom: 14px;
-  left: 14px;
-  display: flex; gap: 0.5rem;
-  z-index: 20;
-}
-
-.window-icon {
-  width: 2rem; height: 2rem;
-  background: var(--color-primary); color: var(--color-black);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-press-start); font-size: 0.75rem;
-  cursor: pointer;
-  border: 2px solid var(--color-primary);
-  box-shadow: 2px 2px 0 var(--color-primary);
-}
-
-/* ===========================
-   SCROLL / FORM
-   =========================== */
-@media (max-width: 600px) {
-  .home-section .content { width: 90%; padding: 2rem 1rem; }
-  .aliens-layer .alien { display: none; }
-  .ship-emoji { font-size: 36px; }
-  .progress-container { display: none; }
-}
-
-.progress-container {
-  position: fixed;
-  top: 50%; right: 1rem;
+  top: 50%;
+  right: 1rem;
   transform: translateY(-50%);
-  width: 20px; height: 80vh;
+  width: 20px;
+  height: 80vh;
   border: 4px solid var(--color-primary);
   background: var(--background);
   box-shadow: 4px 4px 0 var(--color-primary);
   z-index: 1000;
 }
-.progress-bar { width: 100%; background: var(--color-primary); height: 0; }
+.progress-bar{ width:100%; height:0; background: var(--color-primary); }
+@media (max-width: 600px){ .progress-container{ display:none; } }
 
-.home-section form {
-  display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;
+/* Form di contatto dentro una window */
+.home-section form{
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+  margin-top:1rem;
 }
 .home-section form input,
-.home-section form textarea {
-  padding: 0.75rem;
-  background: var(--background);
-  color: var(--foreground);
-  border: 2px solid var(--color-primary);
-  font-size: 1rem;
+.home-section form textarea{
+  padding:.75rem;
+  background:var(--background);
+  color:var(--foreground);
+  border:2px solid var(--color-primary);
+  font-size:1rem;
 }
-.home-section form button {
-  padding: 0.75rem;
-  background: var(--color-primary);
-  color: var(--color-black);
-  border: 2px solid var(--color-primary);
-  cursor: pointer;
-  font-family: var(--font-press-start);
-  font-size: 1rem;
+.home-section form button{
+  padding:.75rem;
+  background:var(--color-primary);
+  color:var(--color-black);
+  border:2px solid var(--color-primary);
+  cursor:pointer;
+  font-family:var(--font-press-start);
+  font-size:1rem;
 }
-
-/* PATCH: allinea i proiettili al sistema a "top" in viewport */
-.bullet-layer {
-  bottom: 0;         /* prima 60px */
-  height: 100%;      /* prima calc(100% - 60px) */
-}
-.bullet {
-  bottom: auto;      /* override */
-  top: 0;            /* gestito inline dal JS frame-by-frame */
-}
-
-/* ===========================
-   ANIMAZIONI OPZIONALI
-   =========================== */
-.content.destroy { animation: explode 0.5s forwards; }
-.content.fade-in  { animation: fadeIn 1s forwards; }
-
-@keyframes explode { to { opacity: 0; transform: scale(0.5) rotate(20deg); } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

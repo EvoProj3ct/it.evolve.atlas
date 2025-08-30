@@ -1,31 +1,57 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useWindows } from "./WindowManager";
+import styles from "./WindowsStyles.module.css";
 
-export default function WindowFrame({ id, title, maximizeHref = "/chi-siamo", children }) {
+/**
+ * Finestra riutilizzabile con barra (minimize / maximize-link / close).
+ * - Legge/storicizza lo stato dal WindowManager
+ * - Mantiene la barra visibile dopo il primo hover (pin)
+ * - Minimizzata => nascosta (finisce nella Tray)
+ * - Chiusa => non renderizza (ma si auto-ripristina dopo reopenMs)
+ */
+export default function WindowFrame({
+                                        id,
+                                        title,
+                                        maximizeHref = "/chi-siamo",
+                                        children,
+                                        reopenMs = 8000, // puoi cambiare a piacere (ms)
+                                    }) {
     const { state, register, pin, minimize, close, restore } = useWindows();
     const w = state.byId[id] || { pinned: false, minimized: false, closed: false };
 
     const reopenTimerRef = useRef(null);
     const [reopening, setReopening] = useState(false);
 
-    useEffect(() => { register(id, title); }, [id, title, register]);
-    useEffect(() => () => { if (reopenTimerRef.current) clearTimeout(reopenTimerRef.current); }, []);
+    useEffect(() => {
+        register(id, title);
+    }, [id, title, register]);
+
+    useEffect(() => {
+        return () => { if (reopenTimerRef.current) clearTimeout(reopenTimerRef.current); };
+    }, []);
 
     const isHidden = w.minimized || w.closed;
-    const contentClass =
-        "content" + (isHidden ? " is-hidden" : "") + (w.pinned ? " keep-bar" : "") + (reopening ? " fade-in" : "");
+    const contentClass = [
+        styles.content,
+        w.pinned ? styles.keepBar : "",
+        isHidden ? styles.isHidden : "",
+        reopening ? styles.fadeIn : "",
+    ].join(" ");
 
     const onClose = () => {
         close(id);
+
         if (reopenTimerRef.current) clearTimeout(reopenTimerRef.current);
         reopenTimerRef.current = setTimeout(() => {
             setReopening(true);
             restore(id);
             setTimeout(() => setReopening(false), 1000);
-        }, 8000); // <-- 8 secondi
+        }, reopenMs);
 
+        // scroll alla prossima sezione visibile
         const section = document.getElementById(id)?.closest("section");
         const next = section?.nextElementSibling;
         next?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -34,8 +60,10 @@ export default function WindowFrame({ id, title, maximizeHref = "/chi-siamo", ch
     const onMinimize = () => { minimize(id); };
     const onFirstHoverOrFocus = () => { if (!w.pinned) pin(id); };
 
+    if (w.closed && !reopening) return null;
+
     return (
-        <section id={id} className="home-section" aria-labelledby={`${id}-title`}>
+        <section id={id} className={styles.section} aria-labelledby={`${id}-title`}>
             <div
                 className={contentClass}
                 data-window-id={id}
@@ -43,14 +71,31 @@ export default function WindowFrame({ id, title, maximizeHref = "/chi-siamo", ch
                 onMouseEnter={onFirstHoverOrFocus}
                 onFocusCapture={onFirstHoverOrFocus}
             >
-                <div className="window-bar">
-                    <button type="button" className="window-btn minimize" title="Riduci" aria-label="Riduci" onClick={onMinimize} />
-                    <Link href={maximizeHref} className="window-btn maximize" title="Ingrandisci" aria-label="Ingrandisci" />
-                    <button type="button" className="window-btn close" title="Chiudi" aria-label="Chiudi" onClick={onClose} />
+                <div className={styles.windowBar}>
+                    <button
+                        type="button"
+                        className={`${styles.btn} ${styles.min}`}
+                        title="Riduci"
+                        aria-label="Riduci"
+                        onClick={onMinimize}
+                    />
+                    <Link
+                        href={maximizeHref}
+                        className={`${styles.btn} ${styles.max}`}
+                        title="Ingrandisci"
+                        aria-label="Ingrandisci"
+                    />
+                    <button
+                        type="button"
+                        className={`${styles.btn} ${styles.cls}`}
+                        title="Chiudi"
+                        aria-label="Chiudi"
+                        onClick={onClose}
+                    />
                 </div>
 
                 <h2 id={`${id}-title`} className="title">{title}</h2>
-                <div className="window-body">{children}</div>
+                <div className="description">{children}</div>
             </div>
         </section>
     );

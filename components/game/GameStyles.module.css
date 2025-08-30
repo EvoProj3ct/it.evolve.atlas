@@ -1,0 +1,117 @@
+:root{
+    --nav-height: 72px;   /* setta questi valori nel layout (inline style sul <body>) */
+    --footer-safe: 0px;   /* spazio da riservare se hai footer sticky */
+}
+
+/* LAYERS del gioco */
+.shipLayer{
+    position: fixed;
+    left: 0;
+    bottom: var(--footer-safe);
+    width: 100%;
+    height: 80px;
+    pointer-events: none;
+    z-index: 2; /* sotto le windows (che stanno a z 10) ma sopra gli alieni */
+}
+
+/* se vuoi visualizzare una nave fissa via DOM, puoi inserirla in .shipLayer:
+   es: .shipEmoji { position:absolute; bottom:2px; left:0; font-size:46px; filter:drop-shadow(0 0 10px var(--foreground)); }
+*/
+
+.bullets{
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    width: 100%;
+    height: calc(100% - var(--nav-height) - var(--footer-safe));
+    pointer-events: none;
+    z-index: 2;
+}
+.bullet{
+    position: absolute;
+    top: 0;                 /* la logica JS aggiorna “top” */
+    width: 4px;
+    height: 20px;
+    background: var(--foreground);
+    box-shadow: 0 0 10px var(--foreground);
+}
+
+.aliens{
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    width: 100%;
+    height: calc(100% - var(--nav-height) - var(--footer-safe));
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* dimensione base degli alieni */
+:root{ --alien-size: 96px; }
+
+.alien{
+    position: absolute;
+    width: var(--alien-size);
+    height: var(--alien-size);
+    top: calc(var(--alien-size) * -1); /* partono fuori dallo schermo */
+    filter: none !important;
+}
+
+/* Fantasmino 👻 */
+.alien.ghost .eye{
+    position:absolute; top:36%;
+    width:16px; height:16px; background:#fff; border-radius:50%;
+}
+.alien.ghost .eye .pupil{
+    position:absolute; top:40%; left:40%;
+    width:6px; height:6px; background:#000; border-radius:50%;
+}
+
+/* Sprite Space-Invader (pixel CSS) – colore via --alien-color */
+.alien.sprite{ background:transparent; }
+.alien.sprite::before{
+    content:""; position:absolute; left:50%; top:50%;
+    width:6px; height:6px; background:var(--alien-color, #39FF14);
+    box-shadow:
+            -24px -24px 0 0 var(--alien-color), -12px -24px 0 0 var(--alien-color), 12px -24px 0 0 var(--alien-color), 24px -24px 0 0 var(--alien-color),
+            -30px -12px 0 0 var(--alien-color), -18px -12px 0 0 var(--alien-color), -6px -12px 0 0 var(--alien-color), 6px -12px 0 0 var(--alien-color), 18px -12px 0 0 var(--alien-color), 30px -12px 0 0 var(--alien-color),
+            -36px 0 0 0 var(--alien-color), -24px 0 0 0 var(--alien-color), -12px 0 0 0 var(--alien-color), 0 0 0 0 var(--alien-color), 12px 0 0 0 var(--alien-color), 24px 0 0 0 var(--alien-color), 36px 0 0 0 var(--alien-color),
+            -36px 12px 0 0 var(--alien-color), -24px 12px 0 0 var(--alien-color), -12px 12px 0 0 var(--alien-color), 12px 12px 0 0 var(--alien-color), 24px 12px 0 0 var(--alien-color), 36px 12px 0 0 var(--alien-color),
+            -48px 24px 0 0 var(--alien-color), -36px 24px 0 0 var(--alien-color), -24px 24px 0 0 var(--alien-color), 24px 24px 0 0 var(--alien-color), 36px 24px 0 0 var(--alien-color), 48px 24px 0 0 var(--alien-color),
+            -36px 36px 0 0 var(--alien-color), -12px 36px 0 0 var(--alien-color), 12px 36px 0 0 var(--alien-color), 36px 36px 0 0 var(--alien-color);
+    transform: translate(-50%, -50%) scale(calc(var(--alien-size) / 96));
+}
+
+/* Esplosione coerente con la tua funzione JS */
+.explosion{
+    position:absolute; width:24px; height:24px; border-radius:50%;
+    pointer-events:none; z-index:2;
+    animation:gBoom .9s ease-out forwards;
+    box-shadow: 0 0 25px currentColor, 0 0 50px currentColor;
+}
+@keyframes gBoom{
+    0%{ transform:scale(.6); opacity:1; }
+    70%{ transform:scale(2.1); opacity:.75; }
+    100%{ transform:scale(2.6); opacity:0; }
+}
+
+/* Toggle mode */
+.toggle{
+    position: fixed;
+    right: 14px;
+    bottom: calc(14px + var(--footer-safe));
+    z-index: 20;
+    padding:.4rem .6rem;
+    background: var(--color-primary);
+    color: var(--color-black);
+    border:2px solid var(--color-primary);
+    box-shadow:2px 2px 0 var(--color-primary);
+    font-family: var(--font-press-start);
+    font-size:.8rem;
+    cursor:pointer;
+}
+
+/* Mobile: mantengo tutto visibile ma più piccolo */
+@media (max-width: 600px){
+    :root{ --alien-size: 78px; }
+}
