@@ -14,6 +14,8 @@ import "@/styles/portfolio.css";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PixeledChatWidget from "@/components/chat/PixeledChatWidget";
+import React from "react";
 
 export default function SiteLayout({ children }) {
     return (
@@ -29,6 +31,14 @@ export default function SiteLayout({ children }) {
                 ]}
             />
             {children}
+            {/* Widget chat pixel */}
+            <PixeledChatWidget
+                label="Talk To Leo"
+                avatarSrc="/avatars/leo.png"
+                initialText="Ciao! Sono Leo, hai domande?"
+                redirectHref="https://chatgpt.com/g/g-68a634b4bb888191b1209375250d95f1-leo?model=gpt-4o"
+                chatTitle="LEO • EVOLVE"
+            />
             <Footer />
         </>
     );

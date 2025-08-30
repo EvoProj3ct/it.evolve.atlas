@@ -5,6 +5,7 @@ import ScrollProgress from "@/components/ui/ScrollProgress";
 import HomeParallax from "@/components/game/HomeParallax";
 import WindowFrame, { WindowProvider, WindowTray } from "@/components/window";
 
+
 export default function Home() {
     return (
         <WindowProvider>
@@ -33,7 +34,7 @@ export default function Home() {
                 </p>
             </WindowFrame>
 
-            <WindowFrame id="prodotti" title="I Nostri Prodotti" maximizeHref="/portfolio">
+            <WindowFrame id="prodotti" title="I Nostri Prodotti" maximizeHref="/stampa">
                 <p>
                     Dal nostro E-Linker all'E-Talk, sviluppiamo dispositivi e piattaforme
                     che integrano NFC e stampa 3D per connettere ciò che conta. Ogni prodotto
@@ -41,7 +42,7 @@ export default function Home() {
                 </p>
             </WindowFrame>
 
-            <WindowFrame id="servizi" title="I Nostri Servizi" maximizeHref="/portfolio">
+            <WindowFrame id="servizi" title="I Nostri Servizi" maximizeHref="/consulenza">
                 <p>
                     Offriamo soluzioni integrate e consulenza personalizzata per ottimizzare
                     i processi aziendali. Dallo sviluppo software alla prototipazione rapida,
@@ -49,7 +50,7 @@ export default function Home() {
                 </p>
             </WindowFrame>
 
-            <WindowFrame id="testimonianze" title="Cosa Dicono di Noi" maximizeHref="/contatti">
+            <WindowFrame id="testimonianze" title="Cosa Dicono di Noi" maximizeHref="/portfolio">
                 <p>
                     "I ragazzi di Evolve hanno trasformato le nostre idee in realtà in pochissimo tempo!"<br />
                     "Finalmente un partner che parla la lingua delle piccole imprese."
@@ -69,6 +70,7 @@ export default function Home() {
                     <button type="submit">Invia</button>
                 </form>
             </WindowFrame>
+
         </WindowProvider>
     );
 }

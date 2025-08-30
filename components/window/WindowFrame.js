@@ -1,15 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useWindows } from "./WindowManager";
 import styles from "./WindowsStyles.module.css";
 
 /**
- * Finestra riutilizzabile con barra (minimize / maximize-link / close).
- * - Stato gestito da WindowManager
- * - Dopo primo hover/focus la barra resta visibile (pin)
+ * Finestra riutilizzabile con barra (minimize / maximize / close).
  * - Minimizzata => scompare con animazione, compare icona trascinabile
  * - Close => si auto-ripristina dopo reopenMs
  * - Maximize (verde) => animazione full-screen e poi navigate
@@ -42,8 +39,10 @@ export default function WindowFrame({
         minimizing ? styles.minimizing : "",
     ].join(" ");
 
+    // CHIUDI: niente scrollIntoView (evita “doppio scroll”)
     const onClose = () => {
         close(id);
+
         if (reopenTimerRef.current) clearTimeout(reopenTimerRef.current);
         reopenTimerRef.current = setTimeout(() => {
             setReopening(true);
@@ -51,8 +50,8 @@ export default function WindowFrame({
             setTimeout(() => setReopening(false), 1000);
         }, reopenMs);
 
-        document.getElementById(id)?.closest("section")?.nextElementSibling
-            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        // RIMOSSA la logica che scorre alla sezione successiva
+        // (lasciamo solo il comportamento naturale del layout)
     };
 
     const onMinimize = () => {
@@ -72,7 +71,7 @@ export default function WindowFrame({
         if (!card) { router.push(maximizeHref); return; }
 
         const rect = card.getBoundingClientRect();
-        // ghost overlay
+
         const ghost = document.createElement("div");
         Object.assign(ghost.style, {
             position: "fixed",
@@ -89,10 +88,8 @@ export default function WindowFrame({
         });
         document.body.appendChild(ghost);
 
-        // nascondo la card reale durante il flash
         card.style.visibility = "hidden";
 
-        // calcolo target: pieno schermo sotto la navbar
         const navVar = getComputedStyle(document.documentElement).getPropertyValue("--nav-height");
         const navH = parseInt(navVar, 10) || 56;
         const targetTop = Math.max(0, navH);
@@ -112,7 +109,6 @@ export default function WindowFrame({
             router.push(maximizeHref);
         };
 
-        // fallback in caso di interruzioni
         setTimeout(() => {
             if (document.body.contains(ghost)) {
                 document.body.removeChild(ghost);
@@ -142,7 +138,6 @@ export default function WindowFrame({
                         aria-label="Riduci"
                         onClick={onMinimize}
                     />
-                    {/* button + handler per animazione, poi navigate */}
                     <button
                         type="button"
                         className={`${styles.btn} ${styles.max}`}
@@ -150,7 +145,6 @@ export default function WindowFrame({
                         aria-label="Ingrandisci"
                         onClick={onMaximize}
                     />
-                    {/* close */}
                     <button
                         type="button"
                         className={`${styles.btn} ${styles.cls}`}

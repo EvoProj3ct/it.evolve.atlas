@@ -1,0 +1,165 @@
+/* Posizione fissa in basso a destra */
+.host {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 1800; /* sotto menu mobile (2100) */
+    pointer-events: none; /* sblocchiamo solo sui figli interattivi */
+    font-family: var(--font-press-start, "Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif);
+}
+
+/* === FAB TONDO ========================================================= */
+.fab {
+    pointer-events: auto;
+    position: relative;
+    width: 64px;
+    height: 64px;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    border: 3px solid var(--color-primary);
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(57, 255, 20, 0.25);
+}
+
+.avatar {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    image-rendering: pixelated;
+    border-radius: 50%;
+}
+.avatarPlaceholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--foreground);
+    opacity: .2;
+}
+
+/* Etichetta sobria (colore = tema) */
+.label {
+    pointer-events: auto;
+    margin-top: 6px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--foreground);
+}
+
+/* === TRILLO: ciclo 6s con “burst” frenetico ============================ */
+/* Il burst dura ~1s (8%→25%), dentro cui lo shake è rapidissimo */
+@keyframes longCycleBurstFrenzy {
+    0%,7%,26%,100% { transform: translate(0,0) rotate(0deg); }
+
+    /* burst ultra-rapido: alterno spesso per dare l'effetto “trillo” */
+    8%  { transform: translate(-2px, 0) rotate(-5deg); }
+    10% { transform: translate( 2px, 0) rotate( 5deg); }
+    12% { transform: translate(-3px, 0) rotate(-6deg); }
+    14% { transform: translate( 3px, 0) rotate( 6deg); }
+    16% { transform: translate(-3px, 0) rotate(-6deg); }
+    18% { transform: translate( 3px, 0) rotate( 6deg); }
+    20% { transform: translate(-2px, 0) rotate(-5deg); }
+    22% { transform: translate( 2px, 0) rotate( 5deg); }
+    24% { transform: translate( 0px, 0) rotate( 0deg); }
+}
+.pulse { animation: longCycleBurstFrenzy 6s ease-in-out infinite; }
+
+/* === CHAT più ARIOSA =================================================== */
+.chat {
+    pointer-events: auto;
+    position: absolute;
+    right: 0;                     /* allineata al bordo destro della host */
+    bottom: 0;
+    transform: translateX(-16px); /* allontano un po’ dal bordo del viewport */
+    width: min(90vw, 360px);
+    background: var(--background);
+    border: 3px solid var(--color-primary);
+    border-radius: 14px;
+    box-shadow: 0 0 0 2px var(--color-primary) inset, 4px 4px 0 var(--color-primary);
+    animation: pop .18s ease-out both;
+}
+@keyframes pop {
+    from { transform: translateX(-16px) scale(.95); opacity: 0; }
+    to   { transform: translateX(-16px) scale(1);   opacity: 1; }
+}
+
+/* Header con avatar GRANDE (56px) e titolo configurabile */
+.header {
+    display: grid;
+    grid-template-columns: 56px 1fr 28px;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 12px;
+    background: var(--color-black);
+    color: var(--color-white);
+    border-bottom: 3px solid var(--color-primary);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+.headerAvatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    image-rendering: pixelated;
+    border: 3px solid var(--color-primary);
+}
+.title {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.close {
+    width: 26px; height: 26px;
+    font-size: 14px; line-height: 24px;
+    border: 2px solid var(--color-white);
+    background: #ff0000;
+    color: #000;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+/* Corpo più spazioso */
+.body { padding: 16px 14px 14px; }
+.botBubble {
+    background: #111;
+    color: var(--color-white);
+    border: 3px solid var(--color-primary);
+    padding: 14px 14px;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+    border-radius: 12px;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 1fr 52px;
+    gap: 10px;
+}
+.input {
+    font-family: inherit;
+    font-size: 13px;
+    padding: 12px 14px;
+    background: var(--background);
+    color: var(--foreground);
+    border: 3px solid var(--color-primary);
+    border-radius: 10px;
+    outline: none;
+}
+.send {
+    font-family: inherit;
+    font-size: 18px;
+    border: 3px solid var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-black);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Mobile: un filo più largo e vicino al bordo */
+@media (max-width: 520px) {
+    .chat { width: min(94vw, 380px); }
+}
