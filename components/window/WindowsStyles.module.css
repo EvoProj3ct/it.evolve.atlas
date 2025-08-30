@@ -1,7 +1,4 @@
-:global(:root){
-    --nav-height: 72px;  /* imposta nel layout */
-    --footer-safe: 0px;
-}
+/* NON dichiarare :root in un module.css */
 
 /* Sezione contenitore: parte sempre sotto la navbar */
 .section{
@@ -18,7 +15,7 @@
     color: var(--foreground);
     font-family: var(--font-press-start);
     background: var(--background);
-    overflow: clip; /* evita che la windowBar “sbordi” a top */
+    overflow: clip;
 }
 
 /* Card finestra */

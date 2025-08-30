@@ -1,7 +1,4 @@
-:global(:root){
-    --nav-height: 72px;   /* set dal layout (inline sul body) */
-    --footer-safe: 0px;   /* se footer sticky, alza questo */
-}
+/* NIENTE :root qui; le var sono in globals.css */
 
 /* LAYERS del gioco */
 .shipLayer{
@@ -42,9 +39,7 @@
     z-index: 1;
 }
 
-/* dimensione base degli alieni */
-:global(:root){ --alien-size: 96px; }
-
+/* dimensione base degli alieni via var globale */
 .alien{
     position: absolute;
     width: var(--alien-size);
@@ -107,7 +102,4 @@
     cursor:pointer;
 }
 
-/* Mobile: mantengo tutto visibile ma più piccolo */
-@media (max-width: 600px){
-    :global(:root){ --alien-size: 78px; }
-}
+/* Mobile – gli override delle var sono in globals.css */
