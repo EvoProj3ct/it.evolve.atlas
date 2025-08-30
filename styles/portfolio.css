@@ -20,10 +20,10 @@
 /* ====== LAYOUT LATERALE ====== */
 .portfolio-side-layout {
     display: grid;
-    grid-template-columns: 300px auto; /* carosello a sinistra + console */
-    gap: 1.2rem;
+    grid-template-columns: 280px auto; /* colonna cassette + console */
+    gap: 1.4rem;
     width: 100%;
-    max-width: 1140px;
+    max-width: 1280px;
     align-items: start;
 }
 
@@ -35,6 +35,16 @@
     gap: .6rem;
 }
 
+.v-viewport { overflow: hidden; width: 100%; }
+
+.v-rail {
+    display: grid;
+    grid-auto-rows: min-content;
+    row-gap: .8rem;                  /* usata anche in JS per il calcolo */
+    padding-right: .25rem;
+}
+
+/* Frecce più compatte, stessa larghezza colonna */
 .v-nav {
     width: 100%;
     border: 4px solid var(--color-primary);
@@ -44,53 +54,58 @@
     border-radius: 10px;
     cursor: pointer;
     font-family: var(--font-press-start);
-    transition: transform .08s ease, box-shadow .08s ease;
+    transition: transform .08s ease, box-shadow .08s ease, filter .08s ease;
 }
 .v-nav:active { transform: translateY(2px); box-shadow: 2px 2px 0 var(--color-primary); }
-.v-nav-big { height: 56px; font-size: 1.2rem; }
+.v-nav:hover  { filter: brightness(1.08); }
+
+/* Altezza frecce ridotta e proporzionata alla cassetta */
+.v-nav-big { height: 44px; font-size: .95rem; letter-spacing: 1px; }
 .v-nav.up   { margin-bottom: .2rem; }
 .v-nav.down { margin-top: .2rem; }
 
-/* Viewport con altezza fissata via JS: mostra max 2 item */
-.v-viewport {
-    overflow: hidden; /* nasconde il resto */
-    width: 100%;
-}
-
-.v-rail {
-    display: grid;
-    grid-auto-rows: min-content;
-    row-gap: .8rem;                  /* usata anche in JS per il calcolo */
-    padding-right: .3rem;
-}
-
+/* Effetto focus della cassetta al passaggio */
 .v-item.focus .cassette {
     transform: translateY(-6px) scale(1.03);
     box-shadow: 6px 6px 0 var(--color-primary);
 }
 
-/* ====== CONSOLE più compatta ====== */
-.portfolio-console { border-radius: 12px; }
+/* ====== CONSOLE più alta & schermo più grande ====== */
+.portfolio-console { border-radius: 14px; }
+
+/* schermo: da 420×260 -> 560×340 */
 .portfolio-screen {
-    width: 420px;
-    height: 260px;
+    width: 560px;
+    height: 340px;
 }
 
-/* Lo schermo eredita gli stili di about.css (Game Boy) ma
-   gli diamo un filo di margine interno in più per evitare sbordi */
+/* margini interni dello schermo per evitare sbordi */
 .portfolio-screen .gb-screen-inner {
     box-sizing: border-box;
-    padding: 1.15rem 1rem 52px; /* top/right più comodi, spazio per hint */
+    padding: 1.2rem 1.1rem 54px; /* spazio extra in basso per gli hint */
 }
-.portfolio-screen .gb-text { padding-right: .6rem; }
+.portfolio-screen .gb-text { padding-right: .7rem; }
+
+/* leggero “upscale” dei controlli per proporzione con lo schermo */
+.portfolio-console .gb-btn      { width: 56px; height: 56px; font-size: 1rem; }
+.portfolio-console .gb-a,
+.portfolio-console .gb-b        { width: 64px; height: 64px; }
+.portfolio-console .gb-dpad-row { gap: .6rem; }
 
 /* ====== Responsive ====== */
+@media (max-width: 1200px) {
+    .portfolio-side-layout { grid-template-columns: 260px auto; }
+    .portfolio-screen { width: 520px; height: 320px; }
+    .portfolio-console .gb-btn { width: 52px; height: 52px; }
+    .portfolio-console .gb-a, .portfolio-console .gb-b { width: 60px; height: 60px; }
+}
+
 @media (max-width: 1100px) {
     .portfolio-side-layout {
         grid-template-columns: 1fr;
         justify-items: center;
     }
-    /* su mobile trasformo il carosello in orizzontale (swipe) */
+    /* su mobile il carosello diventa orizzontale (swipe) */
     .v-carousel { width: 100%; max-width: 560px; }
     .v-viewport { overflow: auto; height: auto !important; }
     .v-rail {
@@ -101,15 +116,8 @@
         row-gap: 0;
         overflow-x: auto;
     }
-    .v-nav { display: none; } /* frecce nascoste: si usa lo swipe */
-}
-
-@media (max-width: 560px) {
-    .portfolio-screen {
-        width: 92vw;
-        height: 58vw;   /* ~16:10 verticale */
-        max-height: 340px;
-    }
-    .gb-btn { width: 48px; height: 48px; }
-    .gb-a, .gb-b { width: 56px; height: 56px; }
+    .v-nav { display: none; } /* frecce nascoste: usa swipe */
+    .portfolio-screen { width: 92vw; height: 58vw; max-height: 360px; }
+    .portfolio-console .gb-btn { width: 48px; height: 48px; }
+    .portfolio-console .gb-a, .portfolio-console .gb-b { width: 56px; height: 56px; }
 }

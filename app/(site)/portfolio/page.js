@@ -8,9 +8,10 @@ const projects = [
     {
         slug: "smart-plant",
         name: "Smart Plant",
-        image: "/portfolio/smart-plant.jpg",
+        image: "/portfolio/smart_plant.png",
         pages: [
-            { type: "image", src: "/portfolio/smart-plant.jpg" },
+            { type: "image", src: "/portfolio/smart_plant.png" },
+            { type: "image", src: "/portfolio/smart_plant2.png" },
             { type: "text", kind: "bio", content: "IoT per bonsai: sensori ESP32, gateway MQTT, dashboard Next.js." },
             { type: "contacts", contacts: [
                     { label: "Demo Live", href: "https://example.com/demo" },
@@ -21,9 +22,9 @@ const projects = [
     {
         slug: "e-linker",
         name: "E-Linker",
-        image: "/portfolio/e-linker.jpg",
+        image: "/portfolio/elinker.png",
         pages: [
-            { type: "image", src: "/portfolio/e-linker.jpg" },
+            { type: "image", src: "/portfolio/elinker.png" },
             { type: "text", content: "Hub NFC per oggetti e card. Provisioning mobile, webhooks e short link." },
             { type: "contacts", contacts: [
                     { label: "Landing", href: "https://evolve3d.it/e-linker" },
