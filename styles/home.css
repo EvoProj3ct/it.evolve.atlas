@@ -1,42 +1,22 @@
-/* HOME */
-
-/* Progress a lato */
+/* progress bar laterale (se usi ScrollProgress) */
 .progress-container{
-  position: fixed;
-  top: 50%;
-  right: 1rem;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 80vh;
+  position: fixed; top: 50%; right: 1rem; transform: translateY(-50%);
+  width: 20px; height: 80vh;
   border: 4px solid var(--color-primary);
   background: var(--background);
   box-shadow: 4px 4px 0 var(--color-primary);
   z-index: 1000;
 }
-.progress-bar{ width:100%; height:0; background: var(--color-primary); }
-@media (max-width: 600px){ .progress-container{ display:none; } }
+.progress-bar{ width:100%; background: var(--color-primary); height:0; }
 
-/* Form di contatto dentro una window */
-.home-section form{
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
-  margin-top:1rem;
+/* form semplice dentro alle finestre */
+.form{ display:flex; flex-direction:column; gap:1rem; margin-top:1rem; }
+.form input, .form textarea{
+  padding:.75rem; background:var(--background); color:var(--foreground);
+  border:2px solid var(--color-primary); font-size:1rem;
 }
-.home-section form input,
-.home-section form textarea{
-  padding:.75rem;
-  background:var(--background);
-  color:var(--foreground);
-  border:2px solid var(--color-primary);
-  font-size:1rem;
-}
-.home-section form button{
-  padding:.75rem;
-  background:var(--color-primary);
-  color:var(--color-black);
-  border:2px solid var(--color-primary);
-  cursor:pointer;
-  font-family:var(--font-press-start);
-  font-size:1rem;
+.form button{
+  padding:.75rem; background:var(--color-primary); color:var(--color-black);
+  border:2px solid var(--color-primary); cursor:pointer;
+  font-family: var(--font-press-start); font-size:1rem;
 }

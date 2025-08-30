@@ -4,29 +4,18 @@ import ParallaxAliens from "./ParallaxAliens";
 import styles from "./GameStyles.module.css";
 
 export default function HomeParallax() {
-    const [mode, setMode] = useState("ALIEN"); // "ALIEN" | "GHOST"
+    const [mode, setMode] = useState("ALIEN");
     const toggleMode = () => setMode(m => (m === "ALIEN" ? "GHOST" : "ALIEN"));
 
     return (
         <>
-            {/* Layer VUOTI: ParallaxAliens popola questi tre container */}
-            <div className={styles.shipLayer} />
-            <div className={styles.bullets} />
-            <div className={styles.aliens} />
+            {/* data-attributes: ParallaxAliens li usa per agganciarsi */}
+            <div data-game="ship-layer" className={styles.shipLayer} />
+            <div data-game="bullets"    className={styles.bullets} />
+            <div data-game="aliens"     className={styles.aliens} />
 
-            <ParallaxAliens
-                mode={mode}
-                classNames={{
-                    shipLayer: styles.shipLayer,
-                    bullets: styles.bullets,
-                    aliens: styles.aliens,
-                    bullet: styles.bullet,
-                    alien: styles.alien,
-                    explosion: styles.explosion,
-                }}
-            />
+            <ParallaxAliens mode={mode} />
 
-            {/* Toggle in basso a SINISTRA */}
             <button
                 type="button"
                 className={styles.toggle}

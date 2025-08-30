@@ -1,26 +1,29 @@
-/* LAYERS del gioco */
+/* grandezza alien predefinita */
+:root{ --alien-size: 96px; }
+
+/* LAYER DEL GIOCO --------------------------------------------------------- */
 .shipLayer{
     position: fixed;
     left: 0;
-    bottom: var(--footer-safe);
+    bottom: var(--footer-safe, 0px);
     width: 100%;
     height: 80px;
     pointer-events: none;
-    z-index: 2;
+    z-index: 2;              /* sotto le finestre (che stanno a z 10) */
 }
 
 .bullets{
     position: fixed;
-    top: var(--nav-height);
+    top: var(--nav-height, 72px);
     left: 0;
     width: 100%;
-    height: calc(100% - var(--nav-height) - var(--footer-safe));
+    height: calc(100% - var(--nav-height, 72px) - var(--footer-safe, 0px));
     pointer-events: none;
     z-index: 2;
 }
 .bullet{
     position: absolute;
-    top: 0; /* aggiornato dal JS */
+    top: 0;                  /* aggiornato via JS */
     width: 4px; height: 20px;
     background: var(--foreground);
     box-shadow: 0 0 10px var(--foreground);
@@ -28,15 +31,24 @@
 
 .aliens{
     position: fixed;
-    top: var(--nav-height);
+    top: var(--nav-height, 72px);
     left: 0;
     width: 100%;
-    height: calc(100% - var(--nav-height) - var(--footer-safe));
+    height: calc(100% - var(--nav-height, 72px) - var(--footer-safe, 0px));
     pointer-events: none;
     z-index: 1;
 }
 
-/* Alien base */
+/* NAVE (usa /public/ship.svg) */
+.ship{
+    position:absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px; height: 60px;
+    filter: drop-shadow(0 0 10px var(--foreground));
+}
+
+/* ALIENI ------------------------------------------------------------------ */
 .alien{
     position: absolute;
     width: var(--alien-size);
@@ -45,17 +57,11 @@
     filter: none !important;
 }
 
-/* Fantasmino 👻 */
-.alien.ghost .eye{
-    position:absolute; top:36%;
-    width:16px; height:16px; background:#fff; border-radius:50%;
-}
-.alien.ghost .eye .pupil{
-    position:absolute; top:40%; left:40%;
-    width:6px; height:6px; background:#000; border-radius:50%;
-}
+/* fantasmino */
+.alien.ghost .eye{ position:absolute; top:36%; width:16px; height:16px; background:#fff; border-radius:50%; }
+.alien.ghost .eye .pupil{ position:absolute; top:40%; left:40%; width:6px; height:6px; background:#000; border-radius:50%; }
 
-/* Sprite Space-Invader */
+/* space-invader */
 .alien.sprite{ background:transparent; }
 .alien.sprite::before{
     content:""; position:absolute; left:50%; top:50%;
@@ -70,10 +76,10 @@
     transform: translate(-50%, -50%) scale(calc(var(--alien-size) / 96));
 }
 
-/* Esplosione */
+/* esplosione */
 .explosion{
     position:absolute; width:24px; height:24px; border-radius:50%;
-    pointer-events:none; z-index:2;
+    pointer-events:none; z-index:3;
     animation:gBoom .9s ease-out forwards;
     box-shadow: 0 0 25px currentColor, 0 0 50px currentColor;
 }
@@ -83,12 +89,12 @@
     100%{ transform:scale(2.6); opacity:0; }
 }
 
-/* Toggle: in BASSO a SINISTRA (non interferisce con la navbar) */
+/* toggle in basso a SINISTRA */
 .toggle{
     position: fixed;
     left: 14px;
-    bottom: calc(14px + var(--footer-safe));
-    z-index: 20;
+    bottom: calc(14px + var(--footer-safe, 0px));
+    z-index: 30;
     padding:.4rem .6rem;
     background: var(--color-primary);
     color: var(--color-black);
@@ -97,4 +103,9 @@
     font-family: var(--font-press-start);
     font-size:.8rem;
     cursor:pointer;
+}
+
+/* mobile */
+@media (max-width: 768px){
+    .ship{ width:48px; height:48px; }
 }
