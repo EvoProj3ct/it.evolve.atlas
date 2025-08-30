@@ -1,11 +1,12 @@
-/* NON dichiarare :root in un module.css */
+/* NIENTE :root in un module.css */
 
-/* Sezione contenitore: parte sempre sotto la navbar */
+/* Sezione finestra: deve lasciare spazio SOPRA per la windowBar che esce in negativo */
 .section{
     position: relative;
-    min-height: calc(100vh - var(--nav-height));
-    padding-top: calc(var(--nav-height) + 12px);
+    /* più spazio sopra per la barra (-2rem) e per non farla tagliare */
+    padding-top: calc(var(--nav-height) + 28px);
     padding-bottom: 48px;
+    min-height: calc(100vh - var(--nav-height));
 
     display:flex;
     align-items:center;
@@ -15,7 +16,9 @@
     color: var(--foreground);
     font-family: var(--font-press-start);
     background: var(--background);
-    overflow: clip;
+
+    /* ← PRIMA era overflow: clip; tagliava la barra: va tolto */
+    overflow: visible;
 }
 
 /* Card finestra */
@@ -35,7 +38,7 @@
 .keepBar{ transform: scale(1.04); }
 .isHidden{ display:none; }
 
-/* animazioni utili */
+/* animazioni di utilità */
 .fadeIn{ animation: wf_fade_in 1s forwards; }
 @keyframes wf_fade_in{
     from{ opacity:0; transform: translateY(6px) scale(.98); }
@@ -45,7 +48,7 @@
 /* Barra finestra */
 .windowBar{
     position: absolute;
-    top: -2.25rem;
+    top: -2.25rem;  /* esce sopra il bordo card */
     left: 0;
     width: 100%;
     height: 2rem;
@@ -87,7 +90,7 @@
 /* Tray (icone delle finestre minimizzate) */
 .tray{
     position: fixed;
-    bottom: 14px;
+    bottom: calc(14px + var(--footer-safe));
     left: 14px;
     display:flex; gap:.5rem;
     z-index: 20;
@@ -108,7 +111,7 @@
 @media (max-width: 768px){
     .section{
         min-height: auto;
-        padding-top: calc(var(--nav-height) + 10px);
+        padding-top: calc(var(--nav-height) + 22px);
         padding-bottom: 36px;
     }
     .content{

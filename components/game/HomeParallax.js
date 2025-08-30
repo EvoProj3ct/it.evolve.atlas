@@ -1,25 +1,35 @@
 "use client";
 import React, { useState } from "react";
 import ParallaxAliens from "./ParallaxAliens";
-import g from "./GameStyles.module.css";
+import styles from "./GameStyles.module.css";
 
 export default function HomeParallax() {
     const [mode, setMode] = useState("ALIEN"); // "ALIEN" | "GHOST"
-    const toggleMode = () => setMode((m) => (m === "ALIEN" ? "GHOST" : "ALIEN"));
+    const toggleMode = () => setMode(m => (m === "ALIEN" ? "GHOST" : "ALIEN"));
 
     return (
         <>
-            {/* LAYER FISSI: ParallaxAliens crea/controlla entity dentro questi container */}
-            <div className={g.shipLayer} />    {/* nave */}
-            <div className={g.bullets} />      {/* proiettili */}
-            <div className={g.aliens} />       {/* alieni */}
+            {/* Layer VUOTI: ParallaxAliens popola questi tre container */}
+            <div className={styles.shipLayer} />
+            <div className={styles.bullets} />
+            <div className={styles.aliens} />
 
-            <ParallaxAliens mode={mode} />
+            <ParallaxAliens
+                mode={mode}
+                classNames={{
+                    shipLayer: styles.shipLayer,
+                    bullets: styles.bullets,
+                    aliens: styles.aliens,
+                    bullet: styles.bullet,
+                    alien: styles.alien,
+                    explosion: styles.explosion,
+                }}
+            />
 
-            {/* Switch in basso a destra (non invade navbar/footer) */}
+            {/* Toggle in basso a SINISTRA */}
             <button
                 type="button"
-                className={g.toggle}
+                className={styles.toggle}
                 aria-label="Cambia tipo nemici"
                 title={mode === "ALIEN" ? "Passa ai fantasmini 👻" : "Torna agli alieni 👾"}
                 onClick={toggleMode}

@@ -1,5 +1,3 @@
-/* NIENTE :root qui; le var sono in globals.css */
-
 /* LAYERS del gioco */
 .shipLayer{
     position: fixed;
@@ -8,7 +6,7 @@
     width: 100%;
     height: 80px;
     pointer-events: none;
-    z-index: 2; /* sotto le windows (z 10) ma sopra gli alieni */
+    z-index: 2;
 }
 
 .bullets{
@@ -22,9 +20,8 @@
 }
 .bullet{
     position: absolute;
-    top: 0;                 /* la logica JS aggiorna “top” */
-    width: 4px;
-    height: 20px;
+    top: 0; /* aggiornato dal JS */
+    width: 4px; height: 20px;
     background: var(--foreground);
     box-shadow: 0 0 10px var(--foreground);
 }
@@ -39,12 +36,12 @@
     z-index: 1;
 }
 
-/* dimensione base degli alieni via var globale */
+/* Alien base */
 .alien{
     position: absolute;
     width: var(--alien-size);
     height: var(--alien-size);
-    top: calc(var(--alien-size) * -1); /* partono fuori dallo schermo */
+    top: calc(var(--alien-size) * -1);
     filter: none !important;
 }
 
@@ -58,7 +55,7 @@
     width:6px; height:6px; background:#000; border-radius:50%;
 }
 
-/* Sprite Space-Invader (pixel CSS) – colore via --alien-color */
+/* Sprite Space-Invader */
 .alien.sprite{ background:transparent; }
 .alien.sprite::before{
     content:""; position:absolute; left:50%; top:50%;
@@ -86,10 +83,10 @@
     100%{ transform:scale(2.6); opacity:0; }
 }
 
-/* Toggle mode */
+/* Toggle: in BASSO a SINISTRA (non interferisce con la navbar) */
 .toggle{
     position: fixed;
-    right: 14px;
+    left: 14px;
     bottom: calc(14px + var(--footer-safe));
     z-index: 20;
     padding:.4rem .6rem;
@@ -101,5 +98,3 @@
     font-size:.8rem;
     cursor:pointer;
 }
-
-/* Mobile – gli override delle var sono in globals.css */

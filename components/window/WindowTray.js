@@ -1,13 +1,11 @@
 "use client";
+import React from "react";
 import { useWindows } from "./WindowManager";
 import styles from "./WindowsStyles.module.css";
 
-/** IconTray: mostra un bottone per ogni finestra minimizzata. */
 export default function WindowTray() {
   const { state, restore } = useWindows();
-  const minimized = Object.values(state.byId).filter(
-      (w) => w.minimized && !w.closed
-  );
+  const minimized = Object.values(state.byId).filter(w => w.minimized && !w.closed);
 
   if (minimized.length === 0) return null;
 
@@ -28,7 +26,7 @@ export default function WindowTray() {
                 aria-label={`Riapri ${w.title}`}
                 onClick={() => onRestore(w.id)}
             >
-              {w.title?.slice(0, 1) || "?"}
+              {w.title.slice(0, 1) || "?"}
             </button>
         ))}
       </div>
