@@ -1,4 +1,4 @@
-"use client";
+"use client"; //home page effetto parallasse + finestre dinamiche
 
 import React from "react";
 import ScrollProgress from "@/components/ui/ScrollProgress";
