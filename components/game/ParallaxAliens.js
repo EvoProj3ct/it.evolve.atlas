@@ -29,7 +29,7 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
     const BULLET_SPEED  = prefersReduce ? 300 : 520; // px/s
     const ALIEN_SPEED   = prefersReduce ? 60  : 82;  // px/s
     const BULLET_EVERY  = prefersReduce ? 0.6 : 0.35; // s
-    const ALIEN_EVERY   = prefersReduce ? 0.85 : 0.50; // s
+    const ALIEN_EVERY   = prefersReduce ? 0.6 : 0.35; // s
 
     const FOOTER_SELECTOR       = ".site-footer";
     const SHIP_MIN_BOTTOM       = 4;
