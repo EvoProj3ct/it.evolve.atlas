@@ -177,7 +177,7 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
       ${color} 0%,
       ${color}aa 30%,
       ${color} 55%,
-      gold 70%,
+      ${color} 70%,
       transparent 90%
     )
   `;
