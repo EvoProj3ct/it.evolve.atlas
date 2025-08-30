@@ -9,6 +9,7 @@ import "@/styles/home.css";
 import "@/styles/icons.css";
 import "@/styles/game.css";
 import "@/styles/about.css";
+import "@/styles/portfolio.css";
 
 
 import Navbar from "@/components/Navbar";
