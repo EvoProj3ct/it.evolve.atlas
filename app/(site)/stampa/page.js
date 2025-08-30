@@ -10,7 +10,6 @@ export default function StampaPage() {
         <WindowProvider>
             {/* HUD / overlay */}
             <ScrollProgress />
-            <HomeParallax />
             <WindowTray />
 
             {/* Sezioni come finestre */}
