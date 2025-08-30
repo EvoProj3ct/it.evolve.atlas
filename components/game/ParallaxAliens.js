@@ -176,7 +176,7 @@ export default function ParallaxAliens({ mode = "ALIEN" }) {
     radial-gradient(circle,
       ${color} 0%,
       ${color}aa 30%,
-      gold 55%,
+      ${color} 55%,
       orange 70%,
       transparent 90%
     )
