@@ -74,6 +74,7 @@ const founders = [
     },
 ];
 
+// TODO refactor
 export default function AboutPage() {
     // Una cassetta per founder (multipagina)
     const wrappers = founders.map(createProfileWrapper);
