@@ -3,12 +3,12 @@ import "@/styles/main.css";
 import "@/styles/buttons.css";
 import "@/styles/forms.css";
 import "@/styles/navbar.css";
-import "@/styles/footer.css";
+import "@/components/ui/footer/FooterStyles.module.css";
 import "@/styles/pages.css";
 import "@/styles/magazzino.css"
 
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Footer from "@/components/ui/footer/Footer";
 import PixeledChatWidget from "@/components/chat/PixeledChatWidget";
 import React from "react";
 

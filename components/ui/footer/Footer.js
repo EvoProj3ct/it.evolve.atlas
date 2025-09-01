@@ -1,4 +1,4 @@
-import { InstagramIcon, TwitterIcon, TikTokIcon } from './Icons';
+import { InstagramIcon, TwitterIcon, TikTokIcon } from '../../Icons';
 
 export default function Footer() {
   return (

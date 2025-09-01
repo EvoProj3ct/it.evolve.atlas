@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]/route";
-import { createNote, listNotes, resolveNote, appendToDescription } from "@/models/Note";
+import { createNote, listNotes, resolveNote, appendToDescription } from "@/repository/QueryNote";
 
 function sanitizeCreate(body) {
     const out = {};

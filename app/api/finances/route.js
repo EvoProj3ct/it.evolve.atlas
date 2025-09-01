@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]/route";
-import { createFinance, listFinances } from "@/models/Finance";
+import { createFinance, listFinances } from "@/repository/QueryFinance";
 
 function sanitize(body) {
     const out = {};

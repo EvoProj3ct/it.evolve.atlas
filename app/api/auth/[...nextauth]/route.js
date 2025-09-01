@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { compare } from 'bcrypt'
-import { findUserByUsername } from '@/models/User'
+import { findUserByUsername } from '@/repository/QueryUser'
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,   // <— IMPORTANTE

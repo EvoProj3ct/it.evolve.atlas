@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcrypt'
-import { findUserByUsername, createUser } from '@/models/User'
+import { findUserByUsername, createUser } from '@/repository/QueryUser'
 
 const USERS = [
     { user: 'emanuele',  pass: 'emanuele',  role: 'user' },
