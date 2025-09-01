@@ -1,0 +1,59 @@
+/* Scope locale per le CSS vars dello stack finestre */
+.varsScope {
+    --z-nav: 100; /* navbar / menu */
+    --z-menu: 120; /* eventuale overlay menù */
+    --z-windows: 20; /* stack finestre */
+    --z-windowbar: 21; /* barra finestra sopra la card */
+    --z-icons: 60; /* icone minimizzate trascinabili */
+}
+
+
+/* SEZIONI / LAYOUT ------------------------------------------------------- */
+.section {
+    position: relative;
+    min-height: calc(8vh - var(--nav-height, 10px) - var(--footer-safe, 0px));
+    padding: clamp(2rem, 6vh, 4rem) 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+
+/* CARD DELLA FINESTRA ---------------------------------------------------- */
+.content {
+    position: relative;
+    z-index: var(--z-windows);
+    background: var(--background);
+    padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 3vw, 2rem);
+    margin: 2rem auto;
+    width: min(92vw, 820px);
+    border: 4px solid var(--color-primary);
+    box-shadow: 6px 6px 0 var(--color-primary);
+    transition: transform 200ms ease, filter 150ms ease;
+    will-change: transform;
+    font-family: var(--font-press-start, "Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif);
+    letter-spacing: .015em;
+    line-height: 1.6;
+    text-align: center; /* centratura come nella reference */
+}
+
+
+/* Eredita il font a tutti i figli comuni */
+.content :where(h1,h2,h3,h4,button,input,textarea,a,p,li,label,small,strong,em){font-family:inherit}
+
+
+/* Zoom al passaggio SOLO su device con hover */
+@media (hover: hover) and (pointer: fine) {
+    .content:hover { transform: scale(1.02); }
+}
+
+
+/* Nascosta */
+.isHidden { display: none; }
+
+
+/* BARRA TITOLI & CONTROLLI ----------------------------------------------- */
+.windowBar {
+    position: absolute;
+    top: -2.6rem;
+}

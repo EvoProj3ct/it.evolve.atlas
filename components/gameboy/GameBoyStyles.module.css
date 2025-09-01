@@ -1,0 +1,355 @@
+/* === ROOT LOCALE (àncora per i CSS Modules) === */
+.root {
+    /* palette & spaziatura */
+    --gb-bg: var(--background, #0e1116);
+    --gb-fg: var(--foreground, #e6e8ec);
+    --gb-border: var(--color-primary, #203b1a);
+    --gb-gap: 1.4rem;
+
+    /* scocca (plastic DMG) */
+    --shell-bg: #d6d1c4;
+    --shell-bg-2: #cfc9b9;
+    --shell-border: #7a7568;
+    --shell-highlight: rgba(255,255,255,.35);
+
+    /* knobs scocca (puoi sovrascriverli via className o style) */
+    --shell-bw: 8px;            /* spessore bordo scocca */
+    --shell-radius: 22px;       /* raggio scocca */
+    --shell-pad: 1.15rem;       /* padding interno scocca */
+    --shell-cordolo-inset: 10px;/* inset del “cordolo” ::before */
+    --shell-shadow: 10px;       /* profondità ombra a blocco */
+
+    /* dimensioni */
+    --gb-footer-h: 36px;
+    --cassette-w: 220px;
+    --cassette-w-desktop-scale: 1.5;
+}
+
+/* ---------- Spaziatura macro attorno al blocco console ---------- */
+.root :global(.gameboy) {
+    display: grid;
+    justify-content: center;
+    gap: var(--gb-gap);
+    padding: 1rem 0.75rem;
+    margin-top: 1.25rem;         /* più aria rispetto al testo sopra */
+}
+
+/* ---------- Corpo console = “scocca” ---------- */
+.root :global(.gb-body) {
+    position: relative;
+    display: grid;
+    gap: calc(var(--gb-gap) + .2rem);
+    justify-items: center;
+
+    width: fit-content;
+    max-width: 100%;
+
+    /* 👇 centra la scocca dentro il grid parent (.gameboy) */
+    justify-self: center;      /* per grid */
+    margin-inline: auto;       /* fallback universale */
+
+    /* scocca */
+    background: linear-gradient(180deg, var(--shell-bg) 0%, var(--shell-bg-2) 100%);
+    border: var(--shell-bw) solid var(--shell-border);
+    border-radius: var(--shell-radius);
+    box-shadow:
+            var(--shell-shadow) var(--shell-shadow) 0 var(--shell-border),
+            0 8px 24px rgba(0,0,0,.35);
+    padding: var(--shell-pad);
+
+    margin-top: 4rem;    /* solo sopra, fra carosello e GameBoy */
+    margin-bottom: 6rem; /* solo sotto, fra GameBoy e footer */
+}
+
+/* cordolo interno della scocca */
+.root :global(.gb-body::before) {
+    content: "";
+    position: absolute;
+    inset: var(--shell-cordolo-inset);
+    border: 2px solid rgba(0,0,0,.25);
+    border-radius: calc(var(--shell-radius) - 6px);
+    pointer-events: none;
+}
+/* highlight bordo alto */
+.root :global(.gb-body::after) {
+    content: "";
+    position: absolute;
+    top: calc(var(--shell-bw) - 2px);
+    left: calc(var(--shell-bw) - 2px);
+    right: calc(var(--shell-bw) - 2px);
+    height: clamp(6px, calc(var(--shell-bw) + 2px), 12px);
+    border-radius: 10px;
+    background: linear-gradient(180deg, var(--shell-highlight), transparent);
+    pointer-events: none;
+}
+
+/* ---------- Schermo ---------- */
+.root :global(.gb-screen) {
+    width: min(100%, 380px);
+}
+.root :global(.gb-screen__inner) {
+    position: relative;
+    aspect-ratio: 10 / 9;
+    background: #a6e28d;         /* LCD */
+    border: 4px solid var(--gb-border);
+    box-shadow:
+            inset 0 0 0 4px var(--gb-bg),
+            3px 3px 0 var(--gb-border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Contenuto IMAGE */
+.root :global(.gb-screen__image) { position: absolute; inset: 0; }
+.root :global(.gb-screen__image > span),
+.root :global(.gb-screen__image img) { object-fit: cover; }
+
+/* Contenuto TEXT */
+.root :global(.gb-screen__text) {
+    position: absolute; inset: 0;
+    padding: 1.1rem 0.95rem calc(var(--gb-footer-h) + 1.7rem);
+    overflow: auto;
+}
+.root :global(.gb-screen__text pre) {
+    margin: 0;
+    white-space: pre-wrap;
+    line-height: 1.62;
+    font-size: .82rem;
+    color: #203b1a;
+    font-family: var(--font-press-start, monospace);
+}
+
+/* Contenuto LINK */
+.root :global(.gb-screen__links) {
+    position: absolute; inset: 0;
+    padding: 1.1rem 0.95rem calc(var(--gb-footer-h) + 1.7rem);
+    overflow: auto;
+}
+.root :global(.gb-screen__links ul){ list-style:none; margin:0; padding:0; }
+.root :global(.gb-screen__links li){
+    padding:.36rem .12rem;
+    color:#203b1a;
+    font-family: var(--font-press-start, monospace);
+    border-radius:6px;
+}
+.root :global(.gb-screen__links li[data-selected="1"]){
+    text-decoration: underline;
+    animation: gbBlink .9s steps(2,end) infinite;
+}
+.root :global(.gb-screen__links a){ color:#203b1a; text-decoration:none; }
+
+/* Stato “vuoto” */
+.root :global(.gb-screen__empty){
+    position:absolute; inset:0;
+    display:grid; place-items:center;
+    color:#203b1a; font-size:.9rem;
+    font-family: var(--font-press-start, monospace);
+    background: rgba(166,226,141,.12);
+}
+
+/* (facoltativi) Nome e footer hint */
+.root :global(.gb-name){
+    position:absolute; left:8px; bottom:calc(var(--gb-footer-h) + 10px);
+    font-size:.82rem; color:#203b1a;
+    background:rgba(166,226,141,.9);
+    border:3px solid #203b1a; padding:3px 7px; z-index:2;
+    font-family: var(--font-press-start, monospace);
+}
+.root :global(.gb-footer-hint){
+    position:absolute; left:8px; right:62px; bottom:8px;
+    display:flex; justify-content:space-between; gap:.7rem;
+    font-family: var(--font-press-start, monospace);
+    font-size:.72rem; color:#203b1a;
+    background:rgba(166,226,141,.96);
+    border:2px solid #203b1a; padding:3px 8px; z-index:1;
+}
+.root :global(.gb-page-ind){
+    position:absolute; right:8px; bottom:8px;
+    color:#203b1a; font-family: var(--font-press-start, monospace);
+    font-size:.72rem;
+}
+
+/* ---------- Controlli ---------- */
+/* D-Pad/A-B invertiti visivamente + più aria */
+.root :global([data-gb="controls-row"]) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: calc(var(--gb-gap) + .4rem);
+    flex-direction: row-reverse;
+    margin-top: .2rem;
+}
+
+/* D-Pad con frecce */
+.root :global(.gb-dpad){
+    display:grid;
+    grid-template-areas:
+    ".   up    ."
+    "left  .  right"
+    ".  down   .";
+    gap:.55rem; align-items:center; justify-items:center;
+}
+.root :global(.gb-dpad__up){grid-area:up;}
+.root :global(.gb-dpad__down){grid-area:down;}
+.root :global(.gb-dpad__left){grid-area:left;}
+.root :global(.gb-dpad__right){grid-area:right;}
+.root :global(.gb-dpad__up),
+.root :global(.gb-dpad__down),
+.root :global(.gb-dpad__left),
+.root :global(.gb-dpad__right){
+    width:54px; height:54px;
+    border:4px solid var(--gb-border);
+    background: var(--gb-bg);
+    color: var(--gb-fg);
+    box-shadow:4px 4px 0 var(--gb-border);
+    border-radius:12px; cursor:pointer;
+    transition: transform .08s ease, box-shadow .08s ease;
+    position:relative; font:inherit;
+}
+.root :global(.gb-dpad__up:active),
+.root :global(.gb-dpad__down:active),
+.root :global(.gb-dpad__left:active),
+.root :global(.gb-dpad__right:active){
+    transform: translateY(2px) scale(0.98);
+    box-shadow:2px 2px 0 var(--gb-border);
+}
+/* frecce */
+.root :global(.gb-dpad__up::after),
+.root :global(.gb-dpad__down::after),
+.root :global(.gb-dpad__left::after),
+.root :global(.gb-dpad__right::after){
+    content:"";
+    position:absolute; inset:0; display:grid; place-items:center;
+    color: var(--gb-fg);
+    font-family: var(--font-press-start, monospace);
+}
+.root :global(.gb-dpad__up::after){ content:"▲"; font-size:1.05rem; }
+.root :global(.gb-dpad__down::after){ content:"▼"; font-size:1.05rem; }
+.root :global(.gb-dpad__left::after){ content:"◀"; font-size:1.05rem; }
+.root :global(.gb-dpad__right::after){ content:"▶"; font-size:1.05rem; }
+
+/* A/B push-button */
+.root :global(.gb-ab){ display:flex; align-items:center; gap:1.1rem; }
+.root :global(.gb-btn){
+    font-family: var(--font-press-start, monospace);
+    font-size:.94rem;
+    width:72px; height:72px;
+    border:4px solid var(--gb-border);
+    background: var(--gb-bg);
+    color: var(--gb-fg);
+    box-shadow:4px 4px 0 var(--gb-border);
+    cursor:pointer; border-radius:14px;
+    transition: transform .08s ease, box-shadow .08s ease;
+}
+.root :global(.gb-btn:active){
+    transform: translateY(2px) scale(0.98);
+    box-shadow:2px 2px 0 var(--gb-border);
+}
+.root :global(.gb-btn--a),
+.root :global(.gb-btn--b){ width:80px; height:80px; border-radius:50%; }
+
+/* START/SELECT */
+.root :global(.gb-ss){ display:flex; gap:1.1rem; justify-content:center; }
+.root :global(.gb-ss__btn){
+    padding:.4rem .9rem; border-radius:14px;
+    border:4px solid var(--gb-border);
+    background: var(--gb-bg); color: var(--gb-fg);
+    box-shadow:4px 4px 0 var(--gb-border);
+    font-family: var(--font-press-start, monospace);
+}
+
+/* ---------- Carosello sopra ---------- */
+.root :global(.gb-carousel){
+    display:grid; grid-template-columns:auto 1fr auto;
+    align-items:center; gap:.7rem;
+    padding:.7rem .45rem;
+    margin-bottom: 1.25rem;
+}
+.root :global(.gb-carousel__viewport){ overflow:hidden; }
+.root :global(.gb-carousel__track){
+    display:flex; gap:1rem;
+    overflow-x:auto; scroll-snap-type:x mandatory;
+    padding:.45rem .7rem;
+    -ms-overflow-style:none; scrollbar-width:none;
+}
+.root :global(.gb-carousel__track::-webkit-scrollbar){ display:none; }
+.root :global(.gb-carousel__nav){
+    appearance:none; border:none; cursor:pointer;
+    font-size:1.25rem; line-height:1;
+    padding:.35rem .7rem; border-radius:10px;
+    background: var(--gb-bg); color: var(--gb-fg);
+    border:3px solid var(--gb-border);
+    box-shadow:3px 3px 0 var(--gb-border);
+    font-family: var(--font-press-start, monospace);
+}
+
+/* ============================ Cassette ============================ */
+.root :global(.cassette){
+    width:100%; max-width: var(--cassette-w);
+    background: var(--gb-bg);
+    border:4px solid var(--gb-border);
+    box-shadow:4px 4px 0 var(--gb-border);
+    padding:.5rem; cursor:pointer;
+    display:grid; grid-template-rows:1fr auto; gap:.55rem;
+    transition: transform .28s cubic-bezier(.2,.9,.25,1),
+    filter .2s ease, opacity .2s ease,
+    box-shadow .2s ease;
+    transform-style: preserve-3d; backface-visibility: visible;
+}
+.root :global(.cassette:hover){
+    animation: cassette-bounce 420ms cubic-bezier(.2,.9,.25,1);
+    transform: translateY(-6px) scale(1.03);
+    box-shadow:6px 6px 0 var(--gb-border);
+}
+@keyframes cassette-bounce{
+    0%{transform:translateY(0) scale(1);} 55%{transform:translateY(-8px) scale(1.04);} 100%{transform:translateY(-6px) scale(1.03);}
+}
+.root :global(.cassette:active){ transform: translateY(-2px) scale(0.99); box-shadow:3px 3px 0 var(--gb-border); }
+.root :global(.cassette.inserted){ transform: scaleX(-1) scale(0.98); opacity:.45; filter:saturate(0.85); }
+.root :global(.cassette-img){ position:relative; width:100%; aspect-ratio:4/3; border:4px solid var(--gb-border); box-shadow:3px 3px 0 var(--gb-border); overflow:hidden; }
+.root :global(.cassette-img img){ object-fit:cover; image-rendering:pixelated; }
+.root :global(.cassette-label){ text-align:center; font-size:.8rem; padding:.4rem .5rem; border:3px solid var(--gb-border); box-shadow:3px 3px 0 var(--gb-border); background: var(--gb-bg); color: var(--gb-fg); font-family: var(--font-press-start, monospace); }
+
+/* ---------- Mobile elegante ---------- */
+@media (max-width: 560px){
+    .root{ --gb-gap: 1.1rem; --cassette-w: 180px; --gb-footer-h: 32px; }
+    .root :global(.gb-screen){ width: 92vw; }
+    .root :global(.gb-body){
+        border-width: calc(var(--shell-bw) - 2px);
+        border-radius: calc(var(--shell-radius) - 4px);
+        padding: calc(var(--shell-pad) - .25rem);
+        box-shadow: calc(var(--shell-shadow) - 2px) calc(var(--shell-shadow) - 2px) 0 var(--shell-border), 0 6px 18px rgba(0,0,0,.3);
+    }
+    .root :global(.gb-screen__inner){ border-width: 3px; box-shadow: inset 0 0 0 3px var(--gb-bg), 2px 2px 0 var(--gb-border); }
+    .root :global(.gb-btn){ width:58px; height:58px; }
+    .root :global(.gb-btn--a), .root :global(.gb-btn--b){ width:66px; height:66px; }
+    .root :global(.gb-dpad__up), .root :global(.gb-dpad__down), .root :global(.gb-dpad__left), .root :global(.gb-dpad__right){ width:50px; height:50px; }
+    .root :global(.gb-carousel){ margin-bottom: 1.1rem; }
+    .root :global(.cassette){ min-width: var(--cassette-w); }
+}
+
+/* ---------- Desktop: carosello 1.5× ---------- */
+@media (min-width: 1024px){
+    .root{ --cassette-w: calc(220px * var(--cassette-w-desktop-scale)); }
+    .root :global(.cassette){ max-width: var(--cassette-w); min-width: var(--cassette-w); }
+    .root :global(.cassette-label){ font-size: .9rem; }
+    .root :global(.gb-carousel__track){ gap: 1.15rem; }
+}
+
+/* Varianti scocca: aggiungi questa classe al Core (className) */
+.root:global(.shell-compact) :global(.gb-body){
+    --shell-bw: 6px; --shell-radius: 18px; --shell-pad: 0.7rem; --shell-cordolo-inset: 8px; --shell-shadow: 6px;
+}
+.root:global(.shell-slim) :global(.gb-body){
+    --shell-bw: 4px; --shell-radius: 16px; --shell-pad: 0.5rem; --shell-cordolo-inset: 6px; --shell-shadow: 4px;
+}
+
+/* Tema chiaro (opzionale) */
+.root :global(.theme-light .gb-screen__inner){ background:#e5e5e5; }
+.root :global(.theme-light .gb-body){
+    background: linear-gradient(180deg, #efefef 0%, #e7e7e7 100%);
+    border-color: #99948a; box-shadow: 10px 10px 0 #99948a, 0 8px 24px rgba(0,0,0,.25);
+}
+
+/* Blink per selezioni/hint */
+@keyframes gbBlink { 50% { opacity: .25; } }

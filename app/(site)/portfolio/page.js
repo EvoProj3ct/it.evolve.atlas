@@ -1,7 +1,9 @@
-// server component
-import PortfolioConsole from "@/components/portfolio/PortfolioConsole";
+"use client";
 
-export const metadata = { title: "Portfolio" };
+import {createProfileWrapper} from "@/components/gameboy/GameBoyWrappers";
+import BoxedText from "@/components/ui/text/BoxedText";
+import GameBoyCore from "@/components/gameboy/GameBoyCore";
+
 
 const projects = [
     {
@@ -30,66 +32,31 @@ const projects = [
                     { label: "Contatti", href: "/contatti" },
                 ]},
         ],
-    },
-    {
-        slug: "e-talk",
-        name: "E-Talk",
-        image: "/portfolio/e-talk.jpg",
-        pages: [
-            { type: "image", src: "/portfolio/e-talk.jpg" },
-            { type: "text", content: "Assistente vocale per PMI con IVR, prompt tools e memorie." },
-            { type: "text", kind: "skill", content: "Stack: Next.js • Edge • WebRTC • RAG • VAD" },
-            { type: "contacts", contacts: [
-                    { label: "Case Study", href: "https://example.com/case-etalk" },
-                ]},
-        ],
-    },
-    {
-        slug: "e-spesatore",
-        name: "E-Spesatore",
-        image: "/portfolio/e-spesatore.jpg",
-        pages: [
-            { type: "image", src: "/portfolio/e-spesatore.jpg" },
-            { type: "text", content: "Gestione spese con OCR e categorizzazione automatica." },
-            { type: "contacts", contacts: [
-                    { label: "Repo", href: "https://github.com/you/e-spesatore" },
-                ]},
-        ],
-    },
-    {
-        slug: "e-magazzino",
-        name: "E-Magazzino",
-        image: "/portfolio/e-magazzino.jpg",
-        pages: [
-            { type: "image", src: "/portfolio/e-magazzino.jpg" },
-            { type: "text", content: "Inventario con QR/NFC, prenotazioni e tracciamento prestiti." },
-            { type: "contacts", contacts: [
-                    { label: "Demo", href: "https://example.com/e-magazzino" },
-                ]},
-        ],
-    },
-    {
-        slug: "e-finanze",
-        name: "E-Finanze",
-        image: "/portfolio/e-finanze.jpg",
-        pages: [
-            { type: "image", src: "/portfolio/e-finanze.jpg" },
-            { type: "text", content: "Planner finanziario con KPI, PDF export e connettori bancari." },
-            { type: "contacts", contacts: [
-                    { label: "Landing", href: "https://example.com/e-finanze" },
-                ]},
-        ],
-    },
+    }
 ];
 
+
 export default function PortfolioPage() {
+    // Una cassetta per founder (multipagina)
+    const wrappers = projects.map(createProfileWrapper);
+
     return (
-        <section className="portfolio">
-            <h1 className="title">Portfolio</h1>
-            <p className="description">
+        <div className="portfolio">
+
+            <BoxedText>
+                <h1 className="title">Portfolio</h1>
                 Questi sono i progetti che abbiamo realizzato finora. Dagli un'occhiata caricandoli nella console.
-            </p>
-            <PortfolioConsole projects={projects} />
-        </section>
+
+            </BoxedText>
+            <GameBoyCore
+                wrappers={wrappers}
+                onEvent={(name, payload) => {
+                    if (name === "WRAPPER" && payload?.name === "open") {
+                        const href = payload.payload?.href;
+                        if (href) window.open(href, "_blank", "noopener,noreferrer");
+                    }
+                }}
+            />
+        </div>
     );
 }
