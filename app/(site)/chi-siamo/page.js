@@ -1,7 +1,7 @@
 "use client";
 
 import GameBoyCore from "@/components/gameboy/GameBoyCore";
-import {createProfileWrapper} from "@/components/gameboy/GameBoyWrappers";
+import {makeCassette} from "@/components/gameboy/GameBoyToolWrapper";
 import BoxedText from "@/components/ui/text/BoxedText";
 
 
@@ -77,7 +77,7 @@ const founders = [
 // TODO refactor
 export default function AboutPage() {
     // Una cassetta per founder (multipagina)
-    const wrappers = founders.map(createProfileWrapper);
+    const wrappers = founders.map(makeCassette);
 
     return (
         <div className="about">

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import Cassette from "./Cassette";
-import { GBInput } from "./GameBoyWrappers"; // il Core non conosce più i tipi, solo gli input
+import { GBInput } from "./GameBoyToolWrapper"; // il Core non conosce più i tipi, solo gli input
 import styles from "./GameBoyStyles.module.css";
 
 /**
@@ -45,7 +45,7 @@ export default function GameBoyCore({
             });
             if (off) relays.push(off);
         };
-        ["open", "openImage", "seek", "back", "notify"].forEach(relay);
+        + ["open", "openImage", "seek", "back", "notify", "change", "event"].forEach(relay);
 
         return () => { unsub && unsub(); relays.forEach(off => off && off()); };
     }, [current, onEvent]);

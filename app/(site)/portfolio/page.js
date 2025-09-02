@@ -1,6 +1,6 @@
 "use client";
 
-import {createProfileWrapper} from "@/components/gameboy/GameBoyWrappers";
+import {makeCassette} from "@/components/gameboy/GameBoyToolWrapper";
 import BoxedText from "@/components/ui/text/BoxedText";
 import GameBoyCore from "@/components/gameboy/GameBoyCore";
 
@@ -38,7 +38,7 @@ const projects = [
 
 export default function PortfolioPage() {
     // Una cassetta per founder (multipagina)
-    const wrappers = projects.map(createProfileWrapper);
+    const wrappers = projects.map(makeCassette);
 
     return (
         <div className="portfolio">
