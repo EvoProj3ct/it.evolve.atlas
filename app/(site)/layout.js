@@ -27,6 +27,7 @@ export default function SiteLayout({ children }) {
                     { label: "Portfolio", href: "/portfolio" },
                     { label: "Consulenza", href: "/consulenza" },
                     { label: "Stampa", href: "/stampa" },
+                    { label: "Arcade", href: "/arcade"},
                     { label: "Contatti", href: "/contatti" },
                 ]}
             />
